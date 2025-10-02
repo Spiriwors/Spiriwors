@@ -1,0 +1,79 @@
+"use client";
+
+import React from 'react';
+import { Award, Users, Clock, Star } from 'lucide-react';
+
+const About = () => {
+  const stats = [
+    { icon: Award, number: '50+', label: 'Proyectos Completados' },
+    { icon: Users, number: '25+', label: 'Clientes Satisfechos' },
+    { icon: Clock, number: '5+', label: 'Años de Experiencia' },
+    { icon: Star, number: '4.9', label: 'Rating Promedio' }
+  ];
+
+  return (
+    <section id="about" className="py-20 bg-gray-600">
+      <div className="container mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left Content */}
+          <div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 amatic-sc-bold text-white">
+              Sobre Nosotros
+            </h2>
+            <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+              Spiriwors es una empresa de animación fundada y dirigida por <strong className="text-yellow-400">Camilo Ayala</strong>, 
+              ilustrador y animador profesional con más de 5 años de experiencia en la industria. 
+              Camilo, como fundador y dueño de Spiriwors, ha desarrollado un enfoque único que combina 
+              sus habilidades como ilustrador con técnicas avanzadas de animación stop-motion y 2D.
+            </p>
+            <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+              Bajo la dirección de Camilo, Spiriwors se especializa en crear experiencias visuales 
+              únicas que conectan marcas con audiencias. Su visión artística y experiencia técnica 
+              han llevado a la empresa a trabajar en proyectos diversos, desde comerciales hasta 
+              cortometrajes independientes, siempre manteniendo la calidad y creatividad como pilares fundamentales.
+            </p>
+            <p className="text-lg text-gray-300 mb-8 leading-relaxed">
+              Nuestro enfoque combina las técnicas tradicionales de ilustración y animación con 
+              tecnología moderna, creando animaciones que no solo son visualmente impactantes, 
+              sino que también conectan emocionalmente con la audiencia a través de narrativas 
+              cuidadosamente diseñadas.
+            </p>
+
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-6">
+              {stats.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <div className="flex justify-center mb-2">
+                    <stat.icon className="w-8 h-8 text-yellow-400" />
+                  </div>
+                  <div className="text-3xl font-bold text-white mb-1">
+                    {stat.number}
+                  </div>
+                  <div className="text-gray-400 text-sm">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Content - Image */}
+          <div className="relative">
+            <div className="relative z-10">
+              <img 
+                src="/images/about/Camilo-Ayala.jpg" 
+                alt="Equipo Spiriwors" 
+                className="rounded-lg shadow-2xl w-full object-cover h-96"
+              />
+            </div>
+            {/* Decorative Elements */}
+            <div className="absolute -top-4 -left-4 w-full h-full bg-yellow-400/20 rounded-lg -z-10"></div>
+            <div className="absolute -bottom-4 -right-4 w-full h-full bg-blue-400/20 rounded-lg -z-20"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default About;
