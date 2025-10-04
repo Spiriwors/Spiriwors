@@ -141,7 +141,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
-          className="flex justify-center items-center"
+          className="flex justify-center items-center mb-20"
         >
           <motion.div
             whileHover={{ scale: SCALE.hoverMd }}
@@ -156,15 +156,15 @@ const Hero = () => {
             </Button>
           </motion.div>
         </motion.div>
+      </motion.div>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <ArrowDown className="w-6 h-6 text-yellow-400" />
-        </motion.div>
+      {/* Scroll Indicator - Outside content div */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+      >
+        <ArrowDown className="w-6 h-6 text-yellow-400" />
       </motion.div>
     </section>
   );
