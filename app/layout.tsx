@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: 'Spiriwors - Empresa de Animación | Stop-Motion & Animación 2D',
   description: 'Spiriwors es una empresa especializada en animación stop-motion y 2D. Creamos experiencias visuales únicas que conectan marcas con audiencias. Bogotá, Colombia.',
   keywords: 'animación, stop-motion, animación 2D, empresa animación, Spiriwors, Colombia, videos comerciales, producción visual',
+  icons: {
+    icon: '/assets/logoSW.ico',
+  },
   openGraph: {
     title: 'Spiriwors - Empresa de Animación',
     description: 'Especialistas en animación stop-motion y 2D. Convirtiendo ideas en experiencias visuales únicas.',
