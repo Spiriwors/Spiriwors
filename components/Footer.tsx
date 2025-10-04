@@ -16,9 +16,9 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Instagram, url: '#', label: 'Instagram', username: '@spiriwors' },
-    { icon: Linkedin, url: '#', label: 'LinkedIn', username: 'Spiriwors' },
-    { icon: Youtube, url: '#', label: 'YouTube', username: 'Spiriwors Studio' },
+    { icon: Instagram, url: 'https://instagram.com/spiriwors', label: 'Instagram', username: '@spiriwors' },
+    { icon: Linkedin, url: 'https://linkedin.com/company/spiriwors', label: 'LinkedIn', username: 'Spiriwors' },
+    { icon: Youtube, url: 'https://youtube.com/@spiriwors', label: 'YouTube', username: 'Spiriwors Studio' },
     { icon: Mail, url: 'mailto:hola@spiriwors.com', label: 'Email', username: 'hola@spiriwors.com' }
   ];
 
@@ -74,7 +74,17 @@ const Footer = () => {
                 <motion.a
                   key={index}
                   href={social.url}
+                  target={social.url.startsWith('http') ? '_blank' : undefined}
+                  rel={social.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  onClick={(e) => {
+                    if (social.url.startsWith('http')) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      window.open(social.url, '_blank');
+                    }
+                  }}
                   className="flex items-center gap-3 text-gray-400 hover:text-yellow-400 transition-colors duration-200 group"
+                  aria-label={social.label}
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.2 }}
                 >

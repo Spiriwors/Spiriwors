@@ -42,6 +42,7 @@ const Contact = () => {
     "idle" | "success" | "error"
   >("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [messageLength, setMessageLength] = useState(0);
 
   const {
     register,
@@ -124,9 +125,9 @@ const Contact = () => {
   ];
 
   const socialLinks = [
-    { icon: Instagram, url: "#", label: "@spiriwors" },
-    { icon: Linkedin, url: "#", label: "Spiriwors" },
-    { icon: Youtube, url: "#", label: "Spiriwors Studio" },
+    { icon: Instagram, url: "https://instagram.com/spiriwors", label: "@spiriwors" },
+    { icon: Linkedin, url: "https://linkedin.com/company/spiriwors", label: "Spiriwors" },
+    { icon: Youtube, url: "https://youtube.com/@spiriwors", label: "Spiriwors Studio" },
   ];
 
   return (
@@ -162,7 +163,8 @@ const Contact = () => {
                       type="text"
                       id="name"
                       {...register("name")}
-                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200"
+                      disabled={isSubmitting}
+                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       placeholder="Tu nombre completo"
                       aria-invalid={errors.name ? "true" : "false"}
                       aria-describedby={errors.name ? "name-error" : undefined}
@@ -181,7 +183,8 @@ const Contact = () => {
                       type="email"
                       id="email"
                       {...register("email")}
-                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200"
+                      disabled={isSubmitting}
+                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       placeholder="tu@email.com"
                       aria-invalid={errors.email ? "true" : "false"}
                       aria-describedby={errors.email ? "email-error" : undefined}
@@ -206,7 +209,8 @@ const Contact = () => {
                       type="text"
                       id="company"
                       {...register("company")}
-                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200"
+                      disabled={isSubmitting}
+                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       placeholder="Nombre de tu empresa"
                     />
                   </div>
@@ -217,8 +221,8 @@ const Contact = () => {
                     >
                       Presupuesto
                     </label>
-                    <Select onValueChange={(value) => register("budget").onChange({ target: { name: "budget", value } })}>
-                      <SelectTrigger className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200">
+                    <Select onValueChange={(value) => register("budget").onChange({ target: { name: "budget", value } })} disabled={isSubmitting}>
+                      <SelectTrigger className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
                         <SelectValue placeholder="Selecciona un rango" />
                       </SelectTrigger>
                       <SelectContent>
@@ -235,9 +239,9 @@ const Contact = () => {
                   <label htmlFor="project" className="block text-gray-300 mb-2">
                     Tipo de Proyecto *
                   </label>
-                  <Select onValueChange={(value) => register("project").onChange({ target: { name: "project", value } })}>
+                  <Select onValueChange={(value) => register("project").onChange({ target: { name: "project", value } })} disabled={isSubmitting}>
                     <SelectTrigger
-                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200"
+                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       aria-invalid={errors.project ? "true" : "false"}
                       aria-describedby={errors.project ? "project-error" : undefined}
                     >
@@ -260,17 +264,26 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-gray-300 mb-2">
-                    Mensaje *
-                  </label>
+                  <div className="flex justify-between items-center mb-2">
+                    <label htmlFor="message" className="block text-gray-300">
+                      Mensaje *
+                    </label>
+                    <span className={`text-sm ${messageLength < 10 ? 'text-gray-500' : messageLength > 450 ? 'text-yellow-400' : 'text-gray-400'}`}>
+                      {messageLength}/500
+                    </span>
+                  </div>
                   <Textarea
                     id="message"
-                    {...register("message")}
+                    {...register("message", {
+                      onChange: (e) => setMessageLength(e.target.value.length)
+                    })}
+                    disabled={isSubmitting}
                     rows={6}
-                    className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200"
+                    maxLength={500}
+                    className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Cuéntame sobre tu proyecto, objetivos, timeline y cualquier detalle relevante..."
                     aria-invalid={errors.message ? "true" : "false"}
-                    aria-describedby={errors.message ? "message-error" : undefined}
+                    aria-describedby={errors.message ? "message-error message-counter" : "message-counter"}
                   />
                   {errors.message && (
                     <p id="message-error" className="text-red-400 text-sm mt-1" role="alert">
@@ -323,7 +336,11 @@ const Contact = () => {
                   >
                     {isSubmitting ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                        <motion.div
+                          className="w-5 h-5 border-2 border-black border-t-transparent rounded-full"
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                        />
                         Enviando...
                       </>
                     ) : (
@@ -348,10 +365,19 @@ const Contact = () => {
 
                 <div className="space-y-6">
                   {contactInfo.map((info, index) => (
-                    <div key={index} className="flex items-center">
-                      <div className="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center mr-4">
+                    <motion.div
+                      key={index}
+                      className="flex items-center"
+                      whileHover={{ x: 5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <motion.div
+                        className="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center mr-4"
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ duration: 0.2 }}
+                      >
                         <info.icon className="w-6 h-6 text-black" />
-                      </div>
+                      </motion.div>
                       <div>
                         <h4 className="text-white font-semibold">
                           {info.title}
@@ -363,7 +389,7 @@ const Contact = () => {
                           {info.value}
                         </a>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
@@ -378,8 +404,15 @@ const Contact = () => {
                     <a
                       key={index}
                       href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(social.url, '_blank');
+                      }}
                       className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-all duration-300 transform hover:scale-110"
                       title={social.label}
+                      aria-label={social.label}
                     >
                       <social.icon className="w-6 h-6" />
                     </a>
