@@ -1,9 +1,72 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Award, Users, Clock, Star } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { ScrollReveal } from '@/components/animations/ScrollReveal';
+import { SPRING } from '@/lib/animation-tokens';
+
+// Counter animation hook
+const useCounter = (end: number, duration: number = 2, shouldStart: boolean = false) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!shouldStart) return;
+
+    let startTime: number | null = null;
+    const startValue = 0;
+
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / (duration * 1000), 1);
+
+      setCount(Math.floor(progress * (end - startValue) + startValue));
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [end, duration, shouldStart]);
+
+  return count;
+};
+
+const StatCounter = ({ icon: Icon, number, label, delay }: any) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  // Extract numeric value for counter
+  const numericValue = parseInt(number.replace(/\D/g, '')) || 0;
+  const suffix = number.replace(/\d/g, '');
+  const count = useCounter(numericValue, 2, isInView);
+
+  return (
+    <ScrollReveal direction="scale" delay={delay}>
+      <motion.div
+        ref={ref}
+        className="text-center"
+        whileHover={{ scale: 1.1 }}
+        transition={SPRING.default}
+      >
+        <motion.div
+          className="flex justify-center mb-2"
+          whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.2 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Icon className="w-8 h-8 text-yellow-400" />
+        </motion.div>
+        <div className="text-3xl font-bold text-white mb-1">
+          {count}{suffix}
+        </div>
+        <div className="text-gray-400 text-sm">
+          {label}
+        </div>
+      </motion.div>
+    </ScrollReveal>
+  );
+};
 
 const About = () => {
   const stats = [
@@ -55,23 +118,13 @@ const About = () => {
             {/* Stats */}
             <div className="grid grid-cols-2 gap-6">
               {stats.map((stat, index) => (
-                <ScrollReveal key={index} direction="scale" delay={0.6 + index * 0.1}>
-                  <motion.div
-                    className="text-center"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <div className="flex justify-center mb-2">
-                      <stat.icon className="w-8 h-8 text-yellow-400" />
-                    </div>
-                    <div className="text-3xl font-bold text-white mb-1">
-                      {stat.number}
-                    </div>
-                    <div className="text-gray-400 text-sm">
-                      {stat.label}
-                    </div>
-                  </motion.div>
-                </ScrollReveal>
+                <StatCounter
+                  key={index}
+                  icon={stat.icon}
+                  number={stat.number}
+                  label={stat.label}
+                  delay={0.6 + index * 0.1}
+                />
               ))}
             </div>
           </div>
