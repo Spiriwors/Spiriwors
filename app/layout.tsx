@@ -15,6 +15,7 @@ const amaticSC = Amatic_SC({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://spiriwors.com'),
   title: 'Spiriwors - Empresa de Animación | Stop-Motion & Animación 2D',
   description: 'Spiriwors es una empresa especializada en animación stop-motion y 2D. Creamos experiencias visuales únicas que conectan marcas con audiencias. Bogotá, Colombia.',
   keywords: 'animación, stop-motion, animación 2D, empresa animación, Spiriwors, Colombia, videos comerciales, producción visual',
