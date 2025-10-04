@@ -20,6 +20,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { SCALE } from "@/lib/animation-tokens";
 
@@ -78,11 +79,14 @@ const Contact = () => {
       if (response.ok) {
         setSubmitStatus("success");
         reset();
+        // Auto-dismiss success message after 5 seconds
+        setTimeout(() => {
+          setSubmitStatus("idle");
+        }, 5000);
       } else {
         throw new Error(result.error || "Error al enviar el mensaje");
       }
     } catch (error) {
-      console.log(error);
       setSubmitStatus("error");
       setErrorMessage(
         "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo o contáctame directamente por email."
@@ -158,11 +162,13 @@ const Contact = () => {
                       type="text"
                       id="name"
                       {...register("name")}
-                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400"
+                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200"
                       placeholder="Tu nombre completo"
+                      aria-invalid={errors.name ? "true" : "false"}
+                      aria-describedby={errors.name ? "name-error" : undefined}
                     />
                     {errors.name && (
-                      <p className="text-red-400 text-sm mt-1">
+                      <p id="name-error" className="text-red-400 text-sm mt-1" role="alert">
                         {errors.name.message}
                       </p>
                     )}
@@ -175,11 +181,13 @@ const Contact = () => {
                       type="email"
                       id="email"
                       {...register("email")}
-                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400"
+                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200"
                       placeholder="tu@email.com"
+                      aria-invalid={errors.email ? "true" : "false"}
+                      aria-describedby={errors.email ? "email-error" : undefined}
                     />
                     {errors.email && (
-                      <p className="text-red-400 text-sm mt-1">
+                      <p id="email-error" className="text-red-400 text-sm mt-1" role="alert">
                         {errors.email.message}
                       </p>
                     )}
@@ -198,7 +206,7 @@ const Contact = () => {
                       type="text"
                       id="company"
                       {...register("company")}
-                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400"
+                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200"
                       placeholder="Nombre de tu empresa"
                     />
                   </div>
@@ -209,17 +217,17 @@ const Contact = () => {
                     >
                       Presupuesto
                     </label>
-                    <select
-                      id="budget"
-                      {...register("budget")}
-                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 rounded-md p-2"
-                    >
-                      <option value="">Selecciona un rango</option>
-                      <option value="1000-5000">$1,000 - $5,000</option>
-                      <option value="5000-10000">$5,000 - $10,000</option>
-                      <option value="10000-25000">$10,000 - $25,000</option>
-                      <option value="25000+">$25,000+</option>
-                    </select>
+                    <Select onValueChange={(value) => register("budget").onChange({ target: { name: "budget", value } })}>
+                      <SelectTrigger className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200">
+                        <SelectValue placeholder="Selecciona un rango" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1000-5000">$1,000 - $5,000</SelectItem>
+                        <SelectItem value="5000-10000">$5,000 - $10,000</SelectItem>
+                        <SelectItem value="10000-25000">$10,000 - $25,000</SelectItem>
+                        <SelectItem value="25000+">$25,000+</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
@@ -227,21 +235,25 @@ const Contact = () => {
                   <label htmlFor="project" className="block text-gray-300 mb-2">
                     Tipo de Proyecto *
                   </label>
-                  <select
-                    id="project"
-                    {...register("project")}
-                    className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 rounded-md p-2"
-                  >
-                    <option value="">Selecciona el tipo de proyecto</option>
-                    <option value="stop-motion">Animación Stop-Motion</option>
-                    <option value="2d-animation">Animación 2D</option>
-                    <option value="commercial">Video Comercial</option>
-                    <option value="music-video">Video Musical</option>
-                    <option value="short-film">Cortometraje</option>
-                    <option value="other">Otro</option>
-                  </select>
+                  <Select onValueChange={(value) => register("project").onChange({ target: { name: "project", value } })}>
+                    <SelectTrigger
+                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200"
+                      aria-invalid={errors.project ? "true" : "false"}
+                      aria-describedby={errors.project ? "project-error" : undefined}
+                    >
+                      <SelectValue placeholder="Selecciona el tipo de proyecto" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="stop-motion">Animación Stop-Motion</SelectItem>
+                      <SelectItem value="2d-animation">Animación 2D</SelectItem>
+                      <SelectItem value="commercial">Video Comercial</SelectItem>
+                      <SelectItem value="music-video">Video Musical</SelectItem>
+                      <SelectItem value="short-film">Cortometraje</SelectItem>
+                      <SelectItem value="other">Otro</SelectItem>
+                    </SelectContent>
+                  </Select>
                   {errors.project && (
-                    <p className="text-red-400 text-sm mt-1">
+                    <p id="project-error" className="text-red-400 text-sm mt-1" role="alert">
                       {errors.project.message}
                     </p>
                   )}
@@ -255,11 +267,13 @@ const Contact = () => {
                     id="message"
                     {...register("message")}
                     rows={6}
-                    className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400"
+                    className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200"
                     placeholder="Cuéntame sobre tu proyecto, objetivos, timeline y cualquier detalle relevante..."
+                    aria-invalid={errors.message ? "true" : "false"}
+                    aria-describedby={errors.message ? "message-error" : undefined}
                   />
                   {errors.message && (
-                    <p className="text-red-400 text-sm mt-1">
+                    <p id="message-error" className="text-red-400 text-sm mt-1" role="alert">
                       {errors.message.message}
                     </p>
                   )}
@@ -267,19 +281,35 @@ const Contact = () => {
 
                 {/* Mensajes de estado */}
                 {submitStatus === "success" && (
-                  <div className="bg-green-900 border border-green-700 text-green-300 px-4 py-3 rounded-lg flex items-center gap-2">
-                    <CheckCircle className="w-5 h-5" />
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-green-900 border border-green-700 text-green-300 px-4 py-3 rounded-lg flex items-center gap-2"
+                    role="alert"
+                    aria-live="polite"
+                  >
+                    <CheckCircle className="w-5 h-5" aria-hidden="true" />
                     <span>
                       ¡Mensaje enviado exitosamente! Te contactaré pronto.
                     </span>
-                  </div>
+                  </motion.div>
                 )}
 
                 {submitStatus === "error" && (
-                  <div className="bg-red-900 border border-red-700 text-red-300 px-4 py-3 rounded-lg flex items-center gap-2">
-                    <AlertCircle className="w-5 h-5" />
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-red-900 border border-red-700 text-red-300 px-4 py-3 rounded-lg flex items-center gap-2"
+                    role="alert"
+                    aria-live="assertive"
+                  >
+                    <AlertCircle className="w-5 h-5" aria-hidden="true" />
                     <span>{errorMessage}</span>
-                  </div>
+                  </motion.div>
                 )}
 
                 <motion.div
