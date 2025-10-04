@@ -2,6 +2,9 @@
 
 import React from 'react';
 import { Film, Palette, Video, Users, Clock, Star } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ScrollReveal } from '@/components/animations/ScrollReveal';
+import { SPRING, DURATION, DELAY } from '@/lib/animation-tokens';
 
 const Services = () => {
   const services = [
@@ -36,45 +39,60 @@ const Services = () => {
     <section id="services" className="py-20 bg-gray-800">
       <div className="container mx-auto px-6">
         {/* Services Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 amatic-sc-bold text-white">
-            Servicios
-          </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Ofrecemos servicios completos de animación para hacer realidad tu visión creativa
-          </p>
-        </div>
+        <ScrollReveal direction="up">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 amatic-sc-bold text-white">
+              Servicios
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Ofrecemos servicios completos de animación para hacer realidad tu visión creativa
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Services Grid */}
         <div className="grid lg:grid-cols-3 gap-8 mb-20">
           {services.map((service, index) => (
-            <div 
-              key={index} 
-              className="bg-gray-900 p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-            >
-              <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 bg-yellow-400 rounded-lg flex items-center justify-center">
-                  <service.icon className="w-8 h-8 text-black" />
-                </div>
-              </div>
-              
-              <h3 className="text-2xl font-bold text-white text-center mb-4">
-                {service.title}
-              </h3>
-              
-              <p className="text-gray-300 text-center mb-6 leading-relaxed">
-                {service.description}
-              </p>
-              
-              <ul className="space-y-2">
-                {service.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center text-gray-300">
-                    <Star className="w-4 h-4 text-yellow-400 mr-3 flex-shrink-0" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <ScrollReveal key={index} direction="up" delay={index * DELAY.md}>
+              <motion.div
+                className="bg-gray-900 p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 will-change-transform"
+                whileHover={{ y: -10, scale: 1.02 }}
+                transition={SPRING.default}
+              >
+                <motion.div
+                  className="flex justify-center mb-6"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: DURATION.fast }}
+                >
+                  <div className="w-16 h-16 bg-yellow-400 rounded-lg flex items-center justify-center">
+                    <service.icon className="w-8 h-8 text-black" />
+                  </div>
+                </motion.div>
+
+                <h3 className="text-2xl font-bold text-white text-center mb-4">
+                  {service.title}
+                </h3>
+
+                <p className="text-gray-300 text-center mb-6 leading-relaxed">
+                  {service.description}
+                </p>
+
+                <ul className="space-y-2">
+                  {service.features.map((feature, featureIndex) => (
+                    <motion.li
+                      key={featureIndex}
+                      className="flex items-center text-gray-300"
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: featureIndex * 0.1 }}
+                    >
+                      <Star className="w-4 h-4 text-yellow-400 mr-3 flex-shrink-0" />
+                      {feature}
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+            </ScrollReveal>
           ))}
         </div>
 
@@ -117,20 +135,12 @@ const Services = () => {
           <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
             Conversemos sobre tu idea y cómo podemos ayudarte a llevarla al siguiente nivel
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-yellow-400 text-black hover:bg-yellow-500 px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
-            >
-              Solicitar Cotización
-            </button>
-            <button 
-              onClick={() => document.querySelector('#reel')?.scrollIntoView({ behavior: 'smooth' })}
-              className="border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black px-8 py-3 rounded-lg font-semibold transition-all duration-300"
-            >
-              Ver Mi Trabajo
-            </button>
-          </div>
+          <button
+            onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
+            className="bg-yellow-400 text-black hover:bg-yellow-500 px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+          >
+            Solicitar Cotización
+          </button>
         </div>
       </div>
     </section>

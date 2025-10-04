@@ -1,0 +1,12 @@
+/* Custom Animations for Spiriwors */
+
+/* Only keeping animations actually used in the codebase */
+
+/* Custom Cursor Hide Default */
+.custom-cursor-active {
+  cursor: none;
+}
+
+.custom-cursor-active * {
+  cursor: none;
+}

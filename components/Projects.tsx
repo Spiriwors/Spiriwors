@@ -2,7 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { ExternalLink, Play, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { ScrollReveal } from '@/components/animations/ScrollReveal';
+import { SPRING, SCALE, DURATION, DELAY } from '@/lib/animation-tokens';
 
 const Projects = () => {
   const [filter, setFilter] = useState('all');
@@ -152,14 +155,16 @@ const Projects = () => {
   return (
     <section id="projects" className="py-20 bg-gray-700">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 amatic-sc-bold text-white">
-            Trabajo
-          </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Una selección de nuestros trabajos más destacados en animación stop-motion y 2D
-          </p>
-        </div>
+        <ScrollReveal direction="up">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 amatic-sc-bold text-white">
+              Trabajo
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Una selección de nuestros trabajos más destacados en animación stop-motion y 2D
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
@@ -181,64 +186,90 @@ const Projects = () => {
 
         {/* Videos Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredVideos.map((video) => (
-            <div 
-              key={video.id} 
-              className="group bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-            >
-              <div className="relative overflow-hidden">
-                <div className="w-full h-48 bg-gradient-to-br from-yellow-400/20 to-blue-400/20 flex items-center justify-center">
-                  <div className="text-center">
-                    <Play className="w-16 h-16 text-yellow-400 mx-auto mb-2" />
-                    <p className="text-white text-sm">Click para reproducir</p>
+          {filteredVideos.map((video, index) => (
+            <ScrollReveal key={video.id} direction="up" delay={index * DELAY.sm}>
+              <motion.div
+                className="group bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 will-change-transform"
+                whileHover={{ y: -8, scale: SCALE.hover }}
+                transition={SPRING.default}
+              >
+                <div className="relative overflow-hidden">
+                  <motion.div
+                    className="w-full h-48 bg-gradient-to-br from-yellow-400/20 to-blue-400/20 flex items-center justify-center will-change-transform"
+                    whileHover={{ scale: SCALE.hoverLg }}
+                    transition={{ duration: DURATION.base }}
+                  >
+                    <div className="text-center">
+                      <motion.div
+                        animate={{ scale: [1, 1.1, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        <Play className="w-16 h-16 text-yellow-400 mx-auto mb-2" />
+                      </motion.div>
+                      <p className="text-white text-sm">Click para reproducir</p>
+                    </div>
+                  </motion.div>
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <motion.div
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      whileHover={{ scale: 1, opacity: 1 }}
+                    >
+                      <Button
+                        onClick={() => handleVideoClick(video.videoPath)}
+                        className="bg-yellow-400 text-black hover:bg-yellow-500"
+                      >
+                        <Play className="w-4 h-4 mr-2" />
+                        Reproducir Video
+                      </Button>
+                    </motion.div>
                   </div>
                 </div>
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <Button 
-                    onClick={() => handleVideoClick(video.videoPath)}
-                    className="bg-yellow-400 text-black hover:bg-yellow-500"
-                  >
-                    <Play className="w-4 h-4 mr-2" />
-                    Reproducir Video
-                  </Button>
+
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="text-xl font-bold text-white group-hover:text-yellow-400 transition-colors duration-300">
+                      {video.title}
+                    </h3>
+                    <span className="text-yellow-400 text-sm font-semibold">
+                      {video.year}
+                    </span>
+                  </div>
+
+                  <p className="text-gray-300 mb-4">
+                    {video.description}
+                  </p>
+
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs bg-yellow-400/20 text-yellow-400 px-2 py-1 rounded-full">
+                      Video
+                    </span>
+                    <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-yellow-400 transition-colors duration-300" />
+                  </div>
                 </div>
-              </div>
-              
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-bold text-white group-hover:text-yellow-400 transition-colors duration-300">
-                    {video.title}
-                  </h3>
-                  <span className="text-yellow-400 text-sm font-semibold">
-                    {video.year}
-                  </span>
-                </div>
-                
-                <p className="text-gray-300 mb-4">
-                  {video.description}
-                </p>
-                
-                <div className="flex justify-between items-center">
-                  <span className="text-xs bg-yellow-400/20 text-yellow-400 px-2 py-1 rounded-full">
-                    Video
-                  </span>
-                  <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-yellow-400 transition-colors duration-300" />
-                </div>
-              </div>
-            </div>
+              </motion.div>
+            </ScrollReveal>
           ))}
         </div>
 
-        {/* Video Modal - Corregido */}
-        {selectedVideo && (
-          <div 
-            className="fixed inset-0 bg-black/95 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-            onClick={closeVideoModal}
-          >
-            <div 
-              className="relative w-full max-w-4xl bg-gray-900 rounded-xl shadow-2xl overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
+        {/* Video Modal - Animated */}
+        <AnimatePresence>
+          {selectedVideo && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: DURATION.base }}
+              className="fixed inset-0 bg-black/95 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+              onClick={closeVideoModal}
             >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                transition={{ duration: DURATION.medium, ease: 'easeOut' }}
+                className="relative w-full max-w-4xl bg-gray-900 rounded-xl shadow-2xl overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
               {/* Header del Modal */}
               <div className="flex justify-between items-center p-4 bg-gray-800 border-b border-gray-700">
                 <h3 className="text-lg font-semibold text-white">
@@ -321,9 +352,10 @@ const Projects = () => {
                   </div>
                 )}
               </div>
-            </div>
-          </div>
-        )}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

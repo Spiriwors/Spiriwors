@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './animations.css';
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -100,5 +102,33 @@
     font-family: var(--font-amatic-sc), sans-serif;
     font-weight: 700;
     font-style: normal;
+  }
+}
+
+/* Performance optimizations for animations */
+@layer utilities {
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* will-change for GPU-accelerated animations */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .will-change-opacity {
+    will-change: opacity;
+  }
+
+  .will-change-transform-opacity {
+    will-change: transform, opacity;
   }
 }
