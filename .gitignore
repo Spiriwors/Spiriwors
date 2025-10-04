@@ -12,6 +12,10 @@
 /.next/
 /out/
 
+# AI
+/.claude/
+/.bolt/
+
 # production
 /build
 
