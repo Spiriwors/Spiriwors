@@ -29,8 +29,13 @@ export const metadata: Metadata = {
   applicationName: "Spiriwors",
   icons: {
     icon: "/assets/logoSW.ico",
-    apple: "/assets/logoSW.png",
+    apple: [
+      { url: "/assets/logoSW.png", sizes: "180x180", type: "image/png" },
+      { url: "/assets/logoSW.png", sizes: "152x152", type: "image/png" },
+      { url: "/assets/logoSW.png", sizes: "120x120", type: "image/png" },
+    ],
   },
+  manifest: "/manifest.json",
   viewport: {
     width: "device-width",
     initialScale: 1,
@@ -51,8 +56,12 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: "Spiriwors - Empresa de Animación Stop-Motion y 2D",
+        type: "image/png",
       },
     ],
+    countryName: "Colombia",
+    emails: ["hola@spiriwors.com"],
+    phoneNumbers: ["+57-300-123-4567"],
   },
   twitter: {
     card: "summary_large_image",
@@ -64,7 +73,20 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://spiriwors.com",
+    languages: {
+      "es-CO": "https://spiriwors.com",
+      "es": "https://spiriwors.com",
+    },
   },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
+    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
+    other: {
+      "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION,
+    },
+  },
+  category: "business",
+  classification: "Animation Studio",
   robots: {
     index: true,
     follow: true,
