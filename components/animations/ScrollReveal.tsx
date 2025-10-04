@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { DURATION, EASING, TRANSLATE } from '@/lib/animation-tokens';
 
 interface ScrollRevealProps {
   children: React.ReactNode;
@@ -16,19 +17,19 @@ interface ScrollRevealProps {
 const getVariants = (direction: string): Variants => {
   const variants: Record<string, Variants> = {
     up: {
-      hidden: { opacity: 0, y: 75 },
+      hidden: { opacity: 0, y: TRANSLATE.xl },
       visible: { opacity: 1, y: 0 }
     },
     down: {
-      hidden: { opacity: 0, y: -75 },
+      hidden: { opacity: 0, y: -TRANSLATE.xl },
       visible: { opacity: 1, y: 0 }
     },
     left: {
-      hidden: { opacity: 0, x: 75 },
+      hidden: { opacity: 0, x: TRANSLATE.xl },
       visible: { opacity: 1, x: 0 }
     },
     right: {
-      hidden: { opacity: 0, x: -75 },
+      hidden: { opacity: 0, x: -TRANSLATE.xl },
       visible: { opacity: 1, x: 0 }
     },
     scale: {
@@ -48,7 +49,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   children,
   direction = 'up',
   delay = 0,
-  duration = 0.6,
+  duration = DURATION.medium,
   once = true,
   className = ''
 }) => {
@@ -63,9 +64,9 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
       transition={{
         duration,
         delay,
-        ease: [0.25, 0.4, 0.25, 1]
+        ease: EASING.spiriwors
       }}
-      className={className}
+      className={`will-change-transform-opacity ${className}`}
     >
       {children}
     </motion.div>

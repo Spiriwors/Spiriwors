@@ -5,6 +5,7 @@ import { ArrowDown, Play } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { FloatingParticles } from '@/components/animations/FloatingParticles';
+import { DURATION, DELAY, SCALE, EASING } from '@/lib/animation-tokens';
 
 const Hero = () => {
   const ref = useRef<HTMLElement>(null);
@@ -86,8 +87,8 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-6"
+          transition={{ duration: DURATION.slow, delay: DELAY.md }}
+          className="mb-6 will-change-transform-opacity"
         >
           <h1 className="text-5xl md:text-7xl font-bold mb-4 leading-tight amatic-sc-bold">
             <motion.span
@@ -131,8 +132,9 @@ const Hero = () => {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: SCALE.hoverMd }}
+            whileTap={{ scale: SCALE.down }}
+            className="will-change-transform"
           >
             <Button
               onClick={scrollToProjects}
@@ -142,8 +144,9 @@ const Hero = () => {
             </Button>
           </motion.div>
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: SCALE.hoverMd }}
+            whileTap={{ scale: SCALE.down }}
+            className="will-change-transform"
           >
             <Button
               onClick={scrollToReel}

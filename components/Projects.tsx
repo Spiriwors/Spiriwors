@@ -5,6 +5,7 @@ import { ExternalLink, Play, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ScrollReveal } from '@/components/animations/ScrollReveal';
+import { SPRING, SCALE, DURATION, DELAY } from '@/lib/animation-tokens';
 
 const Projects = () => {
   const [filter, setFilter] = useState('all');
@@ -186,17 +187,17 @@ const Projects = () => {
         {/* Videos Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredVideos.map((video, index) => (
-            <ScrollReveal key={video.id} direction="up" delay={index * 0.1}>
+            <ScrollReveal key={video.id} direction="up" delay={index * DELAY.sm}>
               <motion.div
-                className="group bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                className="group bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 will-change-transform"
+                whileHover={{ y: -8, scale: SCALE.hover }}
+                transition={SPRING.default}
               >
                 <div className="relative overflow-hidden">
                   <motion.div
-                    className="w-full h-48 bg-gradient-to-br from-yellow-400/20 to-blue-400/20 flex items-center justify-center"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
+                    className="w-full h-48 bg-gradient-to-br from-yellow-400/20 to-blue-400/20 flex items-center justify-center will-change-transform"
+                    whileHover={{ scale: SCALE.hoverLg }}
+                    transition={{ duration: DURATION.base }}
                   >
                     <div className="text-center">
                       <motion.div

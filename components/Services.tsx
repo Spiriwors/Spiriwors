@@ -4,6 +4,7 @@ import React from 'react';
 import { Film, Palette, Video, Users, Clock, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ScrollReveal } from '@/components/animations/ScrollReveal';
+import { SPRING, DURATION, DELAY } from '@/lib/animation-tokens';
 
 const Services = () => {
   const services = [
@@ -52,16 +53,16 @@ const Services = () => {
         {/* Services Grid */}
         <div className="grid lg:grid-cols-3 gap-8 mb-20">
           {services.map((service, index) => (
-            <ScrollReveal key={index} direction="up" delay={index * 0.2}>
+            <ScrollReveal key={index} direction="up" delay={index * DELAY.md}>
               <motion.div
-                className="bg-gray-900 p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300"
+                className="bg-gray-900 p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 will-change-transform"
                 whileHover={{ y: -10, scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                transition={SPRING.default}
               >
                 <motion.div
-                  className="flex justify-center mb-6"
+                  className="flex justify-center mb-6 will-change-transform"
                   whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
+                  transition={{ duration: DURATION.medium }}
                 >
                   <div className="w-16 h-16 bg-yellow-400 rounded-lg flex items-center justify-center">
                     <service.icon className="w-8 h-8 text-black" />
