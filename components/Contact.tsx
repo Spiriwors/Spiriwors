@@ -222,7 +222,10 @@ const Contact = () => {
                       Presupuesto
                     </label>
                     <Select onValueChange={(value) => register("budget").onChange({ target: { name: "budget", value } })} disabled={isSubmitting}>
-                      <SelectTrigger className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                      <SelectTrigger
+                        className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        aria-label="Seleccionar presupuesto"
+                      >
                         <SelectValue placeholder="Selecciona un rango" />
                       </SelectTrigger>
                       <SelectContent>
@@ -242,6 +245,7 @@ const Contact = () => {
                   <Select onValueChange={(value) => register("project").onChange({ target: { name: "project", value } })} disabled={isSubmitting}>
                     <SelectTrigger
                       className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      aria-label="Seleccionar tipo de proyecto"
                       aria-invalid={errors.project ? "true" : "false"}
                       aria-describedby={errors.project ? "project-error" : undefined}
                     >

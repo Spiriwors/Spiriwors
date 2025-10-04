@@ -88,27 +88,32 @@ const Carousel = () => {
             onClick={prevSlide}
             className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full"
             size="icon"
+            aria-label="Proyecto anterior"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-6 h-6" aria-hidden="true" />
           </Button>
-          
+
           <Button
             onClick={nextSlide}
             className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full"
             size="icon"
+            aria-label="Siguiente proyecto"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-6 h-6" aria-hidden="true" />
           </Button>
 
           {/* Indicators */}
-          <div className="flex justify-center space-x-2 mt-6">
-            {slides.map((_, index) => (
+          <div className="flex justify-center space-x-2 mt-6" role="tablist" aria-label="Indicadores de proyectos destacados">
+            {slides.map((slide, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   index === currentSlide ? 'bg-yellow-400' : 'bg-gray-500'
                 }`}
+                role="tab"
+                aria-selected={index === currentSlide}
+                aria-label={`Ir a ${slide.title}`}
               />
             ))}
           </div>
