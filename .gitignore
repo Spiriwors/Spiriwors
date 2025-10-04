@@ -38,3 +38,4 @@ next-env.d.ts
 # videos - use Git LFS for large video files
 # Uncomment the line below if you want to ignore all videos
  public/videos/**/*.{mov,mp4,avi,mkv,flv,wmv}
+.history/

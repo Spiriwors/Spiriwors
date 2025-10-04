@@ -1,33 +1,76 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Send, Mail, Phone, MapPin, Clock, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Send, Mail, Phone, MapPin, Clock, Instagram, Linkedin, Youtube, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
+// Esquema de validación con Zod
+const contactSchema = z.object({
+  name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
+  email: z.string().email('Por favor ingresa un email válido'),
+  company: z.string().optional(),
+  project: z.string().min(1, 'Por favor selecciona un tipo de proyecto'),
+  budget: z.string().optional(),
+  message: z.string().min(10, 'El mensaje debe tener al menos 10 caracteres'),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
+
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    project: '',
-    budget: '',
-    message: ''
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      company: '',
+      project: '',
+      budget: '',
+      message: '',
+    },
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const onSubmit = async (data: ContactFormData) => {
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Aquí implementarías el envío del formulario
-    alert('¡Gracias por tu mensaje! Te contactaré pronto.');
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        reset();
+      } else {
+        throw new Error(result.error || 'Error al enviar el mensaje');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setErrorMessage('Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo o contáctame directamente por email.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -82,7 +125,7 @@ const Contact = () => {
               Cuéntanos sobre tu proyecto
             </h3>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-gray-300 mb-2">
@@ -91,13 +134,13 @@ const Contact = () => {
                   <Input
                     type="text"
                     id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
+                    {...register('name')}
                     className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400"
                     placeholder="Tu nombre completo"
                   />
+                  {errors.name && (
+                    <p className="text-red-400 text-sm mt-1">{errors.name.message}</p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-gray-300 mb-2">
@@ -106,13 +149,13 @@ const Contact = () => {
                   <Input
                     type="email"
                     id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
+                    {...register('email')}
                     className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400"
                     placeholder="tu@email.com"
                   />
+                  {errors.email && (
+                    <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
+                  )}
                 </div>
               </div>
 
@@ -124,9 +167,7 @@ const Contact = () => {
                   <Input
                     type="text"
                     id="company"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
+                    {...register('company')}
                     className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400"
                     placeholder="Nombre de tu empresa"
                   />
@@ -137,9 +178,7 @@ const Contact = () => {
                   </label>
                   <select
                     id="budget"
-                    name="budget"
-                    value={formData.budget}
-                    onChange={handleChange}
+                    {...register('budget')}
                     className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 rounded-md p-2"
                   >
                     <option value="">Selecciona un rango</option>
@@ -157,10 +196,7 @@ const Contact = () => {
                 </label>
                 <select
                   id="project"
-                  name="project"
-                  value={formData.project}
-                  onChange={handleChange}
-                  required
+                  {...register('project')}
                   className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 rounded-md p-2"
                 >
                   <option value="">Selecciona el tipo de proyecto</option>
@@ -171,6 +207,9 @@ const Contact = () => {
                   <option value="short-film">Cortometraje</option>
                   <option value="other">Otro</option>
                 </select>
+                {errors.project && (
+                  <p className="text-red-400 text-sm mt-1">{errors.project.message}</p>
+                )}
               </div>
 
               <div>
@@ -179,22 +218,47 @@ const Contact = () => {
                 </label>
                 <Textarea
                   id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
+                  {...register('message')}
                   rows={6}
                   className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400"
                   placeholder="Cuéntame sobre tu proyecto, objetivos, timeline y cualquier detalle relevante..."
                 />
+                {errors.message && (
+                  <p className="text-red-400 text-sm mt-1">{errors.message.message}</p>
+                )}
               </div>
+
+              {/* Mensajes de estado */}
+              {submitStatus === 'success' && (
+                <div className="bg-green-900 border border-green-700 text-green-300 px-4 py-3 rounded-lg flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5" />
+                  <span>¡Mensaje enviado exitosamente! Te contactaré pronto.</span>
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="bg-red-900 border border-red-700 text-red-300 px-4 py-3 rounded-lg flex items-center gap-2">
+                  <AlertCircle className="w-5 h-5" />
+                  <span>{errorMessage}</span>
+                </div>
+              )}
 
               <Button
                 type="submit"
-                className="w-full bg-yellow-400 text-black hover:bg-yellow-500 py-3 text-lg font-semibold flex items-center justify-center gap-2"
+                disabled={isSubmitting}
+                className="w-full bg-yellow-400 text-black hover:bg-yellow-500 disabled:bg-gray-600 disabled:text-gray-400 py-3 text-lg font-semibold flex items-center justify-center gap-2"
               >
-                <Send className="w-5 h-5" />
-                Enviar Mensaje
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    Enviar Mensaje
+                  </>
+                )}
               </Button>
             </form>
           </div>
