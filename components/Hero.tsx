@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from 'react';
-import { ArrowDown } from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { FloatingParticles } from '@/components/animations/FloatingParticles';
-import { DURATION, DELAY, SCALE, EASING } from '@/lib/animation-tokens';
+import React, { useRef, useState, useEffect } from "react";
+import { ArrowDown } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { FloatingParticles } from "@/components/animations/FloatingParticles";
+import { DURATION, DELAY, SCALE, EASING } from "@/lib/animation-tokens";
 
 const Hero = () => {
   const ref = useRef<HTMLElement>(null);
@@ -13,12 +13,12 @@ const Hero = () => {
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start start', 'end start']
+    offset: ["start start", "end start"],
   });
 
   // Parallax effects
-  const y1 = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
-  const y2 = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const y2 = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.5, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
 
@@ -34,7 +34,7 @@ const Hero = () => {
   }, []);
 
   const scrollToProjects = () => {
-    document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
+    document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -44,10 +44,7 @@ const Hero = () => {
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Animated Background */}
-      <motion.div
-        className="absolute inset-0 z-0"
-        style={{ y: y1 }}
-      >
+      <motion.div className="absolute inset-0 z-0" style={{ y: y1 }}>
         <div className="w-full h-full bg-gradient-to-br from-gray-900 via-gray-800 to-black">
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
@@ -62,28 +59,36 @@ const Hero = () => {
         style={{ y: y2 }}
       >
         <motion.div
-          className="absolute top-1/4 left-1/4 w-64 h-64 bg-yellow-400/10 rounded-full blur-3xl will-change-transform"
-          animate={isInView ? {
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3]
-          } : {}}
+          className="absolute top-1/4 left-1/4 w-64 h-64 bg-yellow-400/10 rounded-full blur-lg will-change-transform"
+          animate={
+            isInView
+              ? {
+                  scale: [1, 1.2, 1],
+                  opacity: [0.3, 0.6, 0.3],
+                }
+              : {}
+          }
           transition={{
             duration: 4,
             repeat: Infinity,
-            ease: EASING.easeInOut
+            ease: EASING.easeInOut,
           }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl will-change-transform"
-          animate={isInView ? {
-            scale: [1, 1.3, 1],
-            opacity: [0.2, 0.5, 0.2]
-          } : {}}
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-lg will-change-transform"
+          animate={
+            isInView
+              ? {
+                  scale: [1, 1.3, 1],
+                  opacity: [0.2, 0.5, 0.2],
+                }
+              : {}
+          }
           transition={{
             duration: 5,
             repeat: Infinity,
             ease: EASING.easeInOut,
-            delay: 1
+            delay: 1,
           }}
         />
       </motion.div>
@@ -102,7 +107,7 @@ const Hero = () => {
               transition={{
                 duration: DURATION.slow,
                 delay: DELAY.md,
-                ease: EASING.spiriwors
+                ease: EASING.spiriwors,
               }}
             >
               SPIRI
@@ -114,7 +119,7 @@ const Hero = () => {
               transition={{
                 duration: DURATION.slow,
                 delay: DELAY.lg,
-                ease: EASING.spiriwors
+                ease: EASING.spiriwors,
               }}
             >
               WORS
@@ -132,7 +137,8 @@ const Hero = () => {
             Empresa de Animación
           </p>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Especialistas en <span className="text-yellow-400 font-semibold">Stop-Motion</span> y
+            Especialistas en{" "}
+            <span className="text-yellow-400 font-semibold">Stop-Motion</span> y
             <span className="text-yellow-400 font-semibold"> Animación 2D</span>
           </p>
         </motion.div>
