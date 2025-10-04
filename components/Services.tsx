@@ -60,9 +60,9 @@ const Services = () => {
                 transition={SPRING.default}
               >
                 <motion.div
-                  className="flex justify-center mb-6 will-change-transform"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: DURATION.medium }}
+                  className="flex justify-center mb-6"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: DURATION.fast }}
                 >
                   <div className="w-16 h-16 bg-yellow-400 rounded-lg flex items-center justify-center">
                     <service.icon className="w-8 h-8 text-black" />
@@ -135,20 +135,12 @@ const Services = () => {
           <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
             Conversemos sobre tu idea y cómo podemos ayudarte a llevarla al siguiente nivel
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-yellow-400 text-black hover:bg-yellow-500 px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
-            >
-              Solicitar Cotización
-            </button>
-            <button 
-              onClick={() => document.querySelector('#reel')?.scrollIntoView({ behavior: 'smooth' })}
-              className="border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black px-8 py-3 rounded-lg font-semibold transition-all duration-300"
-            >
-              Ver Mi Trabajo
-            </button>
-          </div>
+          <button
+            onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
+            className="bg-yellow-400 text-black hover:bg-yellow-500 px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+          >
+            Solicitar Cotización
+          </button>
         </div>
       </div>
     </section>

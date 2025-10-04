@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from 'react';
-import { ArrowDown, Play } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { FloatingParticles } from '@/components/animations/FloatingParticles';
@@ -35,10 +35,6 @@ const Hero = () => {
 
   const scrollToProjects = () => {
     document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const scrollToReel = () => {
-    document.querySelector('#reel')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -145,7 +141,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          className="flex justify-center items-center"
         >
           <motion.div
             whileHover={{ scale: SCALE.hoverMd }}
@@ -157,20 +153,6 @@ const Hero = () => {
               className="bg-yellow-400 text-black hover:bg-yellow-500 px-8 py-4 text-lg font-semibold transition-all duration-300"
             >
               Ver Proyectos
-            </Button>
-          </motion.div>
-          <motion.div
-            whileHover={{ scale: SCALE.hoverMd }}
-            whileTap={{ scale: SCALE.down }}
-            className="will-change-transform"
-          >
-            <Button
-              onClick={scrollToReel}
-              variant="outline"
-              className="border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black px-8 py-4 text-lg font-semibold transition-all duration-300 flex items-center gap-2"
-            >
-              <Play className="w-5 h-5" />
-              Ver Reel
             </Button>
           </motion.div>
         </motion.div>

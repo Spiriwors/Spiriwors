@@ -52,8 +52,8 @@ const StatCounter = ({ icon: Icon, number, label, delay }: any) => {
       >
         <motion.div
           className="flex justify-center mb-2"
-          whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.2 }}
-          transition={{ duration: 0.5 }}
+          whileHover={{ scale: 1.15, y: -2 }}
+          transition={{ duration: 0.3 }}
         >
           <Icon className="w-8 h-8 text-yellow-400" />
         </motion.div>

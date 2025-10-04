@@ -5,8 +5,6 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Projects from '@/components/Projects';
-import Carousel from '@/components/Carousel';
-import Reel from '@/components/Reel';
 import Services from '@/components/Services';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
@@ -17,10 +15,9 @@ export default function Home() {
     <main className="bg-gray-700 text-white overflow-x-hidden">
       <CustomCursor />
       <Navbar />
-      {/* Header / Intro with Reel at the top */}
+      {/* Header / Intro */}
       <Hero />
-      <Reel />
-      
+
       {/* Brief company description */}
       <section className="py-16 bg-gray-600">
         <div className="container mx-auto px-6 text-center">
@@ -39,8 +36,7 @@ export default function Home() {
       
       {/* Portfolio / Projects */}
       <Projects />
-      <Carousel />
-      
+
       {/* Additional sections */}
       <About />
       <Services />
