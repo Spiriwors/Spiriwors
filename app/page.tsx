@@ -10,10 +10,12 @@ import Reel from '@/components/Reel';
 import Services from '@/components/Services';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import { CustomCursor } from '@/components/animations/CustomCursor';
 
 export default function Home() {
   return (
     <main className="bg-gray-700 text-white overflow-x-hidden">
+      <CustomCursor />
       <Navbar />
       {/* Header / Intro with Reel at the top */}
       <Hero />

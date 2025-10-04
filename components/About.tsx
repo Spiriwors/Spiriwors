@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { Award, Users, Clock, Star } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ScrollReveal } from '@/components/animations/ScrollReveal';
 
 const About = () => {
   const stats = [
@@ -17,59 +19,105 @@ const About = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 amatic-sc-bold text-white">
-              Sobre Nosotros
-            </h2>
-            <p className="text-lg text-gray-300 mb-6 leading-relaxed">
-              Spiriwors es una empresa de animación fundada y dirigida por <strong className="text-yellow-400">Camilo Ayala</strong>, 
-              ilustrador y animador profesional con más de 5 años de experiencia en la industria. 
-              Camilo, como fundador y dueño de Spiriwors, ha desarrollado un enfoque único que combina 
-              sus habilidades como ilustrador con técnicas avanzadas de animación stop-motion y 2D.
-            </p>
-            <p className="text-lg text-gray-300 mb-6 leading-relaxed">
-              Bajo la dirección de Camilo, Spiriwors se especializa en crear experiencias visuales 
-              únicas que conectan marcas con audiencias. Su visión artística y experiencia técnica 
-              han llevado a la empresa a trabajar en proyectos diversos, desde comerciales hasta 
-              cortometrajes independientes, siempre manteniendo la calidad y creatividad como pilares fundamentales.
-            </p>
-            <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-              Nuestro enfoque combina las técnicas tradicionales de ilustración y animación con 
-              tecnología moderna, creando animaciones que no solo son visualmente impactantes, 
-              sino que también conectan emocionalmente con la audiencia a través de narrativas 
-              cuidadosamente diseñadas.
-            </p>
+            <ScrollReveal direction="right" delay={0.2}>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 amatic-sc-bold text-white">
+                Sobre Nosotros
+              </h2>
+            </ScrollReveal>
+
+            <ScrollReveal direction="right" delay={0.3}>
+              <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+                Spiriwors es una empresa de animación fundada y dirigida por <strong className="text-yellow-400">Camilo Ayala</strong>,
+                ilustrador y animador profesional con más de 5 años de experiencia en la industria.
+                Camilo, como fundador y dueño de Spiriwors, ha desarrollado un enfoque único que combina
+                sus habilidades como ilustrador con técnicas avanzadas de animación stop-motion y 2D.
+              </p>
+            </ScrollReveal>
+
+            <ScrollReveal direction="right" delay={0.4}>
+              <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+                Bajo la dirección de Camilo, Spiriwors se especializa en crear experiencias visuales
+                únicas que conectan marcas con audiencias. Su visión artística y experiencia técnica
+                han llevado a la empresa a trabajar en proyectos diversos, desde comerciales hasta
+                cortometrajes independientes, siempre manteniendo la calidad y creatividad como pilares fundamentales.
+              </p>
+            </ScrollReveal>
+
+            <ScrollReveal direction="right" delay={0.5}>
+              <p className="text-lg text-gray-300 mb-8 leading-relaxed">
+                Nuestro enfoque combina las técnicas tradicionales de ilustración y animación con
+                tecnología moderna, creando animaciones que no solo son visualmente impactantes,
+                sino que también conectan emocionalmente con la audiencia a través de narrativas
+                cuidadosamente diseñadas.
+              </p>
+            </ScrollReveal>
 
             {/* Stats */}
             <div className="grid grid-cols-2 gap-6">
               {stats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="flex justify-center mb-2">
-                    <stat.icon className="w-8 h-8 text-yellow-400" />
-                  </div>
-                  <div className="text-3xl font-bold text-white mb-1">
-                    {stat.number}
-                  </div>
-                  <div className="text-gray-400 text-sm">
-                    {stat.label}
-                  </div>
-                </div>
+                <ScrollReveal key={index} direction="scale" delay={0.6 + index * 0.1}>
+                  <motion.div
+                    className="text-center"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <div className="flex justify-center mb-2">
+                      <stat.icon className="w-8 h-8 text-yellow-400" />
+                    </div>
+                    <div className="text-3xl font-bold text-white mb-1">
+                      {stat.number}
+                    </div>
+                    <div className="text-gray-400 text-sm">
+                      {stat.label}
+                    </div>
+                  </motion.div>
+                </ScrollReveal>
               ))}
             </div>
           </div>
 
           {/* Right Content - Image */}
-          <div className="relative">
-            <div className="relative z-10">
-              <img 
-                src="/images/about/Camilo-Ayala.jpg" 
-                alt="Equipo Spiriwors" 
-                className="rounded-lg shadow-2xl w-full object-cover h-96"
+          <ScrollReveal direction="left" delay={0.3}>
+            <div className="relative">
+              <motion.div
+                className="relative z-10"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <img
+                  src="/images/about/Camilo-Ayala.jpg"
+                  alt="Equipo Spiriwors"
+                  className="rounded-lg shadow-2xl w-full object-cover h-96"
+                />
+              </motion.div>
+              {/* Decorative Elements */}
+              <motion.div
+                className="absolute -top-4 -left-4 w-full h-full bg-yellow-400/20 rounded-lg -z-10"
+                animate={{
+                  rotate: [0, 2, 0],
+                  scale: [1, 1.02, 1]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              <motion.div
+                className="absolute -bottom-4 -right-4 w-full h-full bg-blue-400/20 rounded-lg -z-20"
+                animate={{
+                  rotate: [0, -2, 0],
+                  scale: [1, 1.02, 1]
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.5
+                }}
               />
             </div>
-            {/* Decorative Elements */}
-            <div className="absolute -top-4 -left-4 w-full h-full bg-yellow-400/20 rounded-lg -z-10"></div>
-            <div className="absolute -bottom-4 -right-4 w-full h-full bg-blue-400/20 rounded-lg -z-20"></div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

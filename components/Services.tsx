@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { Film, Palette, Video, Users, Clock, Star } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ScrollReveal } from '@/components/animations/ScrollReveal';
 
 const Services = () => {
   const services = [
@@ -36,45 +38,60 @@ const Services = () => {
     <section id="services" className="py-20 bg-gray-800">
       <div className="container mx-auto px-6">
         {/* Services Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 amatic-sc-bold text-white">
-            Servicios
-          </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Ofrecemos servicios completos de animación para hacer realidad tu visión creativa
-          </p>
-        </div>
+        <ScrollReveal direction="up">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 amatic-sc-bold text-white">
+              Servicios
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Ofrecemos servicios completos de animación para hacer realidad tu visión creativa
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Services Grid */}
         <div className="grid lg:grid-cols-3 gap-8 mb-20">
           {services.map((service, index) => (
-            <div 
-              key={index} 
-              className="bg-gray-900 p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-            >
-              <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 bg-yellow-400 rounded-lg flex items-center justify-center">
-                  <service.icon className="w-8 h-8 text-black" />
-                </div>
-              </div>
-              
-              <h3 className="text-2xl font-bold text-white text-center mb-4">
-                {service.title}
-              </h3>
-              
-              <p className="text-gray-300 text-center mb-6 leading-relaxed">
-                {service.description}
-              </p>
-              
-              <ul className="space-y-2">
-                {service.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center text-gray-300">
-                    <Star className="w-4 h-4 text-yellow-400 mr-3 flex-shrink-0" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <ScrollReveal key={index} direction="up" delay={index * 0.2}>
+              <motion.div
+                className="bg-gray-900 p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300"
+                whileHover={{ y: -10, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <motion.div
+                  className="flex justify-center mb-6"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <div className="w-16 h-16 bg-yellow-400 rounded-lg flex items-center justify-center">
+                    <service.icon className="w-8 h-8 text-black" />
+                  </div>
+                </motion.div>
+
+                <h3 className="text-2xl font-bold text-white text-center mb-4">
+                  {service.title}
+                </h3>
+
+                <p className="text-gray-300 text-center mb-6 leading-relaxed">
+                  {service.description}
+                </p>
+
+                <ul className="space-y-2">
+                  {service.features.map((feature, featureIndex) => (
+                    <motion.li
+                      key={featureIndex}
+                      className="flex items-center text-gray-300"
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: featureIndex * 0.1 }}
+                    >
+                      <Star className="w-4 h-4 text-yellow-400 mr-3 flex-shrink-0" />
+                      {feature}
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+            </ScrollReveal>
           ))}
         </div>
 
