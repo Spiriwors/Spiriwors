@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { ArrowDown, Play } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,8 @@ import { DURATION, DELAY, SCALE, EASING } from '@/lib/animation-tokens';
 
 const Hero = () => {
   const ref = useRef<HTMLElement>(null);
+  const [isInView, setIsInView] = useState(true);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start']
@@ -19,6 +21,17 @@ const Hero = () => {
   const y2 = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.5, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
+
+  // Track if hero is in viewport to pause animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   const scrollToProjects = () => {
     document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
@@ -49,31 +62,31 @@ const Hero = () => {
 
       {/* Animated Background Elements with Parallax */}
       <motion.div
-        className="absolute inset-0 z-10"
+        className="absolute inset-0 z-10 will-change-transform"
         style={{ y: y2 }}
       >
         <motion.div
-          className="absolute top-1/4 left-1/4 w-64 h-64 bg-yellow-400/10 rounded-full blur-3xl"
-          animate={{
+          className="absolute top-1/4 left-1/4 w-64 h-64 bg-yellow-400/10 rounded-full blur-3xl will-change-transform"
+          animate={isInView ? {
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.6, 0.3]
-          }}
+          } : {}}
           transition={{
             duration: 4,
             repeat: Infinity,
-            ease: 'easeInOut'
+            ease: EASING.easeInOut
           }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl"
-          animate={{
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl will-change-transform"
+          animate={isInView ? {
             scale: [1, 1.3, 1],
             opacity: [0.2, 0.5, 0.2]
-          }}
+          } : {}}
           transition={{
             duration: 5,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: EASING.easeInOut,
             delay: 1
           }}
         />
@@ -84,31 +97,34 @@ const Hero = () => {
         className="relative z-20 text-center px-6 max-w-4xl mx-auto"
         style={{ opacity, scale }}
       >
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: DURATION.slow, delay: DELAY.md }}
-          className="mb-6 will-change-transform-opacity"
-        >
+        <div className="mb-6">
           <h1 className="text-5xl md:text-7xl font-bold mb-4 leading-tight amatic-sc-bold">
             <motion.span
-              className="block text-white"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              className="block bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent will-change-transform-opacity"
+              initial={{ opacity: 0, x: -100, rotateY: -90 }}
+              animate={{ opacity: 1, x: 0, rotateY: 0 }}
+              transition={{
+                duration: DURATION.slow,
+                delay: DELAY.md,
+                ease: EASING.spiriwors
+              }}
             >
               SPIRI
             </motion.span>
             <motion.span
-              className="block text-yellow-400"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
+              className="block bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 bg-clip-text text-transparent will-change-transform-opacity"
+              initial={{ opacity: 0, x: 100, rotateY: 90 }}
+              animate={{ opacity: 1, x: 0, rotateY: 0 }}
+              transition={{
+                duration: DURATION.slow,
+                delay: DELAY.lg,
+                ease: EASING.spiriwors
+              }}
             >
               WORS
             </motion.span>
           </h1>
-        </motion.div>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}

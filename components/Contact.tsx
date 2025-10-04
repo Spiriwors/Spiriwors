@@ -2,9 +2,12 @@
 
 import React, { useState } from 'react';
 import { Send, Mail, Phone, MapPin, Clock, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { ScrollReveal } from '@/components/animations/ScrollReveal';
+import { SCALE } from '@/lib/animation-tokens';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -66,18 +69,21 @@ const Contact = () => {
   return (
     <section id="contact" className="py-20 bg-gray-700">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 amatic-sc-bold text-white">
-            Contacto
-          </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            ¿Tienes un proyecto en mente? Nos encantaría escuchar tu idea y ayudarte a hacerla realidad
-          </p>
-        </div>
+        <ScrollReveal direction="up">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 amatic-sc-bold text-white">
+              Contacto
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              ¿Tienes un proyecto en mente? Nos encantaría escuchar tu idea y ayudarte a hacerla realidad
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Form */}
-          <div className="bg-gray-900 p-8 rounded-lg shadow-lg">
+          <ScrollReveal direction="right">
+            <div className="bg-gray-900 p-8 rounded-lg shadow-lg">
             <h3 className="text-2xl font-bold text-white mb-6">
               Cuéntanos sobre tu proyecto
             </h3>
@@ -189,18 +195,22 @@ const Contact = () => {
                 />
               </div>
 
-              <Button
-                type="submit"
-                className="w-full bg-yellow-400 text-black hover:bg-yellow-500 py-3 text-lg font-semibold flex items-center justify-center gap-2"
-              >
-                <Send className="w-5 h-5" />
-                Enviar Mensaje
-              </Button>
+              <motion.div whileHover={{ scale: SCALE.hover }} whileTap={{ scale: SCALE.down }}>
+                <Button
+                  type="submit"
+                  className="w-full bg-yellow-400 text-black hover:bg-yellow-500 py-3 text-lg font-semibold flex items-center justify-center gap-2 will-change-transform"
+                >
+                  <Send className="w-5 h-5" />
+                  Enviar Mensaje
+                </Button>
+              </motion.div>
             </form>
-          </div>
+            </div>
+          </ScrollReveal>
 
           {/* Contact Information */}
-          <div className="space-y-8">
+          <ScrollReveal direction="left">
+            <div className="space-y-8">
             <div>
               <h3 className="text-2xl font-bold text-white mb-6">
                 Información de Contacto
@@ -267,7 +277,8 @@ const Contact = () => {
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

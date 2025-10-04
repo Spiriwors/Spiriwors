@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ExternalLink, Play, X } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ScrollReveal } from '@/components/animations/ScrollReveal';
 import { SPRING, SCALE, DURATION, DELAY } from '@/lib/animation-tokens';
@@ -251,16 +251,25 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* Video Modal - Corregido */}
-        {selectedVideo && (
-          <div 
-            className="fixed inset-0 bg-black/95 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-            onClick={closeVideoModal}
-          >
-            <div 
-              className="relative w-full max-w-4xl bg-gray-900 rounded-xl shadow-2xl overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
+        {/* Video Modal - Animated */}
+        <AnimatePresence>
+          {selectedVideo && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: DURATION.base }}
+              className="fixed inset-0 bg-black/95 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+              onClick={closeVideoModal}
             >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                transition={{ duration: DURATION.medium, ease: 'easeOut' }}
+                className="relative w-full max-w-4xl bg-gray-900 rounded-xl shadow-2xl overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
               {/* Header del Modal */}
               <div className="flex justify-between items-center p-4 bg-gray-800 border-b border-gray-700">
                 <h3 className="text-lg font-semibold text-white">
@@ -343,9 +352,10 @@ const Projects = () => {
                   </div>
                 )}
               </div>
-            </div>
-          </div>
-        )}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
