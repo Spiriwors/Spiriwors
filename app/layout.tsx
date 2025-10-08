@@ -2,16 +2,27 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Creepster, Amatic_SC } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: 'swap',
+  preload: true,
+  variable: '--font-inter'
+});
 const creepster = Creepster({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-creepster",
+  display: 'swap',
+  preload: false, // Defer decorative font
+  fallback: ['cursive']
 });
 const amaticSC = Amatic_SC({
   weight: ["400", "700"],
   subsets: ["latin"],
   variable: "--font-amatic-sc",
+  display: 'swap',
+  preload: true, // Used in headings
+  fallback: ['cursive', 'Comic Sans MS']
 });
 
 export const metadata: Metadata = {
@@ -165,6 +176,11 @@ export default function RootLayout({
   return (
     <html lang="es" className="scroll-smooth">
       <head>
+        {/* DNS Prefetch and Preconnect for Google Fonts - Faster font loading */}
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

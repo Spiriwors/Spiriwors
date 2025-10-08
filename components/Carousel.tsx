@@ -10,14 +10,16 @@ const Carousel = () => {
   const slides = [
     {
       id: 1,
-      image: '/images/projects/LJDP_HD_FULL_DEFF.png',
+      image: '/images/projects/LJDP_HD_FULL_DEFF.webp',
+      imageFallback: '/images/projects/LJDP_HD_FULL_DEFF.png',
       title: 'La Joya Del Pantano',
       description: 'Historia original de Spiriwors que combina la magia del stop-motion con una narrativa emotiva sobre la naturaleza y la aventura.',
       category: 'Spiriwors Historias Originales'
     },
     {
       id: 2,
-      image: '/images/projects/SALU_AFICHE.png',
+      image: '/images/projects/SALU_AFICHE.webp',
+      imageFallback: '/images/projects/SALU_AFICHE.png',
       title: 'SALU',
       description: 'Proyecto destacado de Spiriwors que muestra la creatividad y técnica única en animación, desarrollando mundos únicos para una experiencia inmersiva.',
       category: 'Spiriwors Historias Originales'
@@ -56,11 +58,18 @@ const Carousel = () => {
               {slides.map((slide, index) => (
                 <div key={slide.id} className="w-full flex-shrink-0 relative">
                   <div className="relative h-[600px] md:h-[700px]">
-                    <img 
-                      src={slide.image} 
-                      alt={slide.title}
-                      className="w-full h-full object-contain bg-gray-900"
-                    />
+                    <picture>
+                      <source srcSet={slide.image} type="image/webp" />
+                      <img
+                        src={slide.imageFallback}
+                        alt={slide.title}
+                        className="w-full h-full object-contain bg-gray-900"
+                        loading={index === 0 ? "eager" : "lazy"}
+                        decoding="async"
+                        width="455"
+                        height="650"
+                      />
+                    </picture>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                   </div>
                   

@@ -41,6 +41,10 @@ const Footer = () => {
                 src="/assets/logoSW.png"
                 alt="Spiriwors Logo"
                 className="w-8 h-8 object-contain"
+                width="32"
+                height="32"
+                loading="lazy"
+                decoding="async"
               />
               <span className="text-2xl font-bold text-white amatic-sc-bold">SPIRIWORS</span>
             </div>

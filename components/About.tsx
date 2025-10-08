@@ -141,6 +141,8 @@ const About = () => {
                   src="/images/about/Camilo-Ayala.jpg"
                   alt="Equipo Spiriwors"
                   className="rounded-lg shadow-2xl w-full object-cover h-96"
+                  loading="lazy"
+                  decoding="async"
                 />
               </motion.div>
               {/* Decorative Elements */}

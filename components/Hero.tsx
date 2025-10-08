@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { ArrowDown } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { FloatingParticles } from "@/components/animations/FloatingParticles";
+import { LightParticles } from "@/components/animations/LightParticles";
 import { DURATION, DELAY, SCALE, EASING } from "@/lib/animation-tokens";
 
 const Hero = () => {
@@ -50,8 +50,8 @@ const Hero = () => {
         </div>
       </motion.div>
 
-      {/* Floating Particles */}
-      <FloatingParticles count={30} />
+      {/* Floating Particles - Lightweight CSS version */}
+      <LightParticles count={30} />
 
       {/* Animated Background Elements with Parallax */}
       <motion.div

@@ -1,16 +1,19 @@
 "use client";
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
-import About from '@/components/About';
-import Projects from '@/components/Projects';
-import Carousel from '@/components/Carousel';
-import Services from '@/components/Services';
-import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
-import { CustomCursor } from '@/components/animations/CustomCursor';
-import { FadeOnScroll } from '@/components/FadeOnScroll';
+import { SimpleFade } from '@/components/SimpleFade';
+
+// Dynamic imports for below-the-fold components to reduce initial bundle size
+const Projects = dynamic(() => import('@/components/Projects'), { ssr: false });
+const Carousel = dynamic(() => import('@/components/Carousel'), { ssr: false });
+const About = dynamic(() => import('@/components/About'), { ssr: false });
+const Services = dynamic(() => import('@/components/Services'), { ssr: false });
+const Contact = dynamic(() => import('@/components/ContactWrapper'), { ssr: false });
+const Footer = dynamic(() => import('@/components/Footer'), { ssr: false });
+const CustomCursor = dynamic(() => import('@/components/animations/CustomCursor').then(mod => ({ default: mod.CustomCursor })), { ssr: false });
 
 export default function Home() {
   return (
@@ -21,30 +24,30 @@ export default function Home() {
       {/* Header / Intro - Has built-in fade */}
       <Hero />
 
-      {/* All sections fade in/out as they scroll */}
-      <FadeOnScroll>
+      {/* All sections fade in as they scroll into view */}
+      <SimpleFade>
         <Projects />
-      </FadeOnScroll>
+      </SimpleFade>
 
-      <FadeOnScroll>
+      <SimpleFade>
         <Carousel />
-      </FadeOnScroll>
+      </SimpleFade>
 
-      <FadeOnScroll>
+      <SimpleFade>
         <About />
-      </FadeOnScroll>
+      </SimpleFade>
 
-      <FadeOnScroll>
+      <SimpleFade>
         <Services />
-      </FadeOnScroll>
+      </SimpleFade>
 
-      <FadeOnScroll>
+      <SimpleFade>
         <Contact />
-      </FadeOnScroll>
+      </SimpleFade>
 
-      <FadeOnScroll>
+      <SimpleFade>
         <Footer />
-      </FadeOnScroll>
+      </SimpleFade>
     </main>
   );
 }

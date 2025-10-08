@@ -326,7 +326,7 @@ const Projects = () => {
                       autoPlay
                       onError={handleVideoError}
                       className="w-full max-h-[70vh] object-contain"
-                      preload="metadata"
+                      preload="auto"
                       playsInline
                       style={{ maxWidth: '100%', height: 'auto' }}
                     >

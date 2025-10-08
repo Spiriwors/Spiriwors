@@ -1,0 +1,12 @@
+# Modern browsers only - reduces polyfills and bundle size
+# Supports ES6+, async/await, optional chaining, nullish coalescing, etc.
+
+# Production
+last 2 Chrome versions
+last 2 Firefox versions
+last 2 Safari versions
+last 2 Edge versions
+
+# Not supporting IE11 or older browsers
+not IE 11
+not dead
