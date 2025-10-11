@@ -9,6 +9,8 @@ import { DURATION, DELAY, EASING } from "@/lib/animation-tokens";
 const Hero = () => {
   const ref = useRef<HTMLElement>(null);
   const [isInView, setIsInView] = useState(true);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [videoFailed, setVideoFailed] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -32,6 +34,24 @@ const Hero = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Try to autoplay the background video when ready
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const tryPlay = () => {
+      const playPromise = v.play();
+      if (playPromise && typeof (playPromise as any).then === 'function') {
+        (playPromise as Promise<void>).catch(() => {
+          v.muted = true;
+          v.play().catch(() => {});
+        });
+      }
+    };
+    if (v.readyState >= 2) tryPlay();
+    v.addEventListener('loadeddata', tryPlay);
+    return () => v.removeEventListener('loadeddata', tryPlay);
+  }, []);
+
   
 
   return (
@@ -42,17 +62,26 @@ const Hero = () => {
     >
       {/* Background Video */}
       <motion.div className="absolute inset-0 z-0" style={{ y: y1 }}>
+        {/* Fallback gradient if video fails or while loading */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black" />
         <video
-          className="w-full h-full object-cover"
+          ref={videoRef}
+          id="hero-bg-video"
+          className="absolute inset-0 w-full h-full object-cover"
           autoPlay
           loop
           muted
           playsInline
           preload="auto"
+          src="/gif/Gif.mov"
+          onError={() => setVideoFailed(true)}
+          aria-hidden="true"
         >
           <source src="/gif/Gif.mov" type="video/quicktime" />
+          <source src="/gif/Gif.mp4" type="video/mp4" />
+          <source src="/gif/Gif.webm" type="video/webm" />
         </video>
-        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute inset-0 bg-black/40" />
       </motion.div>
 
       {/* Floating Particles - Lightweight CSS version */}
