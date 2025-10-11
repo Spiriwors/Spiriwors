@@ -3,9 +3,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ArrowDown } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { LightParticles } from "@/components/animations/LightParticles";
-import { DURATION, DELAY, SCALE, EASING } from "@/lib/animation-tokens";
+import { DURATION, DELAY, EASING } from "@/lib/animation-tokens";
 
 const Hero = () => {
   const ref = useRef<HTMLElement>(null);
@@ -33,9 +32,7 @@ const Hero = () => {
     return () => observer.disconnect();
   }, []);
 
-  const scrollToProjects = () => {
-    document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" });
-  };
+  
 
   return (
     <section
@@ -43,11 +40,19 @@ const Hero = () => {
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Animated Background */}
+      {/* Background Video */}
       <motion.div className="absolute inset-0 z-0" style={{ y: y1 }}>
-        <div className="w-full h-full bg-gradient-to-br from-gray-900 via-gray-800 to-black">
-          <div className="absolute inset-0 bg-black/40"></div>
-        </div>
+        <video
+          className="w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        >
+          <source src="/gif/Gif.mov" type="video/quicktime" />
+        </video>
+        <div className="absolute inset-0 bg-black/40"></div>
       </motion.div>
 
       {/* Floating Particles - Lightweight CSS version */}
@@ -99,9 +104,9 @@ const Hero = () => {
         style={{ opacity, scale }}
       >
         <div className="mb-6">
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 leading-tight amatic-sc-bold">
+          <h1 className="text-5xl md:text-7xl font-bold mb-4 leading-tight amatic-sc-bold whitespace-nowrap">
             <motion.span
-              className="block bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent will-change-transform-opacity"
+              className="inline-block bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent will-change-transform-opacity"
               initial={{ opacity: 0, x: -100, rotateY: -90 }}
               animate={{ opacity: 1, x: 0, rotateY: 0 }}
               transition={{
@@ -112,8 +117,9 @@ const Hero = () => {
             >
               SPIRI
             </motion.span>
+            {/* no space */}
             <motion.span
-              className="block bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 bg-clip-text text-transparent will-change-transform-opacity"
+              className="inline-block bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 bg-clip-text text-transparent will-change-transform-opacity"
               initial={{ opacity: 0, x: 100, rotateY: 90 }}
               animate={{ opacity: 1, x: 0, rotateY: 0 }}
               transition={{
@@ -127,41 +133,7 @@ const Hero = () => {
           </h1>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="mb-8"
-        >
-          <p className="text-xl md:text-2xl text-gray-300 mb-4 amatic-sc-regular">
-            Empresa de Animación
-          </p>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Especialistas en{" "}
-            <span className="text-yellow-400 font-semibold">Stop-Motion</span> y
-            <span className="text-yellow-400 font-semibold"> Animación 2D</span>
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="flex justify-center items-center mb-20"
-        >
-          <motion.div
-            whileHover={{ scale: SCALE.hoverMd }}
-            whileTap={{ scale: SCALE.down }}
-            className="will-change-transform"
-          >
-            <Button
-              onClick={scrollToProjects}
-              className="bg-yellow-400 text-black hover:bg-yellow-500 px-8 py-4 text-lg font-semibold transition-all duration-300"
-            >
-              Ver Proyectos
-            </Button>
-          </motion.div>
-        </motion.div>
+        
       </motion.div>
 
       {/* Scroll Indicator - Outside content div */}
