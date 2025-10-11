@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Film, Palette, Video, Users, Clock, Star } from 'lucide-react';
+import { Film, Palette, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ScrollReveal } from '@/components/animations/ScrollReveal';
 import { SPRING, DURATION, DELAY } from '@/lib/animation-tokens';
@@ -9,22 +9,28 @@ import { SPRING, DURATION, DELAY } from '@/lib/animation-tokens';
 const Services = () => {
   const services = [
     {
-      icon: Film,
-      title: 'Animación Stop-Motion',
-      description: 'Creación de animaciones frame por frame con objetos físicos para comerciales, cortometrajes y contenido creativo.',
-      features: ['Storyboarding', 'Diseño de sets', 'Iluminación profesional', 'Post-producción']
-    },
-    {
       icon: Palette,
-      title: 'Animación 2D',
-      description: 'Desarrollo de animaciones digitales expresivas con técnicas tradicionales y herramientas modernas.',
-      features: ['Diseño de personajes', 'Animación fluida', 'Efectos visuales', 'Composición digital']
+      title: 'Servicios Creativos',
+      description:
+        'Producción y animación para marcas, videoclips y campañas. Nos integramos a tu equipo para diseñar, animar y entregar piezas listas para publicar.',
+      features: [
+        'Concepto y guion',
+        'Dirección de arte',
+        'Animación 2D y stop‑motion',
+        'Edición y postproducción'
+      ]
     },
     {
-      icon: Video,
-      title: 'Video Promocional',
-      description: 'Producción completa de videos animados para marketing, explicativos y contenido corporativo.',
-      features: ['Guión creativo', 'Dirección artística', 'Sonido y música', 'Distribución multiplataforma']
+      icon: Film,
+      title: 'Contenidos Originales',
+      description:
+        'Desarrollo y realización de historias propias: cortos, series y piezas experimentales que exploran nuestro universo creativo.',
+      features: [
+        'Desarrollo de IP',
+        'Pitching y biblias',
+        'Producción de cortometrajes',
+        'Alianzas y coproducciones'
+      ]
     }
   ];
 
@@ -51,7 +57,7 @@ const Services = () => {
         </ScrollReveal>
 
         {/* Services Grid */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-20">
+        <div className="grid lg:grid-cols-2 gap-8 mb-20">
           {services.map((service, index) => (
             <ScrollReveal key={index} direction="up" delay={index * DELAY.md}>
               <motion.div
@@ -96,52 +102,7 @@ const Services = () => {
           ))}
         </div>
 
-        {/* Process Section */}
-        <div className="bg-gray-900 rounded-lg p-8 md:p-12">
-          <h3 className="text-3xl font-bold text-center text-white mb-4 amatic-sc-bold">
-            Proceso
-          </h3>
-          <p className="text-center text-gray-300 mb-12 max-w-2xl mx-auto">
-            Un enfoque estructurado que garantiza resultados excepcionales en cada proyecto
-          </p>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {process.map((step, index) => (
-              <div key={index} className="text-center relative">
-                <div className="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4 text-black font-bold text-xl">
-                  {step.step}
-                </div>
-                <h4 className="text-xl font-bold text-white mb-2">
-                  {step.title}
-                </h4>
-                <p className="text-gray-300">
-                  {step.description}
-                </p>
-                
-                {/* Connection Line */}
-                {index < process.length - 1 && (
-                  <div className="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-yellow-400/30 transform -translate-y-1/2 z-0"></div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center mt-16">
-          <h3 className="text-2xl font-bold text-white mb-4 amatic-sc-bold">
-            ¿Listo para comenzar tu proyecto?
-          </h3>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-            Conversemos sobre tu idea y cómo podemos ayudarte a llevarla al siguiente nivel
-          </p>
-          <button
-            onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="bg-yellow-400 text-black hover:bg-yellow-500 px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
-          >
-            Solicitar Cotización
-          </button>
-        </div>
+        {/* Se removieron Proceso y CTA según solicitud */}
       </div>
     </section>
   );
