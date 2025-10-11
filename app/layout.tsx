@@ -39,11 +39,16 @@ export const metadata: Metadata = {
   publisher: "Spiriwors",
   applicationName: "Spiriwors",
   icons: {
-    icon: "/assets/logoSW.ico",
+    icon: [
+      { url: "/assets/SW.ico", type: "image/x-icon" },
+      { url: "/assets/SW.png", sizes: "32x32", type: "image/png" },
+      { url: "/assets/SW.png", sizes: "16x16", type: "image/png" },
+    ],
+    shortcut: ["/assets/SW.ico"],
     apple: [
-      { url: "/assets/logoSW.png", sizes: "180x180", type: "image/png" },
-      { url: "/assets/logoSW.png", sizes: "152x152", type: "image/png" },
-      { url: "/assets/logoSW.png", sizes: "120x120", type: "image/png" },
+      { url: "/assets/SW.png", sizes: "180x180", type: "image/png" },
+      { url: "/assets/SW.png", sizes: "152x152", type: "image/png" },
+      { url: "/assets/SW.png", sizes: "120x120", type: "image/png" },
     ],
   },
   manifest: "/manifest.json",
@@ -63,7 +68,7 @@ export const metadata: Metadata = {
       "Especialistas en animación stop-motion y 2D. Creamos experiencias visuales únicas que conectan marcas con audiencias.",
     images: [
       {
-        url: "/assets/logoSW.png",
+        url: "/assets/SW.png",
         width: 1200,
         height: 630,
         alt: "Spiriwors - Empresa de Animación Stop-Motion y 2D",
@@ -79,7 +84,7 @@ export const metadata: Metadata = {
     title: "Spiriwors - Animación Stop-Motion & 2D en Colombia",
     description:
       "Especialistas en animación stop-motion y 2D. Creamos experiencias visuales únicas que conectan marcas con audiencias.",
-    images: ["/assets/logoSW.png"],
+    images: ["/assets/SW.png"],
     creator: "@spiriwors",
   },
   alternates: {
@@ -93,7 +98,7 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
     yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
     other: {
-      "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION,
+      "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION || "",
     },
   },
   category: "business",
@@ -121,7 +126,7 @@ export default function RootLayout({
     "@type": "Organization",
     name: "Spiriwors",
     url: "https://spiriwors.com",
-    logo: "https://spiriwors.com/assets/logoSW.png",
+    logo: "https://spiriwors.com/assets/SW.png",
     description:
       "Empresa especializada en animación stop-motion y 2D en Colombia",
     founder: {
@@ -150,7 +155,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     name: "Spiriwors",
-    image: "https://spiriwors.com/assets/logoSW.png",
+    image: "https://spiriwors.com/assets/SW.png",
     "@id": "https://spiriwors.com",
     url: "https://spiriwors.com",
     telephone: "+57-300-123-4567",
@@ -180,6 +185,11 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Favicon fallbacks */}
+        <link rel="icon" href="/assets/SW.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/SW.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/SW.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/SW.png" />
 
         <script
           type="application/ld+json"

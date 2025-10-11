@@ -38,11 +38,11 @@ const Footer = () => {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <img
-                src="/assets/logoSW.png"
+                src="/assets/SW.png"
                 alt="Spiriwors Logo"
-                className="w-8 h-8 object-contain"
-                width="32"
-                height="32"
+                className="w-16 h-16 object-contain"
+                width="64"
+                height="64"
                 loading="lazy"
                 decoding="async"
               />
