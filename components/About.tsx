@@ -135,9 +135,9 @@ const About = () => {
                 transition={{ duration: 0.3 }}
               >
                 <img
-                  src="/images/about/Camilo-Ayala.jpg"
+                  src="/images/about/Foto.jpeg"
                   alt="Equipo Spiriwors"
-                  className="rounded-lg shadow-2xl w-full object-cover h-96"
+                  className="rounded-lg shadow-2xl w-full object-contain"
                   loading="lazy"
                   decoding="async"
                 />
