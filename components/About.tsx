@@ -1,80 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { Award, Users, Clock, Star } from 'lucide-react';
-import { motion, useInView } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { ScrollReveal } from '@/components/animations/ScrollReveal';
-import { SPRING } from '@/lib/animation-tokens';
 
-// Counter animation hook
-const useCounter = (end: number, duration: number = 2, shouldStart: boolean = false) => {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!shouldStart) return;
-
-    let startTime: number | null = null;
-    const startValue = 0;
-
-    const animate = (currentTime: number) => {
-      if (!startTime) startTime = currentTime;
-      const progress = Math.min((currentTime - startTime) / (duration * 1000), 1);
-
-      setCount(Math.floor(progress * (end - startValue) + startValue));
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-
-    requestAnimationFrame(animate);
-  }, [end, duration, shouldStart]);
-
-  return count;
-};
-
-const StatCounter = ({ icon: Icon, number, label, delay }: any) => {
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true });
-
-  // Extract numeric value for counter
-  const numericValue = parseInt(number.replace(/\D/g, '')) || 0;
-  const suffix = number.replace(/\d/g, '');
-  const count = useCounter(numericValue, 2, isInView);
-
-  return (
-    <ScrollReveal direction="scale" delay={delay}>
-      <motion.div
-        ref={ref}
-        className="text-center"
-        whileHover={{ scale: 1.1 }}
-        transition={SPRING.default}
-      >
-        <motion.div
-          className="flex justify-center mb-2"
-          whileHover={{ scale: 1.15, y: -2 }}
-          transition={{ duration: 0.3 }}
-        >
-          <Icon className="w-8 h-8 text-yellow-400" />
-        </motion.div>
-        <div className="text-3xl font-bold text-white mb-1">
-          {count}{suffix}
-        </div>
-        <div className="text-gray-400 text-sm">
-          {label}
-        </div>
-      </motion.div>
-    </ScrollReveal>
-  );
-};
 
 const About = () => {
-  const stats = [
-    { icon: Award, number: '50+', label: 'Proyectos Completados' },
-    { icon: Users, number: '25+', label: 'Clientes Satisfechos' },
-    { icon: Clock, number: '20+', label: 'Años de Experiencia' },
-    { icon: Star, number: '4.9', label: 'Rating Promedio' }
-  ];
 
   return (
     <section id="about" className="py-20 bg-gray-600">
@@ -112,18 +43,6 @@ const About = () => {
               </p>
             </ScrollReveal>
 
-            {/* Stats */}
-            <div className="grid grid-cols-2 gap-6">
-              {stats.map((stat, index) => (
-                <StatCounter
-                  key={index}
-                  icon={stat.icon}
-                  number={stat.number}
-                  label={stat.label}
-                  delay={0.6 + index * 0.1}
-                />
-              ))}
-            </div>
           </div>
 
           {/* Right Content - Image */}
@@ -135,9 +54,9 @@ const About = () => {
                 transition={{ duration: 0.3 }}
               >
                 <img
-                  src="/images/about/Camilo-Ayala.jpg"
+                  src="/images/about/Foto.jpeg"
                   alt="Equipo Spiriwors"
-                  className="rounded-lg shadow-2xl w-full object-cover h-96"
+                  className="rounded-lg shadow-2xl w-full object-contain"
                   loading="lazy"
                   decoding="async"
                 />
