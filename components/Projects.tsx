@@ -93,8 +93,15 @@ const Projects = () => {
       description: 'Cargo: Realizador de Animatic y Animador – Camilo Ayala. Original Content by Venturia Animation Studios. All Rights Reserved.',
       year: undefined,
       category: '2d' as const
+    },
+    {
+      id: 11,
+      title: 'Smiling Symphonies',
+      url: 'https://dinamitaanimacion.com/portfolio/smiling-symphonies/',
+      description: 'Proyecto de Dinamita Animación – Smiling Symphonies',
+      year: undefined,
+      category: '2d' as const
     }
-    // Dinamita Animación – Smiling Symphonies (falta enlace)
   ];
 
   const filterOptions = [
@@ -138,6 +145,9 @@ const Projects = () => {
     }
     if (title === 'Heroes Collection: Francis Ford Coppola') {
       return '/images/megaCard/Coppola.jpeg';
+    }
+    if (title === 'Smiling Symphonies') {
+      return '/images/megaCard/Smiling Symphonies.jpeg';
     }
     // Para los demás proyectos, usar placeholder por ahora
     return '/images/projects/placeholder.jpg';
