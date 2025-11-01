@@ -114,43 +114,58 @@ const Projects = () => {
     ? projects
     : projects.filter((p) => p.category === filter);
 
-  // Función para asignar la imagen correcta basada en el título
-  const getProjectImage = (title: string) => {
+  console.log('Filtered projects count:', filteredProjects.length);
+
+  // Función para asignar las imágenes del carousel basado en el título
+  const getProjectImages = (title: string) => {
+    const createImageArray = (folder: string, prefix: string, count: number = 3) => {
+      return Array.from({ length: count }, (_, i) => ({
+        src: `/images/megaCard/${folder}/${prefix}0${i + 1}.jpeg`,
+        alt: `${title} - Imagen ${i + 1}`,
+        title: title
+      }));
+    };
+
     if (title === 'La Joya Del Pantano') {
-      return '/images/megaCard/LaJoyaDelPantano.jpeg';
+      return createImageArray('LaJoyaDelPantano', 'LJDP');
     }
     if (title === 'SALÚ') {
-      return '/images/megaCard/Salu.jpeg';
+      return createImageArray('Salu', 'Salu');
     }
     if (title === 'Un Bosque Encantado 2 – El Abrazo del Ciempiés') {
-      return '/images/megaCard/El abrazo del ciempies.jpeg';
+      return createImageArray('Ciempies', 'Cien');
     }
     if (title === 'Un Bosque Encantado 2 – Lobos') {
-      return '/images/megaCard/Lobos.jpeg';
+      return createImageArray('Lobos', 'Lobos');
     }
     if (title === 'AJR – My Play') {
-      return '/images/megaCard/MyPlay_ajr.jpeg';
+      return createImageArray('AJR', 'Ajr');
     }
     if (title === 'ONR – It Gets To a Point') {
-      return '/images/megaCard/ONR.jpeg';
+      return createImageArray('ONR', 'ONR');
     }
     if (title === 'We The Kingdom – Christmas In Hawaii') {
-      return '/images/megaCard/ChristmasInHawaii.jpeg';
+      return createImageArray('Christmas', 'Ch');
     }
     if (title === 'Satellite – Bebe Rexha & Snoop Dogg') {
-      return '/images/megaCard/Snoop-Dogg.jpeg';
+      return createImageArray('SnoopDogg', 'SD');
     }
     if (title === 'Waldo´s Dream') {
-      return '/images/megaCard/Waldo´sDream.jpeg';
+      return createImageArray('Waldo´sDream', 'WD');
     }
     if (title === 'Heroes Collection: Francis Ford Coppola') {
-      return '/images/megaCard/Coppola.jpeg';
+      return createImageArray('Coppola', 'Coppola');
     }
     if (title === 'Smiling Symphonies') {
-      return '/images/megaCard/Smiling Symphonies.jpeg';
+      return createImageArray('Smiling', 'S_Sy');
     }
-    // Para los demás proyectos, usar placeholder por ahora
-    return '/images/projects/placeholder.jpg';
+
+    // Fallback para proyectos sin imágenes
+    return [{
+      src: '/images/projects/placeholder.jpg',
+      alt: title,
+      title: title
+    }];
   };
 
 
@@ -185,21 +200,14 @@ const Projects = () => {
         </div>
 
         {/* MegaCard Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
           {filteredProjects.map((item, index) => (
-            <ScrollReveal key={item.id} direction="up" delay={index * DELAY.sm}>
-              <MegaCard
-                images={[
-                  {
-                    src: getProjectImage(item.title),
-                    alt: item.title,
-                    title: item.title
-                  }
-                ]}
-                videoSrc={item.url}
-                videoTitle={item.title}
-              />
-            </ScrollReveal>
+            <MegaCard
+              key={item.id}
+              images={getProjectImages(item.title)}
+              videoSrc={item.url}
+              videoTitle={item.title}
+            />
           ))}
         </div>
 

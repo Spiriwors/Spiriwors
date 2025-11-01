@@ -25,11 +25,11 @@ const MegaCard: React.FC<MegaCardProps> = ({
 
   // Auto-slide functionality
   useEffect(() => {
-    if (isFlipped) return; // Stop auto-slide when flipped
+    if (isFlipped || images.length <= 1) return; // Stop auto-slide when flipped or only one image
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % images.length);
-    }, 3000); // Change slide every 3 seconds
+    }, 5000); // Change slide every 5 seconds
 
     return () => clearInterval(interval);
   }, [images.length, isFlipped]);
@@ -123,7 +123,7 @@ const MegaCard: React.FC<MegaCardProps> = ({
               {images.map((image, index) => (
                 <div
                   key={index}
-                  className={`absolute inset-0 transition-opacity duration-500 ${
+                  className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
                     index === currentSlide ? 'opacity-100' : 'opacity-0'
                   }`}
                 >
@@ -142,45 +142,49 @@ const MegaCard: React.FC<MegaCardProps> = ({
               ))}
             </div>
 
-            {/* Navigation Arrows */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                prevSlide();
-              }}
-              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
-              aria-label="Imagen anterior"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                nextSlide();
-              }}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
-              aria-label="Siguiente imagen"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-
-            {/* Indicators */}
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              {images.map((_, index) => (
+            {/* Navigation Arrows - Only show if multiple images */}
+            {images.length > 1 && (
+              <>
                 <button
-                  key={index}
                   onClick={(e) => {
                     e.stopPropagation();
-                    setCurrentSlide(index);
+                    prevSlide();
                   }}
-                  className={`w-2 h-2 rounded-full transition-colors ${
-                    index === currentSlide ? 'bg-yellow-400' : 'bg-white/50'
-                  }`}
-                  aria-label={`Ir a imagen ${index + 1}`}
-                />
-              ))}
-            </div>
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
+                  aria-label="Imagen anterior"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextSlide();
+                  }}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
+                  aria-label="Siguiente imagen"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+
+                {/* Indicators */}
+                <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {images.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentSlide(index);
+                      }}
+                      className={`w-2 h-2 rounded-full transition-colors ${
+                        index === currentSlide ? 'bg-yellow-400' : 'bg-white/50'
+                      }`}
+                      aria-label={`Ir a imagen ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
 
           </div>
         </div>
