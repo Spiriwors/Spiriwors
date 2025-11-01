@@ -2,8 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export const CustomCursor: React.FC = () => {
+  const { accentColor } = useTheme();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -52,7 +54,8 @@ export const CustomCursor: React.FC = () => {
     <>
       {/* Main cursor dot */}
       <motion.div
-        className="fixed top-0 left-0 w-4 h-4 bg-yellow-400 rounded-full pointer-events-none z-[9999] mix-blend-difference hidden md:block"
+        className="fixed top-0 left-0 w-4 h-4 rounded-full pointer-events-none z-[9999] mix-blend-difference hidden md:block"
+        style={{ backgroundColor: accentColor }}
         animate={{
           x: mousePosition.x - 8,
           y: mousePosition.y - 8,
@@ -67,7 +70,8 @@ export const CustomCursor: React.FC = () => {
 
       {/* Cursor ring */}
       <motion.div
-        className="fixed top-0 left-0 w-10 h-10 border-2 border-yellow-400/50 rounded-full pointer-events-none z-[9999] mix-blend-difference hidden md:block"
+        className="fixed top-0 left-0 w-10 h-10 border-2 rounded-full pointer-events-none z-[9999] mix-blend-difference hidden md:block"
+        style={{ borderColor: `${accentColor}80` }}
         animate={{
           x: mousePosition.x - 20,
           y: mousePosition.y - 20,

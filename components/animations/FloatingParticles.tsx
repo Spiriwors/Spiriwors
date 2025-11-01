@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface Particle {
   id: number;
@@ -19,9 +20,20 @@ interface FloatingParticlesProps {
 
 export const FloatingParticles: React.FC<FloatingParticlesProps> = ({
   count = 20,
-  color = 'rgba(250, 204, 21, 0.1)' // yellow-400 with opacity
+  color
 }) => {
+  const { accentColor } = useTheme();
   const [particles, setParticles] = useState<Particle[]>([]);
+  
+  // Convert hex to rgba
+  const hexToRgba = (hex: string, alpha: number) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  };
+  
+  const defaultColor = color || hexToRgba(accentColor, 0.1);
 
   useEffect(() => {
     // Generate particles only on client to avoid hydration mismatch
@@ -46,7 +58,7 @@ export const FloatingParticles: React.FC<FloatingParticlesProps> = ({
             top: `${particle.y}%`,
             width: particle.size,
             height: particle.size,
-            backgroundColor: color
+            backgroundColor: defaultColor
           }}
           animate={{
             y: [0, -30, 0],

@@ -5,12 +5,14 @@ import { ArrowDown } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { LightParticles } from "@/components/animations/LightParticles";
 import { DURATION, DELAY, EASING } from "@/lib/animation-tokens";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const Hero = () => {
   const ref = useRef<HTMLElement>(null);
   const [isInView, setIsInView] = useState(true);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoFailed, setVideoFailed] = useState(false);
+  const { accentColor } = useTheme();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -93,7 +95,8 @@ const Hero = () => {
         style={{ y: y2 }}
       >
         <motion.div
-          className="absolute top-1/4 left-1/4 w-64 h-64 bg-yellow-400/10 rounded-full blur-lg will-change-transform"
+          className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full blur-lg will-change-transform"
+          style={{ backgroundColor: `${accentColor}20` }}
           animate={
             isInView
               ? {
@@ -148,7 +151,8 @@ const Hero = () => {
             </motion.span>
             {/* no space */}
             <motion.span
-              className="inline-block bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 bg-clip-text text-transparent will-change-transform-opacity"
+              className="inline-block will-change-transform-opacity"
+              style={{ color: accentColor }}
               initial={{ opacity: 0, x: 100, rotateY: 90 }}
               animate={{ opacity: 1, x: 0, rotateY: 0 }}
               transition={{
@@ -171,7 +175,7 @@ const Hero = () => {
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 1.5, repeat: Infinity }}
       >
-        <ArrowDown className="w-6 h-6 text-yellow-400" />
+        <ArrowDown className="w-6 h-6" style={{ color: accentColor }} />
       </motion.div>
     </section>
   );

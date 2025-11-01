@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Play, X, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface MegaCardProps {
   images: Array<{
@@ -19,6 +20,7 @@ const MegaCard: React.FC<MegaCardProps> = ({
   videoSrc,
   videoTitle = "Video",
 }) => {
+  const { accentColor } = useTheme();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -177,8 +179,9 @@ const MegaCard: React.FC<MegaCardProps> = ({
                         setCurrentSlide(index);
                       }}
                       className={`w-2 h-2 rounded-full transition-colors ${
-                        index === currentSlide ? "bg-yellow-400" : "bg-white/50"
+                        index === currentSlide ? "" : "bg-white/50"
                       }`}
+                      style={index === currentSlide ? { backgroundColor: accentColor } : {}}
                       aria-label={`Ir a imagen ${index + 1}`}
                     />
                   ))}
@@ -282,8 +285,8 @@ const MegaCard: React.FC<MegaCardProps> = ({
             {/* Modal Content */}
             <div className="p-6">
               <div className="text-center">
-                <div className="w-16 h-16 bg-yellow-400/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Play className="w-8 h-8 text-yellow-400" />
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: `${accentColor}33` }}>
+                  <Play className="w-8 h-8" style={{ color: accentColor }} />
                 </div>
                 <h4 className="text-xl font-bold text-white mb-2">
                   {videoTitle}
@@ -295,7 +298,14 @@ const MegaCard: React.FC<MegaCardProps> = ({
                 <div className="flex gap-3 justify-center">
                   <Button
                     onClick={() => setShowInfoModal(false)}
-                    className="bg-yellow-400 text-black hover:bg-yellow-500"
+                    className="text-white"
+                    style={{ backgroundColor: accentColor }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = accentColor === '#ffaf26' ? '#ff9500' : '#2190a8';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = accentColor;
+                    }}
                   >
                     Entendido
                   </Button>

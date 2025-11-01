@@ -5,8 +5,10 @@ import { Film, Palette, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ScrollReveal } from '@/components/animations/ScrollReveal';
 import { SPRING, DURATION, DELAY } from '@/lib/animation-tokens';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const Services = () => {
+  const { accentColor } = useTheme();
   const services = [
     {
       icon: Palette,
@@ -70,7 +72,7 @@ const Services = () => {
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: DURATION.fast }}
                 >
-                  <div className="w-16 h-16 bg-yellow-400 rounded-lg flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-lg flex items-center justify-center" style={{ backgroundColor: accentColor }}>
                     <service.icon className="w-8 h-8 text-black" />
                   </div>
                 </motion.div>
@@ -92,7 +94,7 @@ const Services = () => {
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: featureIndex * 0.1 }}
                     >
-                      <Star className="w-4 h-4 text-yellow-400 mr-3 flex-shrink-0" />
+                      <Star className="w-4 h-4 mr-3 flex-shrink-0" style={{ color: accentColor }} />
                       {feature}
                     </motion.li>
                   ))}
