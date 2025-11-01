@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Play, X, Info } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import React, { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, Play, X, Info } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface MegaCardProps {
   images: Array<{
@@ -17,7 +17,7 @@ interface MegaCardProps {
 const MegaCard: React.FC<MegaCardProps> = ({
   images,
   videoSrc,
-  videoTitle = "Video"
+  videoTitle = "Video",
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -25,11 +25,11 @@ const MegaCard: React.FC<MegaCardProps> = ({
 
   // Auto-slide functionality
   useEffect(() => {
-    if (isFlipped) return; // Stop auto-slide when flipped
+    if (isFlipped || images.length <= 1) return; // Stop auto-slide when flipped or only one image
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % images.length);
-    }, 3000); // Change slide every 3 seconds
+    }, 5000); // Change slide every 5 seconds
 
     return () => clearInterval(interval);
   }, [images.length, isFlipped]);
@@ -37,7 +37,7 @@ const MegaCard: React.FC<MegaCardProps> = ({
   // Cerrar modal con tecla Escape
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         if (showInfoModal) {
           setShowInfoModal(false);
         }
@@ -45,11 +45,11 @@ const MegaCard: React.FC<MegaCardProps> = ({
     };
 
     if (showInfoModal) {
-      document.addEventListener('keydown', handleEscape);
+      document.addEventListener("keydown", handleEscape);
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener("keydown", handleEscape);
     };
   }, [showInfoModal]);
 
@@ -104,9 +104,9 @@ const MegaCard: React.FC<MegaCardProps> = ({
       <div
         className="card relative w-full h-64 cursor-pointer transition-transform duration-700"
         style={{
-          perspective: '1000px',
-          transformStyle: 'preserve-3d',
-          transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
+          perspective: "1000px",
+          transformStyle: "preserve-3d",
+          transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
         }}
         onClick={handleCardClick}
       >
@@ -114,7 +114,7 @@ const MegaCard: React.FC<MegaCardProps> = ({
         <div
           className="card-face card-front absolute inset-0 w-full h-full"
           style={{
-            backfaceVisibility: 'hidden'
+            backfaceVisibility: "hidden",
           }}
         >
           <div className="relative w-full h-full rounded-lg overflow-hidden bg-gray-800 group">
@@ -123,8 +123,8 @@ const MegaCard: React.FC<MegaCardProps> = ({
               {images.map((image, index) => (
                 <div
                   key={index}
-                  className={`absolute inset-0 transition-opacity duration-500 ${
-                    index === currentSlide ? 'opacity-100' : 'opacity-0'
+                  className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                    index === currentSlide ? "opacity-100" : "opacity-0"
                   }`}
                 >
                   <img
@@ -142,46 +142,49 @@ const MegaCard: React.FC<MegaCardProps> = ({
               ))}
             </div>
 
-            {/* Navigation Arrows */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                prevSlide();
-              }}
-              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
-              aria-label="Imagen anterior"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                nextSlide();
-              }}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
-              aria-label="Siguiente imagen"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-
-            {/* Indicators */}
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              {images.map((_, index) => (
+            {/* Navigation Arrows - Only show if multiple images */}
+            {images.length > 1 && (
+              <>
                 <button
-                  key={index}
                   onClick={(e) => {
                     e.stopPropagation();
-                    setCurrentSlide(index);
+                    prevSlide();
                   }}
-                  className={`w-2 h-2 rounded-full transition-colors ${
-                    index === currentSlide ? 'bg-yellow-400' : 'bg-white/50'
-                  }`}
-                  aria-label={`Ir a imagen ${index + 1}`}
-                />
-              ))}
-            </div>
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
+                  aria-label="Imagen anterior"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
 
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextSlide();
+                  }}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
+                  aria-label="Siguiente imagen"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+
+                {/* Indicators */}
+                <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {images.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentSlide(index);
+                      }}
+                      className={`w-2 h-2 rounded-full transition-colors ${
+                        index === currentSlide ? "bg-yellow-400" : "bg-white/50"
+                      }`}
+                      aria-label={`Ir a imagen ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -189,8 +192,8 @@ const MegaCard: React.FC<MegaCardProps> = ({
         <div
           className="card-face card-back absolute inset-0 w-full h-full"
           style={{
-            backfaceVisibility: 'hidden',
-            transform: 'rotateY(180deg)'
+            backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
           }}
         >
           <div className="relative w-full h-full rounded-lg overflow-hidden bg-gray-900">
@@ -220,7 +223,9 @@ const MegaCard: React.FC<MegaCardProps> = ({
 
             {/* Video Player */}
             <div className="video-container relative w-full h-full group">
-              {videoSrc.includes('youtube.com') || videoSrc.includes('youtu.be') || videoSrc.includes('vimeo.com') ? (
+              {videoSrc.includes("youtube.com") ||
+              videoSrc.includes("youtu.be") ||
+              videoSrc.includes("vimeo.com") ? (
                 <div className="relative w-full h-full">
                   <iframe
                     src={getVideoEmbedSrc(videoSrc)}
@@ -239,9 +244,11 @@ const MegaCard: React.FC<MegaCardProps> = ({
                   autoPlay
                   className="w-full h-full object-cover"
                   preload="metadata"
-                  style={{
-                    // Los controles aparecerán automáticamente en hover
-                  }}
+                  style={
+                    {
+                      // Los controles aparecerán automáticamente en hover
+                    }
+                  }
                 >
                   Tu navegador no soporta la reproducción de video.
                 </video>
@@ -282,8 +289,8 @@ const MegaCard: React.FC<MegaCardProps> = ({
                   {videoTitle}
                 </h4>
                 <p className="text-gray-300 mb-4">
-                  Video disponible para reproducción automática.
-                  Los controles aparecen al pasar el mouse sobre el área del video.
+                  Video disponible para reproducción automática. Los controles
+                  aparecen al pasar el mouse sobre el área del video.
                 </p>
                 <div className="flex gap-3 justify-center">
                   <Button
