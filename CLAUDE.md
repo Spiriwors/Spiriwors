@@ -124,7 +124,7 @@ The site uses a comprehensive animation system built on Framer Motion:
 
 - **Color Scheme**:
   - Primary: Gray scale (gray-600 to gray-900)
-  - Accent: Yellow-400 for CTAs and highlights
+  - Accent: #ffaf26 (orange) for CTAs and highlights
   - Background: Dark theme with gray-700 base
 
 - **Responsive**: Mobile-first approach using Tailwind's `md:` and `lg:` breakpoints

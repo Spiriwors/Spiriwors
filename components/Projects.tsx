@@ -5,9 +5,12 @@ import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { DELAY } from "@/lib/animation-tokens";
 import MegaCard from "@/components/ui/megaCard";
+import ParallaxAnimation from "@/components/ParallaxAnimation";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const Projects = () => {
   const [filter, setFilter] = useState<"all" | "2d" | "stop">("all");
+  const { accentColor } = useTheme();
 
   // Catálogo unificado: categoría por tipo de animación (2D o Stop Motion)
   const projects = [
@@ -197,9 +200,26 @@ const Projects = () => {
               variant={filter === category.key ? "default" : "outline"}
               className={`px-6 py-2 transition-all duration-300 ${
                 filter === category.key
-                  ? "bg-yellow-400 text-black hover:bg-yellow-500"
-                  : "border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black"
+                  ? "text-white"
+                  : ""
               }`}
+              style={
+                filter === category.key
+                  ? { backgroundColor: accentColor }
+                  : { borderColor: accentColor, color: accentColor }
+              }
+              onMouseEnter={(e) => {
+                if (filter !== category.key) {
+                  e.currentTarget.style.backgroundColor = accentColor;
+                  e.currentTarget.style.color = 'white';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (filter !== category.key) {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = accentColor;
+                }
+              }}
             >
               {category.label}
             </Button>
@@ -216,6 +236,12 @@ const Projects = () => {
               videoTitle={item.title}
             />
           ))}
+          {/* Parallax Animation en el espacio vacío */}
+          {filteredProjects.length === 11 && (
+            <div className="w-full max-w-md mx-auto">
+              <ParallaxAnimation frameRate={15} />
+            </div>
+          )}
         </div>
       </div>
     </section>

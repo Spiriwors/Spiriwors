@@ -3,9 +3,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ScrollReveal } from '@/components/animations/ScrollReveal';
+import { useTheme } from '@/contexts/ThemeContext';
 
 
 const About = () => {
+  const { accentColor } = useTheme();
 
   return (
     <section id="about" className="py-20 bg-gray-600">
@@ -21,25 +23,25 @@ const About = () => {
 
             <ScrollReveal direction="right" delay={0.3}>
               <p className="text-lg text-gray-300 mb-6 leading-relaxed">
-                Como un huevo que eclosiona para dar paso a la misteriosa vida de una nueva criatura, así son los proyectos de <strong className="text-yellow-400">SPIRIWORS</strong>; una palabra garabateada en la mente de un niño que se negó a crecer y quiere compartir la <span className="text-yellow-400">magia</span> y <span className="text-yellow-400">alegría</span> que surgen de la <span className="text-yellow-400">imaginación</span>.
+                Como un huevo que eclosiona para dar paso a la misteriosa vida de una nueva criatura, así son los proyectos de <strong style={{ color: accentColor }}>SPIRIWORS</strong>; una palabra garabateada en la mente de un niño que se negó a crecer y quiere compartir la <span style={{ color: accentColor }}>magia</span> y <span style={{ color: accentColor }}>alegría</span> que surgen de la <span style={{ color: accentColor }}>imaginación</span>.
               </p>
             </ScrollReveal>
 
             <ScrollReveal direction="right" delay={0.4}>
               <p className="text-lg text-gray-300 mb-6 leading-relaxed">
-                Creemos que la <span className="text-yellow-400">animación</span> realizada con las <span className="text-yellow-400">manos</span> —y el <span className="text-yellow-400">corazón</span>— es el medio idóneo para traer a la vida diversión creativa. Por eso nos gusta la <span className="text-yellow-400">naturaleza artesanal</span> que hay en los <span className="text-yellow-400">dibujos animados</span> y el <span className="text-yellow-400">stop motion</span>; un arte que explora la belleza del <span className="text-yellow-400">movimiento</span>, el <span className="text-yellow-400">dibujo</span> y la <span className="text-yellow-400">escultura</span>, entre muchas otras disciplinas que convergen en la consecución de una <span className="text-yellow-400">historia</span> o <span className="text-yellow-400">idea visual</span> para <span className="text-yellow-400">entretener</span>, <span className="text-yellow-400">conmover</span> o <span className="text-yellow-400">emocionar</span>.
+                Creemos que la <span style={{ color: accentColor }}>animación</span> realizada con las <span style={{ color: accentColor }}>manos</span> —y el <span style={{ color: accentColor }}>corazón</span>— es el medio idóneo para traer a la vida diversión creativa. Por eso nos gusta la <span style={{ color: accentColor }}>naturaleza artesanal</span> que hay en los <span style={{ color: accentColor }}>dibujos animados</span> y el <span style={{ color: accentColor }}>stop motion</span>; un arte que explora la belleza del <span style={{ color: accentColor }}>movimiento</span>, el <span style={{ color: accentColor }}>dibujo</span> y la <span style={{ color: accentColor }}>escultura</span>, entre muchas otras disciplinas que convergen en la consecución de una <span style={{ color: accentColor }}>historia</span> o <span style={{ color: accentColor }}>idea visual</span> para <span style={{ color: accentColor }}>entretener</span>, <span style={{ color: accentColor }}>conmover</span> o <span style={{ color: accentColor }}>emocionar</span>.
               </p>
             </ScrollReveal>
 
             <ScrollReveal direction="right" delay={0.5}>
               <p className="text-lg text-gray-300 mb-6 leading-relaxed">
-                Con más de <span className="text-yellow-400">20 años de experiencia</span> en la industria, trabajando en diversos proyectos, desde <span className="text-yellow-400">comerciales</span> y <span className="text-yellow-400">videoclips</span>, hasta <span className="text-yellow-400">cortometrajes independientes</span>, la <span className="text-yellow-400">misión</span> de <strong className="text-yellow-400">SPIRIWORS</strong> es <span className="text-yellow-400">sorprender</span> y <span className="text-yellow-400">alegrar</span> a la <span className="text-yellow-400">audiencia</span> y a nuestros <span className="text-yellow-400">clientes</span>… con la convicción de que más allá de la técnica, la <span className="text-yellow-400">innovación</span> y <span className="text-yellow-400">originalidad</span> están siempre en la <span className="text-yellow-400">creatividad</span> inmersa en cada uno de nuestros proyectos.
+                Con más de <span style={{ color: accentColor }}>20 años de experiencia</span> en la industria, trabajando en diversos proyectos, desde <span style={{ color: accentColor }}>comerciales</span> y <span style={{ color: accentColor }}>videoclips</span>, hasta <span style={{ color: accentColor }}>cortometrajes independientes</span>, la <span style={{ color: accentColor }}>misión</span> de <strong style={{ color: accentColor }}>SPIRIWORS</strong> es <span style={{ color: accentColor }}>sorprender</span> y <span style={{ color: accentColor }}>alegrar</span> a la <span style={{ color: accentColor }}>audiencia</span> y a nuestros <span style={{ color: accentColor }}>clientes</span>… con la convicción de que más allá de la técnica, la <span style={{ color: accentColor }}>innovación</span> y <span style={{ color: accentColor }}>originalidad</span> están siempre en la <span style={{ color: accentColor }}>creatividad</span> inmersa en cada uno de nuestros proyectos.
               </p>
             </ScrollReveal>
 
             <ScrollReveal direction="right" delay={0.55}>
               <p className="text-lg text-gray-300 italic mb-8">
-                <span className="text-yellow-400">Camilo Ayala Nieto.</span>
+                <span style={{ color: accentColor }}>Camilo Ayala Nieto.</span>
               </p>
             </ScrollReveal>
 
@@ -63,7 +65,8 @@ const About = () => {
               </motion.div>
               {/* Decorative Elements */}
               <motion.div
-                className="absolute -top-4 -left-4 w-full h-full bg-yellow-400/20 rounded-lg -z-10"
+                className="absolute -top-4 -left-4 w-full h-full rounded-lg -z-10"
+                style={{ backgroundColor: `${accentColor}33` }}
                 animate={{
                   rotate: [0, 2, 0],
                   scale: [1, 1.02, 1]

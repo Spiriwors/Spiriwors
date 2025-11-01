@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Creepster, Amatic_SC } from "next/font/google";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -207,7 +208,9 @@ export default function RootLayout({
       <body
         className={`${inter.className} ${creepster.variable} ${amaticSC.variable}`}
       >
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

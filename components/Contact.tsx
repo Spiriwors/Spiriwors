@@ -23,6 +23,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { SCALE } from "@/lib/animation-tokens";
+import { useTheme } from "@/contexts/ThemeContext";
 
 // Esquema de validación con Zod
 const contactSchema = z.object({
@@ -37,6 +38,7 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 
 const Contact = () => {
+  const { accentColor, theme } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
@@ -164,7 +166,19 @@ const Contact = () => {
                       id="name"
                       {...register("name")}
                       disabled={isSubmitting}
-                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      style={{
+                        '--tw-ring-color': accentColor,
+                        '--tw-border-opacity': '1'
+                      } as React.CSSProperties}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = accentColor;
+                        e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = '';
+                        e.currentTarget.style.boxShadow = '';
+                      }}
                       placeholder="Tu nombre completo"
                       aria-invalid={errors.name ? "true" : "false"}
                       aria-describedby={errors.name ? "name-error" : undefined}
@@ -184,7 +198,18 @@ const Contact = () => {
                       id="email"
                       {...register("email")}
                       disabled={isSubmitting}
-                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      style={{
+                        '--tw-ring-color': accentColor
+                      } as React.CSSProperties}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = accentColor;
+                        e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = '';
+                        e.currentTarget.style.boxShadow = '';
+                      }}
                       placeholder="tu@email.com"
                       aria-invalid={errors.email ? "true" : "false"}
                       aria-describedby={errors.email ? "email-error" : undefined}
@@ -210,7 +235,18 @@ const Contact = () => {
                       id="company"
                       {...register("company")}
                       disabled={isSubmitting}
-                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      style={{
+                        '--tw-ring-color': accentColor
+                      } as React.CSSProperties}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = accentColor;
+                        e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = '';
+                        e.currentTarget.style.boxShadow = '';
+                      }}
                       placeholder="Nombre de tu empresa"
                     />
                   </div>
@@ -223,7 +259,18 @@ const Contact = () => {
                     </label>
                     <Select onValueChange={(value) => register("budget").onChange({ target: { name: "budget", value } })} disabled={isSubmitting}>
                       <SelectTrigger
-                        className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        style={{
+                          '--tw-ring-color': accentColor
+                        } as React.CSSProperties}
+                        onFocus={(e) => {
+                          e.currentTarget.style.borderColor = accentColor;
+                          e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
+                        }}
+                        onBlur={(e) => {
+                          e.currentTarget.style.borderColor = '';
+                          e.currentTarget.style.boxShadow = '';
+                        }}
                         aria-label="Seleccionar presupuesto"
                       >
                         <SelectValue placeholder="Selecciona un rango" />
@@ -244,7 +291,18 @@ const Contact = () => {
                   </label>
                   <Select onValueChange={(value) => register("project").onChange({ target: { name: "project", value } })} disabled={isSubmitting}>
                     <SelectTrigger
-                      className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      style={{
+                        '--tw-ring-color': accentColor
+                      } as React.CSSProperties}
+                      onFocus={(e) => {
+                        e.currentTarget.style.borderColor = accentColor;
+                        e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
+                      }}
+                      onBlur={(e) => {
+                        e.currentTarget.style.borderColor = '';
+                        e.currentTarget.style.boxShadow = '';
+                      }}
                       aria-label="Seleccionar tipo de proyecto"
                       aria-invalid={errors.project ? "true" : "false"}
                       aria-describedby={errors.project ? "project-error" : undefined}
@@ -272,7 +330,7 @@ const Contact = () => {
                     <label htmlFor="message" className="block text-gray-300">
                       Mensaje *
                     </label>
-                    <span className={`text-sm ${messageLength < 10 ? 'text-gray-500' : messageLength > 450 ? 'text-yellow-400' : 'text-gray-400'}`}>
+                    <span className={`text-sm ${messageLength < 10 ? 'text-gray-500' : 'text-gray-400'}`} style={messageLength > 450 ? { color: accentColor } : {}}>
                       {messageLength}/500
                     </span>
                   </div>
@@ -284,7 +342,18 @@ const Contact = () => {
                     disabled={isSubmitting}
                     rows={6}
                     maxLength={500}
-                    className="w-full bg-gray-800 border-gray-700 text-white focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{
+                      '--tw-ring-color': accentColor
+                    } as React.CSSProperties}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = accentColor;
+                      e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '';
+                      e.currentTarget.style.boxShadow = '';
+                    }}
                     placeholder="Cuéntame sobre tu proyecto, objetivos, timeline y cualquier detalle relevante..."
                     aria-invalid={errors.message ? "true" : "false"}
                     aria-describedby={errors.message ? "message-error message-counter" : "message-counter"}
@@ -336,7 +405,17 @@ const Contact = () => {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-yellow-400 text-black hover:bg-yellow-500 disabled:bg-gray-600 disabled:text-gray-400 py-3 text-lg font-semibold flex items-center justify-center gap-2 will-change-transform"
+                    className="w-full text-white disabled:bg-gray-600 disabled:text-gray-400 py-3 text-lg font-semibold flex items-center justify-center gap-2 will-change-transform"
+                    style={{ 
+                      backgroundColor: accentColor,
+                      '--hover-bg': theme === 'light' ? '#ff9500' : '#2190a8'
+                    } as React.CSSProperties}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = theme === 'light' ? '#ff9500' : '#2190a8';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = accentColor;
+                    }}
                   >
                     {isSubmitting ? (
                       <>
@@ -376,7 +455,8 @@ const Contact = () => {
                       transition={{ duration: 0.2 }}
                     >
                       <motion.div
-                        className="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center mr-4"
+                        className="w-12 h-12 rounded-lg flex items-center justify-center mr-4"
+                        style={{ backgroundColor: accentColor }}
                         whileHover={{ scale: 1.1, rotate: 5 }}
                         transition={{ duration: 0.2 }}
                       >
@@ -388,7 +468,10 @@ const Contact = () => {
                         </h4>
                         <a
                           href={info.link}
-                          className="text-gray-300 hover:text-yellow-400 transition-colors duration-200"
+                          className="text-gray-300 transition-colors duration-200"
+                          style={{ color: 'rgb(209, 213, 219)' }}
+                          onMouseEnter={(e) => e.currentTarget.style.color = accentColor}
+                          onMouseLeave={(e) => e.currentTarget.style.color = 'rgb(209, 213, 219)'}
                         >
                           {info.value}
                         </a>
@@ -414,7 +497,13 @@ const Contact = () => {
                         e.stopPropagation();
                         window.open(social.url, '_blank');
                       }}
-                      className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-all duration-300 transform hover:scale-110"
+                      className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center hover:text-black transition-all duration-300 transform hover:scale-110"
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = accentColor;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = 'rgb(55, 65, 81)';
+                      }}
                       title={social.label}
                       aria-label={social.label}
                     >
@@ -431,7 +520,7 @@ const Contact = () => {
                 </h4>
                 <div className="space-y-4 text-gray-300">
                   <div>
-                    <h5 className="font-semibold text-yellow-400">
+                    <h5 className="font-semibold" style={{ color: accentColor }}>
                       ¿Cuánto tiempo toma un proyecto?
                     </h5>
                     <p className="text-sm">
@@ -439,7 +528,7 @@ const Contact = () => {
                     </p>
                   </div>
                   <div>
-                    <h5 className="font-semibold text-yellow-400">
+                    <h5 className="font-semibold" style={{ color: accentColor }}>
                       ¿Trabajas con clientes internacionales?
                     </h5>
                     <p className="text-sm">
@@ -447,7 +536,7 @@ const Contact = () => {
                     </p>
                   </div>
                   <div>
-                    <h5 className="font-semibold text-yellow-400">
+                    <h5 className="font-semibold" style={{ color: accentColor }}>
                       ¿Ofreces revisiones?
                     </h5>
                     <p className="text-sm">

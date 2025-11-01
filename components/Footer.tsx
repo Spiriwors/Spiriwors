@@ -1,11 +1,13 @@
 "use client";
 
 import React from 'react';
-import { Instagram, Linkedin, Youtube, Mail, Heart } from 'lucide-react';
+import { Instagram, Linkedin, Youtube, Mail, Heart, Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { accentColor, theme, toggleTheme } = useTheme();
 
   const quickLinks = [
     { name: 'Inicio', href: '#hero' },
@@ -61,7 +63,10 @@ const Footer = () => {
                 <li key={index}>
                   <button
                     onClick={() => scrollToSection(link.href)}
-                    className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 text-sm"
+                    className="text-gray-400 transition-colors duration-200 text-sm"
+                    style={{ color: 'rgb(156, 163, 175)' }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = accentColor}
+                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgb(156, 163, 175)'}
                   >
                     {link.name}
                   </button>
@@ -87,12 +92,19 @@ const Footer = () => {
                       window.open(social.url, '_blank');
                     }
                   }}
-                  className="flex items-center gap-3 text-gray-400 hover:text-yellow-400 transition-colors duration-200 group"
+                  className="flex items-center gap-3 text-gray-400 transition-colors duration-200 group"
+                  style={{ color: 'rgb(156, 163, 175)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = accentColor}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'rgb(156, 163, 175)'}
                   aria-label={social.label}
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div className="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center group-hover:bg-yellow-400 transition-colors duration-200">
+                  <div 
+                    className="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center transition-colors duration-200"
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = accentColor}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgb(31, 41, 55)'}
+                  >
                     <social.icon className="w-4 h-4 group-hover:text-black transition-colors duration-200" />
                   </div>
                   <span className="text-sm">{social.username}</span>
@@ -108,10 +120,26 @@ const Footer = () => {
             © {currentYear} Spiriwors. Todos los derechos reservados.
           </p>
 
-          <div className="flex items-center text-gray-500 text-sm">
-            <span>Hecho con</span>
-            <Heart className="w-4 h-4 mx-2 text-red-500 fill-current" />
-            <span>en Colombia</span>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center text-gray-500 text-sm">
+              <span>Hecho con</span>
+              <Heart className="w-4 h-4 mx-2 text-red-500 fill-current" />
+              <span>en Colombia</span>
+            </div>
+            
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg transition-all duration-200 hover:bg-white/10"
+              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              style={{ color: accentColor }}
+            >
+              {theme === 'light' ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
           </div>
         </div>
       </div>
