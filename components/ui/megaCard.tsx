@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Play, X, Info } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import React, { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, Play, X, Info } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface MegaCardProps {
   images: Array<{
@@ -17,7 +17,7 @@ interface MegaCardProps {
 const MegaCard: React.FC<MegaCardProps> = ({
   images,
   videoSrc,
-  videoTitle = "Video"
+  videoTitle = "Video",
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -37,7 +37,7 @@ const MegaCard: React.FC<MegaCardProps> = ({
   // Cerrar modal con tecla Escape
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         if (showInfoModal) {
           setShowInfoModal(false);
         }
@@ -45,11 +45,11 @@ const MegaCard: React.FC<MegaCardProps> = ({
     };
 
     if (showInfoModal) {
-      document.addEventListener('keydown', handleEscape);
+      document.addEventListener("keydown", handleEscape);
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener("keydown", handleEscape);
     };
   }, [showInfoModal]);
 
@@ -104,9 +104,9 @@ const MegaCard: React.FC<MegaCardProps> = ({
       <div
         className="card relative w-full h-64 cursor-pointer transition-transform duration-700"
         style={{
-          perspective: '1000px',
-          transformStyle: 'preserve-3d',
-          transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
+          perspective: "1000px",
+          transformStyle: "preserve-3d",
+          transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
         }}
         onClick={handleCardClick}
       >
@@ -114,7 +114,7 @@ const MegaCard: React.FC<MegaCardProps> = ({
         <div
           className="card-face card-front absolute inset-0 w-full h-full"
           style={{
-            backfaceVisibility: 'hidden'
+            backfaceVisibility: "hidden",
           }}
         >
           <div className="relative w-full h-full rounded-lg overflow-hidden bg-gray-800 group">
@@ -124,7 +124,7 @@ const MegaCard: React.FC<MegaCardProps> = ({
                 <div
                   key={index}
                   className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                    index === currentSlide ? 'opacity-100' : 'opacity-0'
+                    index === currentSlide ? "opacity-100" : "opacity-0"
                   }`}
                 >
                   <img
@@ -177,7 +177,7 @@ const MegaCard: React.FC<MegaCardProps> = ({
                         setCurrentSlide(index);
                       }}
                       className={`w-2 h-2 rounded-full transition-colors ${
-                        index === currentSlide ? 'bg-yellow-400' : 'bg-white/50'
+                        index === currentSlide ? "bg-yellow-400" : "bg-white/50"
                       }`}
                       aria-label={`Ir a imagen ${index + 1}`}
                     />
@@ -185,7 +185,6 @@ const MegaCard: React.FC<MegaCardProps> = ({
                 </div>
               </>
             )}
-
           </div>
         </div>
 
@@ -193,8 +192,8 @@ const MegaCard: React.FC<MegaCardProps> = ({
         <div
           className="card-face card-back absolute inset-0 w-full h-full"
           style={{
-            backfaceVisibility: 'hidden',
-            transform: 'rotateY(180deg)'
+            backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
           }}
         >
           <div className="relative w-full h-full rounded-lg overflow-hidden bg-gray-900">
@@ -224,7 +223,9 @@ const MegaCard: React.FC<MegaCardProps> = ({
 
             {/* Video Player */}
             <div className="video-container relative w-full h-full group">
-              {videoSrc.includes('youtube.com') || videoSrc.includes('youtu.be') || videoSrc.includes('vimeo.com') ? (
+              {videoSrc.includes("youtube.com") ||
+              videoSrc.includes("youtu.be") ||
+              videoSrc.includes("vimeo.com") ? (
                 <div className="relative w-full h-full">
                   <iframe
                     src={getVideoEmbedSrc(videoSrc)}
@@ -243,9 +244,11 @@ const MegaCard: React.FC<MegaCardProps> = ({
                   autoPlay
                   className="w-full h-full object-cover"
                   preload="metadata"
-                  style={{
-                    // Los controles aparecerán automáticamente en hover
-                  }}
+                  style={
+                    {
+                      // Los controles aparecerán automáticamente en hover
+                    }
+                  }
                 >
                   Tu navegador no soporta la reproducción de video.
                 </video>
@@ -286,8 +289,8 @@ const MegaCard: React.FC<MegaCardProps> = ({
                   {videoTitle}
                 </h4>
                 <p className="text-gray-300 mb-4">
-                  Video disponible para reproducción automática.
-                  Los controles aparecen al pasar el mouse sobre el área del video.
+                  Video disponible para reproducción automática. Los controles
+                  aparecen al pasar el mouse sobre el área del video.
                 </p>
                 <div className="flex gap-3 justify-center">
                   <Button
