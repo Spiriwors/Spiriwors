@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { DELAY } from "@/lib/animation-tokens";
 import MegaCard from "@/components/ui/megaCard";
+import ParallaxAnimation from "@/components/ParallaxAnimation";
 
 const Projects = () => {
   const [filter, setFilter] = useState<"all" | "2d" | "stop">("all");
@@ -216,6 +217,12 @@ const Projects = () => {
               videoTitle={item.title}
             />
           ))}
+          {/* Parallax Animation en el espacio vacío */}
+          {filteredProjects.length === 11 && (
+            <div className="w-full max-w-md mx-auto">
+              <ParallaxAnimation frameRate={15} />
+            </div>
+          )}
         </div>
       </div>
     </section>
