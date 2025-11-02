@@ -84,15 +84,15 @@ const Navbar = () => {
             transition={{ duration: DURATION.fast }}
           >
             <img
-              src="/assets/SW.png"
+              src="/assets/logoSW_beige.png"
               alt="Spiriwors Logo"
-              className="w-16 h-16 object-contain"
+              className="w-16 h-16 object-contain cursor-pointer"
               width="64"
               height="64"
               loading="eager"
               decoding="async"
+              onClick={() => window.location.reload()}
             />
-            <span className="text-3xl md:text-4xl font-bold amatic-sc-bold">SPIRIWORS</span>
           </motion.div>
 
           {/* Desktop Menu */}
