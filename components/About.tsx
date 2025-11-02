@@ -17,25 +17,25 @@ const About = () => {
           <div>
             <ScrollReveal direction="right" delay={0.2}>
               <h2 className="text-4xl md:text-5xl font-bold mb-6 amatic-sc-bold text-white">
-                Sobre Nosotros
+                Sobre Spiriwors
               </h2>
             </ScrollReveal>
 
             <ScrollReveal direction="right" delay={0.3}>
               <p className="text-lg text-gray-300 mb-6 leading-relaxed">
-                Como un huevo que eclosiona para dar paso a la misteriosa vida de una nueva criatura, así son los proyectos de <strong style={{ color: accentColor }}>SPIRIWORS</strong>; una palabra garabateada en la mente de un niño que se negó a crecer y quiere compartir la <span style={{ color: accentColor }}>magia</span> y <span style={{ color: accentColor }}>alegría</span> que surgen de la <span style={{ color: accentColor }}>imaginación</span>.
+                Como un huevo que eclosiona para dar paso a la misteriosa vida de una nueva criatura, así son los proyectos de <strong style={{ color: accentColor }}>SPIRIWORS</strong>; una palabra garabateada en la mente de un niño que se negó a crecer y quiere compartir la magia y alegría que surgen de la imaginación.
               </p>
             </ScrollReveal>
 
             <ScrollReveal direction="right" delay={0.4}>
               <p className="text-lg text-gray-300 mb-6 leading-relaxed">
-                Creemos que la <span style={{ color: accentColor }}>animación</span> realizada con las <span style={{ color: accentColor }}>manos</span> —y el <span style={{ color: accentColor }}>corazón</span>— es el medio idóneo para traer a la vida diversión creativa. Por eso nos gusta la <span style={{ color: accentColor }}>naturaleza artesanal</span> que hay en los <span style={{ color: accentColor }}>dibujos animados</span> y el <span style={{ color: accentColor }}>stop motion</span>; un arte que explora la belleza del <span style={{ color: accentColor }}>movimiento</span>, el <span style={{ color: accentColor }}>dibujo</span> y la <span style={{ color: accentColor }}>escultura</span>, entre muchas otras disciplinas que convergen en la consecución de una <span style={{ color: accentColor }}>historia</span> o <span style={{ color: accentColor }}>idea visual</span> para <span style={{ color: accentColor }}>entretener</span>, <span style={{ color: accentColor }}>conmover</span> o <span style={{ color: accentColor }}>emocionar</span>.
+                Creemos que la animación realizada con las manos —y el corazón— es el medio idóneo para traer a la vida diversión creativa. Por eso nos gusta la naturaleza artesanal que hay en los dibujos animados y el stop motion; un arte que explora la belleza del movimiento, el dibujo y la escultura, entre muchas otras disciplinas que convergen en la consecución de una historia o idea visual para entretener, conmover o emocionar.
               </p>
             </ScrollReveal>
 
             <ScrollReveal direction="right" delay={0.5}>
               <p className="text-lg text-gray-300 mb-6 leading-relaxed">
-                Con más de <span style={{ color: accentColor }}>20 años de experiencia</span> en la industria, trabajando en diversos proyectos, desde <span style={{ color: accentColor }}>comerciales</span> y <span style={{ color: accentColor }}>videoclips</span>, hasta <span style={{ color: accentColor }}>cortometrajes independientes</span>, la <span style={{ color: accentColor }}>misión</span> de <strong style={{ color: accentColor }}>SPIRIWORS</strong> es <span style={{ color: accentColor }}>sorprender</span> y <span style={{ color: accentColor }}>alegrar</span> a la <span style={{ color: accentColor }}>audiencia</span> y a nuestros <span style={{ color: accentColor }}>clientes</span>… con la convicción de que más allá de la técnica, la <span style={{ color: accentColor }}>innovación</span> y <span style={{ color: accentColor }}>originalidad</span> están siempre en la <span style={{ color: accentColor }}>creatividad</span> inmersa en cada uno de nuestros proyectos.
+                Con más de 20 años de experiencia en la industria, trabajando en diversos proyectos, desde comerciales y videoclips, hasta cortometrajes independientes, la <span style={{ color: accentColor }}>misión</span> de <strong style={{ color: accentColor }}>SPIRIWORS</strong> es sorprender y alegrar a la audiencia y a nuestros clientes… con la convicción de que más allá de la técnica, la <span style={{ color: accentColor }}>innovación</span> y la <span style={{ color: accentColor }}>creatividad</span> están siempre en cada uno de nuestros proyectos.
               </p>
             </ScrollReveal>
 
