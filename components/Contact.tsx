@@ -111,7 +111,7 @@ const Contact = () => {
 
   const socialLinks = [
     { icon: Instagram, url: "https://www.instagram.com/camiloayalanieto?igsh=eHhiNGMwdmZ1dWM5&utm_source=qr", label: "@spiriwors" },
-    { icon: Linkedin, url: "https://linkedin.com/company/spiriwors", label: "Spiriwors" },
+    { icon: Linkedin, url: "https://www.linkedin.com/in/camilo-ayala-nieto-125730388?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app", label: "Spiriwors" },
   ];
 
   return (

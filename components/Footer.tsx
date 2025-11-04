@@ -19,7 +19,7 @@ const Footer = () => {
 
   const socialLinks = [
     { icon: Instagram, url: 'https://www.instagram.com/camiloayalanieto?igsh=eHhiNGMwdmZ1dWM5&utm_source=qr', label: 'Instagram', username: '@spiriwors' },
-    { icon: Linkedin, url: 'https://linkedin.com/company/spiriwors', label: 'LinkedIn', username: 'Spiriwors' },
+    { icon: Linkedin, url: 'https://www.linkedin.com/in/camilo-ayala-nieto-125730388?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app', label: 'LinkedIn', username: 'Spiriwors' },
     { icon: Mail, url: 'mailto:spiriwors@gmail.com', label: 'Email', username: 'spiriwors@gmail.com' }
   ];
 
