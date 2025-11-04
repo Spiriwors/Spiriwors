@@ -90,7 +90,8 @@ CREATE POLICY "Proyectos son públicos para lectura"
 CREATE POLICY "Solo admins pueden modificar proyectos"
   ON projects
   FOR ALL
-  USING (auth.role() = 'authenticated');
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
 ```
 
 4. Click en **"Run"** (o Ctrl/Cmd + Enter)
@@ -263,6 +264,81 @@ Si tienes problemas, revisa:
 
 ---
 
+## 9️⃣ Testing de la Configuración
+
+**⚠️ IMPORTANTE:** El código del CMS ya está 100% completo. NO hay nada que programar. Solo necesitas configurar Supabase y probar.
+
+### Cómo probar que funciona:
+
+1. **Reiniciar el servidor de desarrollo:**
+   ```bash
+   # Detener el servidor (Ctrl+C)
+   npm run dev
+   ```
+
+2. **Verificar modo Supabase (no fallback):**
+   - Ir a `http://localhost:3000/admin/login`
+   - **NO deberías ver** el banner amarillo que dice "⚠️ MODO FALLBACK"
+   - Si lo ves, significa que las credenciales en `.env.local` están mal
+
+3. **Probar login:**
+   - Usar el email y contraseña del usuario que creaste en el paso 4
+   - Si funciona, verás el panel de admin
+
+4. **Probar crear proyecto:**
+   - Click en "+ Crear Proyecto"
+   - Llenar formulario
+   - Subir imágenes
+   - Guardar
+   - **Verificar en Supabase:** Ir a Table Editor → projects → Deberías ver el proyecto
+
+5. **Probar upload de imágenes:**
+   - En el formulario, subir imágenes
+   - **Verificar en Supabase:** Ir a Storage → project-images → Deberías ver las imágenes
+
+6. **Probar frontend público:**
+   - Ir a `http://localhost:3000`
+   - Scroll a "Nuestros Proyectos"
+   - Deberías ver el proyecto que creaste
+
+### ✅ Checklist de Testing:
+
+- [ ] No aparece banner de "MODO FALLBACK"
+- [ ] Puedo hacer login con las credenciales creadas
+- [ ] Puedo crear un proyecto
+- [ ] Veo el proyecto en Supabase (Table Editor)
+- [ ] Puedo subir imágenes
+- [ ] Veo las imágenes en Supabase (Storage)
+- [ ] El proyecto aparece en el sitio público
+- [ ] Puedo editar el proyecto
+- [ ] Puedo eliminarlo
+
+---
+
+## 🔄 Entender el Modo Fallback
+
+El CMS tiene un **sistema de fallback** para que funcione sin Supabase durante desarrollo:
+
+**Modo Fallback (SIN Supabase):**
+- Login: `admin@spiriwors.com` / `admin123`
+- Datos: Los 11 proyectos hardcodeados originales
+- **Identificador:** Banner amarillo en login
+
+**Modo Supabase (CON Supabase configurado):**
+- Login: Credenciales del usuario que creaste
+- Datos: PostgreSQL real
+- Upload: Storage real
+- **Identificador:** NO hay banner amarillo
+
+**Cómo saber en qué modo estoy:**
+```bash
+# Ver en la consola del navegador (F12 → Console)
+# Si ves: "📦 Usando datos fallback" → Modo fallback
+# Si no ves ese mensaje → Modo Supabase ✅
+```
+
+---
+
 ## ✅ Siguiente Paso
 
 Una vez completado esto, el equipo de frontend podrá:
@@ -274,3 +350,29 @@ Una vez completado esto, el equipo de frontend podrá:
 El sitio público automáticamente mostrará los datos de Supabase.
 
 **¡Listo! 🎉**
+
+---
+
+## 📝 Resumen para tu compañero de Frontend
+
+Después de completar esta configuración, envíale este mensaje:
+
+```
+✅ Supabase configurado
+
+Credenciales para .env.local:
+NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGc...
+
+Usuario admin creado:
+Email: camilo@spiriwors.com
+Password: [la contraseña que creaste]
+
+Testing: ✅
+- Login funciona
+- Crear proyecto funciona
+- Upload de imágenes funciona
+- Sitio público muestra datos de Supabase
+
+🚀 Listo para merge a main
+```
