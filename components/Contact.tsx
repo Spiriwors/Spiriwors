@@ -7,12 +7,9 @@ import { z } from "zod";
 import {
   Send,
   Mail,
-  Phone,
   MapPin,
-  Clock,
   Instagram,
   Linkedin,
-  Youtube,
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
@@ -103,14 +100,8 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email",
-      value: "hola@spiriwors.com",
-      link: "mailto:hola@spiriwors.com",
-    },
-    {
-      icon: Phone,
-      title: "Teléfono",
-      value: "+57 300 123 4567",
-      link: "tel:+573001234567",
+      value: "spiriwors@gmail.com",
+      link: "mailto:spiriwors@gmail.com",
     },
     {
       icon: MapPin,
@@ -118,18 +109,11 @@ const Contact = () => {
       value: "Bogotá, Colombia",
       link: "#",
     },
-    {
-      icon: Clock,
-      title: "Horario",
-      value: "Lun - Vie: 9:00 - 18:00",
-      link: "#",
-    },
   ];
 
   const socialLinks = [
-    { icon: Instagram, url: "https://instagram.com/spiriwors", label: "@spiriwors" },
+    { icon: Instagram, url: "https://www.instagram.com/camiloayalanieto?igsh=eHhiNGMwdmZ1dWM5&utm_source=qr", label: "@spiriwors" },
     { icon: Linkedin, url: "https://linkedin.com/company/spiriwors", label: "Spiriwors" },
-    { icon: Youtube, url: "https://youtube.com/@spiriwors", label: "Spiriwors Studio" },
   ];
 
   return (
@@ -513,38 +497,6 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* FAQ */}
-              <div className="bg-gray-900 p-6 rounded-lg">
-                <h4 className="text-xl font-bold text-white mb-4">
-                  Preguntas Frecuentes
-                </h4>
-                <div className="space-y-4 text-gray-300">
-                  <div>
-                    <h5 className="font-semibold" style={{ color: accentColor }}>
-                      ¿Cuánto tiempo toma un proyecto?
-                    </h5>
-                    <p className="text-sm">
-                      Depende del alcance, pero típicamente entre 2-8 semanas.
-                    </p>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold" style={{ color: accentColor }}>
-                      ¿Trabajas con clientes internacionales?
-                    </h5>
-                    <p className="text-sm">
-                      ¡Sí! Trabajo con clientes de todo el mundo remotamente.
-                    </p>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold" style={{ color: accentColor }}>
-                      ¿Ofreces revisiones?
-                    </h5>
-                    <p className="text-sm">
-                      Incluyo 3 rondas de revisiones en todos mis proyectos.
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </ScrollReveal>
         </div>

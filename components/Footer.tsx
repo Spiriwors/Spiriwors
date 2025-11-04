@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Instagram, Linkedin, Youtube, Mail, Heart, Sun, Moon } from 'lucide-react';
+import { Instagram, Linkedin, Mail, Heart, Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 
@@ -18,10 +18,9 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Instagram, url: 'https://instagram.com/spiriwors', label: 'Instagram', username: '@spiriwors' },
+    { icon: Instagram, url: 'https://www.instagram.com/camiloayalanieto?igsh=eHhiNGMwdmZ1dWM5&utm_source=qr', label: 'Instagram', username: '@spiriwors' },
     { icon: Linkedin, url: 'https://linkedin.com/company/spiriwors', label: 'LinkedIn', username: 'Spiriwors' },
-    { icon: Youtube, url: 'https://youtube.com/@spiriwors', label: 'YouTube', username: 'Spiriwors Studio' },
-    { icon: Mail, url: 'mailto:hola@spiriwors.com', label: 'Email', username: 'hola@spiriwors.com' }
+    { icon: Mail, url: 'mailto:spiriwors@gmail.com', label: 'Email', username: 'spiriwors@gmail.com' }
   ];
 
   const scrollToSection = (href: string) => {
