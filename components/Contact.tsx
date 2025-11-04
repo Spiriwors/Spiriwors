@@ -28,7 +28,6 @@ const contactSchema = z.object({
   email: z.string().email("Por favor ingresa un email válido"),
   company: z.string().optional(),
   project: z.string().min(1, "Por favor selecciona un tipo de proyecto"),
-  budget: z.string().optional(),
   message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
 });
 
@@ -55,7 +54,6 @@ const Contact = () => {
       email: "",
       company: "",
       project: "",
-      budget: "",
       message: "",
     },
   });
@@ -206,67 +204,32 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label
-                      htmlFor="company"
-                      className="block text-gray-300 mb-2"
-                    >
-                      Empresa
-                    </label>
-                    <Input
-                      type="text"
-                      id="company"
-                      {...register("company")}
-                      disabled={isSubmitting}
-                      className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                      style={{
-                        '--tw-ring-color': accentColor
-                      } as React.CSSProperties}
-                      onFocus={(e) => {
-                        e.currentTarget.style.borderColor = accentColor;
-                        e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.borderColor = '';
-                        e.currentTarget.style.boxShadow = '';
-                      }}
-                      placeholder="Nombre de tu empresa"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="budget"
-                      className="block text-gray-300 mb-2"
-                    >
-                      Presupuesto
-                    </label>
-                    <Select onValueChange={(value) => register("budget").onChange({ target: { name: "budget", value } })} disabled={isSubmitting}>
-                      <SelectTrigger
-                        className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                        style={{
-                          '--tw-ring-color': accentColor
-                        } as React.CSSProperties}
-                        onFocus={(e) => {
-                          e.currentTarget.style.borderColor = accentColor;
-                          e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
-                        }}
-                        onBlur={(e) => {
-                          e.currentTarget.style.borderColor = '';
-                          e.currentTarget.style.boxShadow = '';
-                        }}
-                        aria-label="Seleccionar presupuesto"
-                      >
-                        <SelectValue placeholder="Selecciona un rango" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="1000-5000">$1,000 - $5,000</SelectItem>
-                        <SelectItem value="5000-10000">$5,000 - $10,000</SelectItem>
-                        <SelectItem value="10000-25000">$10,000 - $25,000</SelectItem>
-                        <SelectItem value="25000+">$25,000+</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <div>
+                  <label
+                    htmlFor="company"
+                    className="block text-gray-300 mb-2"
+                  >
+                    Empresa
+                  </label>
+                  <Input
+                    type="text"
+                    id="company"
+                    {...register("company")}
+                    disabled={isSubmitting}
+                    className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{
+                      '--tw-ring-color': accentColor
+                    } as React.CSSProperties}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = accentColor;
+                      e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '';
+                      e.currentTarget.style.boxShadow = '';
+                    }}
+                    placeholder="Nombre de tu empresa"
+                  />
                 </div>
 
                 <div>
