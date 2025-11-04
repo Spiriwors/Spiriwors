@@ -46,42 +46,128 @@
 
 ## 🔧 Próximos Pasos
 
-### Para tu compañero (Backend/Supabase):
+### ⚠️ IMPORTANTE: El código está 100% completo
+
+**NO hay código pendiente.** Todo el frontend y backend del CMS está implementado. Solo falta:
+1. Configurar Supabase (15-30 min)
+2. Probar que funciona
+3. Hacer PR y deploy
+
+---
+
+### 👨‍💻 Para tu compañero (Backend/Supabase):
+
+**Su trabajo es solo configuración, NO programación:**
 
 1. **Leer el archivo:** `SUPABASE_SETUP.md`
-2. Seguir las instrucciones paso a paso (15-30 min)
-3. Darte estas credenciales:
+2. **Seguir 8 pasos** (15-30 min):
+   - Crear proyecto en Supabase
+   - Ejecutar SQL para crear tabla
+   - Configurar Storage
+   - Crear usuario admin
+   - Probar que funciona
+3. **Enviarte:**
    ```
    NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
    NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGc...
+
+   Email admin: camilo@spiriwors.com
+   Password: [contraseña que creó]
    ```
 
-### Para ti (Frontend):
+---
 
-1. **Crear archivo `.env.local`:**
-   ```bash
-   cp .env.example .env.local
-   ```
+### 👨‍💻 Para ti (Frontend):
 
-2. **Pegar las credenciales** que tu compañero te dé:
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGc...
-   ```
+**Tu trabajo:**
 
-3. **Probar en desarrollo:**
-   ```bash
-   npm run dev
-   ```
-   - Ir a `http://localhost:3000/admin/login`
-   - Iniciar sesión con las credenciales que tu compañero creó
-   - Crear un proyecto de prueba
-   - Verificar que aparece en el sitio público
+#### 1. Crear `.env.local`
+```bash
+cp .env.example .env.local
+```
 
-4. **Deploy:**
-   - Hacer PR de `feature/admin-cms` → `main`
-   - En Vercel/Netlify, añadir las variables de entorno
-   - Deploy automático
+#### 2. Pegar credenciales
+Editar `.env.local` con las credenciales que tu compañero te dé:
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGc...
+```
+
+#### 3. Reiniciar servidor
+```bash
+# Detener (Ctrl+C) y reiniciar
+npm run dev
+```
+
+#### 4. Probar funcionalidad completa
+
+**a) Verificar modo Supabase (no fallback):**
+- Ir a `http://localhost:3000/admin/login`
+- **NO deberías ver** banner amarillo de "MODO FALLBACK"
+- Si lo ves, las credenciales están mal en `.env.local`
+
+**b) Login:**
+- Usar email/password que tu compañero creó
+- Deberías ver el panel de admin
+
+**c) Crear proyecto:**
+- Click "+ Crear Proyecto"
+- Llenar formulario (título, descripción, video URL)
+- Subir 2-3 imágenes
+- Guardar
+- **Verificar:** El proyecto aparece en la lista
+
+**d) Marcar como destacado:**
+- Editar el proyecto
+- Activar "⭐ Mostrar en Trabajos Destacados"
+- Subir poster vertical
+- Guardar
+
+**e) Frontend público:**
+- Ir a `http://localhost:3000`
+- Scroll a "Nuestros Proyectos" → Deberías ver tu proyecto
+- Scroll a "Trabajos Destacados" → Deberías ver el proyecto destacado
+
+**f) Editar y eliminar:**
+- Editar el proyecto
+- Eliminarlo
+- Verificar que desaparece
+
+#### 5. Deploy
+
+**a) PR:**
+```bash
+# Ya está pusheado en feature/admin-cms
+# Crear PR en GitHub: feature/admin-cms → main
+```
+
+**b) Variables en Vercel/Netlify:**
+```
+NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGc...
+```
+
+**c) Merge y deploy automático**
+
+---
+
+## 🔄 Modo Fallback vs Supabase
+
+El CMS tiene 2 modos:
+
+| | **Modo Fallback** | **Modo Supabase** |
+|---|---|---|
+| **Cuándo** | Sin `.env.local` configurado | Con `.env.local` configurado |
+| **Login** | `admin@spiriwors.com` / `admin123` | Credenciales reales de Supabase |
+| **Datos** | 11 proyectos hardcodeados | PostgreSQL real |
+| **Upload** | No funciona | Storage real |
+| **Identificador** | ⚠️ Banner amarillo en login | Sin banner |
+
+**Cómo verificar en qué modo estás:**
+1. Abrir consola del navegador (F12 → Console)
+2. Ir a `/admin/login`
+3. Si ves: `"📦 Usando datos fallback"` → Modo fallback
+4. Si NO lo ves → Modo Supabase ✅
 
 ---
 
