@@ -1,117 +1,38 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { DELAY } from "@/lib/animation-tokens";
 import MegaCard from "@/components/ui/megaCard";
 import ParallaxAnimation from "@/components/ParallaxAnimation";
 import { useTheme } from "@/contexts/ThemeContext";
+import { getProjects } from "@/lib/supabase/projects";
+import { Project } from "@/types/project";
 
 const Projects = () => {
   const [filter, setFilter] = useState<"all" | "2d" | "stop">("all");
   const { accentColor } = useTheme();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Catálogo unificado: categoría por tipo de animación (2D o Stop Motion)
-  const projects = [
-    // SPIRIWORS – Contenidos Originales
-    {
-      id: 1,
-      title: "La Joya Del Pantano",
-      url: "https://vimeo.com/896578269?fl=pl&fe=sh",
-      description: "Trailer de la historia original La Joya Del Pantano",
-      year: undefined,
-      category: "2d" as const,
-    },
-    {
-      id: 2,
-      title: "SALÚ",
-      url: "https://vimeo.com/172426682?fl=pl&fe=sh",
-      description: "Trailer de la historia original SALÚ",
-      year: undefined,
-      category: "2d" as const,
-    },
-    // SPIRIWORS – Servicios Creativos y Animación
-    {
-      id: 3,
-      title: "Un Bosque Encantado 2 – El Abrazo del Ciempiés",
-      url: "https://www.youtube.com/watch?v=qDt5k1NIWr0&list=RDqDt5k1NIWr0&start_radio=1",
-      description: "Un Bosque Encantado 2 – El Abrazo del Ciempiés",
-      year: undefined,
-      category: "2d" as const,
-    },
-    {
-      id: 4,
-      title: "Un Bosque Encantado 2 – Lobos",
-      url: "https://www.youtube.com/watch?v=zQM8IrGu5Oo&list=RDzQM8IrGu5Oo&start_radio=1",
-      description: "Un Bosque Encantado 2 – Lobos",
-      year: undefined,
-      category: "2d" as const,
-    },
-    // Venturia Animation Studios – Servicios Creativos
-    {
-      id: 5,
-      title: "AJR – My Play",
-      url: "https://venturiaanimation.com/portfolio/my-play-ajr/",
-      description:
-        "Cargo: animación – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
-      year: undefined,
-      category: "2d" as const,
-    },
-    {
-      id: 6,
-      title: "ONR – It Gets To a Point",
-      url: "https://venturiaanimation.com/portfolio/it-gets-to-a-point-onr/",
-      description:
-        "Cargo: animación – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
-      year: undefined,
-      category: "2d" as const,
-    },
-    {
-      id: 7,
-      title: "We The Kingdom – Christmas In Hawaii",
-      url: "https://venturiaanimation.com/portfolio/christmas-in-hawaii-we-the-kingdom/",
-      description:
-        "Cargo: modelado de marionetas y animación stop-motion – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
-      year: undefined,
-      category: "stop" as const,
-    },
-    {
-      id: 8,
-      title: "Satellite – Bebe Rexha & Snoop Dogg",
-      url: "https://venturiaanimation.com/portfolio/satellite-bebe-rexha-snoop-dogg/",
-      description:
-        "Cargo: animación. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
-      year: undefined,
-      category: "2d" as const,
-    },
-    {
-      id: 9,
-      title: "Waldo´s Dream",
-      url: "https://venturiaanimation.com/portfolio/waldos-dream/",
-      description:
-        "Cargo: animación. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
-      year: undefined,
-      category: "2d" as const,
-    },
-    {
-      id: 10,
-      title: "Heroes Collection: Francis Ford Coppola",
-      url: "https://venturiaanimation.com/portfolio/heroes-francis-ford-coppola/",
-      description:
-        "Cargo: Realizador de Animatic y Animador – Camilo Ayala. Original Content by Venturia Animation Studios. All Rights Reserved.",
-      year: undefined,
-      category: "2d" as const,
-    },
-    {
-      id: 11,
-      title: "Smiling Symphonies",
-      url: "https://dinamitaanimacion.com/portfolio/smiling-symphonies/",
-      description: "Proyecto de Dinamita Animación – Smiling Symphonies",
-      year: undefined,
-      category: "2d" as const,
-    },
-  ];
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
+  const loadProjects = async () => {
+    try {
+      const data = await getProjects();
+      setProjects(data);
+    } catch (error) {
+      console.error('Error loading projects:', error);
+      // Fallback a datos vacíos si falla
+      setProjects([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const filterOptions = [
     { key: "all", label: "Todos" },
@@ -122,8 +43,19 @@ const Projects = () => {
   const filteredProjects =
     filter === "all" ? projects : projects.filter((p) => p.category === filter);
 
-  // Función para asignar las imágenes del carousel basado en el título
-  const getProjectImages = (title: string) => {
+  // Convertir imágenes de Supabase a formato MegaCard
+  const getProjectImages = (project: Project) => {
+    // Si tiene imágenes de Supabase, usarlas
+    if (project.images && project.images.length > 0) {
+      return project.images.map((url, i) => ({
+        src: url,
+        alt: `${project.title} - Imagen ${i + 1}`,
+        title: project.title,
+      }));
+    }
+
+    // Fallback para compatibilidad con imágenes antiguas
+    const title = project.title;
     const createImageArray = (
       folder: string,
       prefix: string,
@@ -227,22 +159,29 @@ const Projects = () => {
         </div>
 
         {/* MegaCard Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
-          {filteredProjects.map((item, index) => (
-            <MegaCard
-              key={item.id}
-              images={getProjectImages(item.title)}
-              videoSrc={item.url}
-              videoTitle={item.title}
-            />
-          ))}
-          {/* Parallax Animation en el espacio vacío */}
-          {filteredProjects.length === 11 && (
-            <div className="w-full max-w-md mx-auto">
-              <ParallaxAnimation frameRate={15} />
-            </div>
-          )}
-        </div>
+        {loading ? (
+          <div className="text-center text-gray-400">Cargando proyectos...</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
+            {filteredProjects.map((item, index) => {
+              console.log('Rendering project:', item.title, 'Video URL:', item.video_url);
+              return (
+                <MegaCard
+                  key={item.id}
+                  images={getProjectImages(item)}
+                  videoSrc={item.video_url}
+                  videoTitle={item.title}
+                />
+              );
+            })}
+            {/* Parallax Animation en el espacio vacío */}
+            {filteredProjects.length === 11 && (
+              <div className="w-full max-w-md mx-auto">
+                <ParallaxAnimation frameRate={15} />
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );
