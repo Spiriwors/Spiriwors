@@ -203,31 +203,84 @@ const Projects = () => {
 
         {/* MegaCard Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
-          {filteredProjects.map((item, index) => {
-            const shouldShowParallaxInMiddle = 
-              filter === "2d" && index === 5; // Después de la tarjeta 6 (índice 5)
+          {filteredProjects.map((item) => (
+            <MegaCard
+              key={item.id}
+              images={getProjectImages(item.title)}
+              videoSrc={item.url}
+              videoTitle={item.title}
+            />
+          ))}
+          {/* Parallax Animation al final - en la misma fila que las tarjetas */}
+          {filteredProjects.length > 0 && (() => {
+            const totalCards = filteredProjects.length;
+            const cardsInLastRow = totalCards % 3; // Para grid de 3 columnas en desktop
             
-            return (
-              <React.Fragment key={item.id}>
-                <MegaCard
-                  images={getProjectImages(item.title)}
-                  videoSrc={item.url}
-                  videoTitle={item.title}
-                />
-                {shouldShowParallaxInMiddle && (
-                  <div className="w-full max-w-md mx-auto">
+            // Para Animación 2D: segunda posición de la última fila
+            if (filter === "2d") {
+              // Si la última fila tiene 0 o 1 tarjeta, necesitamos un espacio vacío antes
+              if (cardsInLastRow === 0 || cardsInLastRow === 1) {
+                return (
+                  <>
+                    {cardsInLastRow === 0 && <div className="hidden lg:block"></div>}
+                    <div className="w-full">
+                      <ParallaxAnimation frameRate={15} />
+                    </div>
+                  </>
+                );
+              }
+              // Si la última fila tiene 2 tarjetas, el parallax va directamente después
+              return (
+                <div className="w-full">
+                  <ParallaxAnimation frameRate={15} />
+                </div>
+              );
+            }
+            
+            // Para Stop Motion: tercera posición de la última fila
+            if (filter === "stop") {
+              // Necesitamos 2 espacios vacíos si la última fila tiene 0 o 1 tarjeta
+              // Necesitamos 1 espacio vacío si la última fila tiene 2 tarjetas
+              if (cardsInLastRow === 0 || cardsInLastRow === 1) {
+                return (
+                  <>
+                    <div className="hidden lg:block"></div>
+                    <div className="hidden lg:block"></div>
+                    <div className="w-full">
+                      <ParallaxAnimation frameRate={15} />
+                    </div>
+                  </>
+                );
+              }
+              if (cardsInLastRow === 2) {
+                return (
+                  <>
+                    <div className="hidden lg:block"></div>
+                    <div className="w-full">
+                      <ParallaxAnimation frameRate={15} />
+                    </div>
+                  </>
+                );
+              }
+              // Si la última fila está completa (3 tarjetas), el parallax va en nueva fila, tercera posición
+              return (
+                <>
+                  <div className="hidden lg:block"></div>
+                  <div className="hidden lg:block"></div>
+                  <div className="w-full">
                     <ParallaxAnimation frameRate={15} />
                   </div>
-                )}
-              </React.Fragment>
+                </>
+              );
+            }
+            
+            // Para otros filtros: al final
+            return (
+              <div className="w-full">
+                <ParallaxAnimation frameRate={15} />
+              </div>
             );
-          })}
-          {/* Parallax Animation al final para otros filtros */}
-          {filteredProjects.length > 0 && filter !== "2d" && (
-            <div className="w-full max-w-md mx-auto">
-              <ParallaxAnimation frameRate={15} />
-            </div>
-          )}
+          })()}
         </div>
       </div>
     </section>

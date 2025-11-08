@@ -39,7 +39,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <img
-                src="/assets/SW.png"
+                src="/swLogo/S.W.png"
                 alt="Spiriwors Logo"
                 className="w-16 h-16 object-contain"
                 width="64"
