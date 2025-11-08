@@ -1,16 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { DELAY } from "@/lib/animation-tokens";
 import MegaCard from "@/components/ui/megaCard";
 import ParallaxAnimation from "@/components/ParallaxAnimation";
-import { useTheme } from "@/contexts/ThemeContext";
+import FilterButton from "@/components/ui/FilterButton";
 
 const Projects = () => {
   const [filter, setFilter] = useState<"all" | "2d" | "stop">("all");
-  const { accentColor } = useTheme();
 
   // Catálogo unificado: categoría por tipo de animación (2D o Stop Motion)
   const projects = [
@@ -114,9 +112,9 @@ const Projects = () => {
   ];
 
   const filterOptions = [
-    { key: "all", label: "Todos" },
-    { key: "2d", label: "Animación 2D" },
-    { key: "stop", label: "Stop Motion" },
+    { key: "all", label: "Todos", folder: "Todos" },
+    { key: "2d", label: "Animación 2D", folder: "2D" },
+    { key: "stop", label: "Stop Motion", folder: "StopMotion" },
   ] as const;
 
   const filteredProjects =
@@ -194,35 +192,12 @@ const Projects = () => {
         {/* Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
           {filterOptions.map((category) => (
-            <Button
+            <FilterButton
               key={category.key}
+              folder={category.folder}
+              isActive={filter === category.key}
               onClick={() => setFilter(category.key)}
-              variant={filter === category.key ? "default" : "outline"}
-              className={`px-6 py-2 transition-all duration-300 ${
-                filter === category.key
-                  ? "text-white"
-                  : ""
-              }`}
-              style={
-                filter === category.key
-                  ? { backgroundColor: accentColor }
-                  : { borderColor: accentColor, color: accentColor }
-              }
-              onMouseEnter={(e) => {
-                if (filter !== category.key) {
-                  e.currentTarget.style.backgroundColor = accentColor;
-                  e.currentTarget.style.color = 'white';
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (filter !== category.key) {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.color = accentColor;
-                }
-              }}
-            >
-              {category.label}
-            </Button>
+            />
           ))}
         </div>
 
