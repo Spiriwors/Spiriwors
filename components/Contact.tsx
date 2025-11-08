@@ -287,9 +287,9 @@ const Contact = () => {
                       onChange: (e) => setMessageLength(e.target.value.length)
                     })}
                     disabled={isSubmitting}
-                    rows={6}
+                    rows={3}
                     maxLength={500}
-                    className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed resize-none"
                     style={{
                       '--tw-ring-color': accentColor
                     } as React.CSSProperties}

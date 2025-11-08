@@ -13,34 +13,23 @@ const Services = () => {
     {
       icon: Palette,
       title: 'Servicios Creativos',
-      description:
-        'Producción y animación para marcas, videoclips y campañas. Nos integramos a tu equipo para diseñar, animar y entregar piezas listas para publicar.',
+      description: 'Animación para marcas, videoclips y campañas.',
       features: [
-        'Concepto y guion',
-        'Dirección de arte',
         'Animación 2D y stop‑motion',
-        'Edición y postproducción'
+        'Dirección de arte',
+        'Postproducción'
       ]
     },
     {
       icon: Film,
       title: 'Contenidos Originales',
-      description:
-        'Desarrollo y realización de historias propias: cortos, series y piezas experimentales que exploran nuestro universo creativo.',
+      description: 'Desarrollo y producción de historias propias.',
       features: [
-        'Desarrollo de IP',
-        'Pitching y biblias',
-        'Producción de cortometrajes',
-        'Alianzas y coproducciones'
+        'Cortometrajes',
+        'Series',
+        'Coproducciones'
       ]
     }
-  ];
-
-  const process = [
-    { step: '01', title: 'Concepto', description: 'Definimos la idea y desarrollamos el concepto creativo' },
-    { step: '02', title: 'Pre-producción', description: 'Storyboard, diseño de personajes y planificación técnica' },
-    { step: '03', title: 'Producción', description: 'Animación frame por frame con atención al detalle' },
-    { step: '04', title: 'Post-producción', description: 'Edición, efectos, sonido y entrega final' }
   ];
 
   return (
@@ -48,22 +37,19 @@ const Services = () => {
       <div className="container mx-auto px-6">
         {/* Services Header */}
         <ScrollReveal direction="up">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 amatic-sc-bold text-white">
               Servicios
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Ofrecemos servicios completos de animación para hacer realidad tu visión creativa
-            </p>
           </div>
         </ScrollReveal>
 
         {/* Services Grid */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-20">
+        <div className="grid lg:grid-cols-2 gap-8">
           {services.map((service, index) => (
             <ScrollReveal key={index} direction="up" delay={index * DELAY.md}>
               <motion.div
-                className="bg-gray-900 p-8 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 will-change-transform"
+                className="bg-gray-900 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 will-change-transform"
                 whileHover={{ y: -10, scale: 1.02 }}
                 transition={SPRING.default}
               >
@@ -77,11 +63,11 @@ const Services = () => {
                   </div>
                 </motion.div>
 
-                <h3 className="text-2xl font-bold text-white text-center mb-4">
+                <h3 className="text-2xl font-bold text-white text-center mb-3">
                   {service.title}
                 </h3>
 
-                <p className="text-gray-300 text-center mb-6 leading-relaxed">
+                <p className="text-gray-300 text-center mb-6">
                   {service.description}
                 </p>
 
@@ -89,7 +75,7 @@ const Services = () => {
                   {service.features.map((feature, featureIndex) => (
                     <motion.li
                       key={featureIndex}
-                      className="flex items-center text-gray-300"
+                      className="flex items-center justify-center text-gray-300"
                       initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: featureIndex * 0.1 }}
@@ -103,8 +89,6 @@ const Services = () => {
             </ScrollReveal>
           ))}
         </div>
-
-        {/* Se removieron Proceso y CTA según solicitud */}
       </div>
     </section>
   );

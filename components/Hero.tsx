@@ -12,6 +12,7 @@ const Hero = () => {
   const [isInView, setIsInView] = useState(true);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoFailed, setVideoFailed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const { accentColor } = useTheme();
 
   const { scrollYProgress } = useScroll({
@@ -25,6 +26,17 @@ const Hero = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.5, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
 
+  // Detect mobile/tablet screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // md breakpoint
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // Track if hero is in viewport to pause animations
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -35,6 +47,15 @@ const Hero = () => {
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
+
+  // Update video source when screen size changes
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    
+    // Force reload when switching between mobile/desktop videos
+    v.load();
+  }, [isMobile]);
 
   // Try to autoplay the background video when ready
   useEffect(() => {
@@ -52,7 +73,7 @@ const Hero = () => {
     if (v.readyState >= 2) tryPlay();
     v.addEventListener('loadeddata', tryPlay);
     return () => v.removeEventListener('loadeddata', tryPlay);
-  }, []);
+  }, [isMobile]);
 
   
 
@@ -75,13 +96,16 @@ const Hero = () => {
           muted
           playsInline
           preload="auto"
-          src="/gif/Gif.mov"
           onError={() => setVideoFailed(true)}
           aria-hidden="true"
         >
-          <source src="/gif/Gif.mov" type="video/quicktime" />
-          <source src="/gif/Gif.mp4" type="video/mp4" />
-          <source src="/gif/Gif.webm" type="video/webm" />
+          <source src={isMobile ? "/mobileVideo/Gif_Cel02 (1).mp4" : "/gif/Gif.mov"} type={isMobile ? "video/mp4" : "video/quicktime"} />
+          {!isMobile && (
+            <>
+              <source src="/gif/Gif.mp4" type="video/mp4" />
+              <source src="/gif/Gif.webm" type="video/webm" />
+            </>
+          )}
         </video>
         <div className="absolute inset-0 bg-black/40" />
       </motion.div>

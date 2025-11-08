@@ -27,7 +27,7 @@ const Projects = () => {
       url: "https://vimeo.com/172426682?fl=pl&fe=sh",
       description: "Trailer de la historia original SALÚ",
       year: undefined,
-      category: "2d" as const,
+      category: "stop" as const,
     },
     // SPIRIWORS – Servicios Creativos y Animación
     {
@@ -203,16 +203,27 @@ const Projects = () => {
 
         {/* MegaCard Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
-          {filteredProjects.map((item, index) => (
-            <MegaCard
-              key={item.id}
-              images={getProjectImages(item.title)}
-              videoSrc={item.url}
-              videoTitle={item.title}
-            />
-          ))}
-          {/* Parallax Animation en el espacio vacío */}
-          {filteredProjects.length === 11 && (
+          {filteredProjects.map((item, index) => {
+            const shouldShowParallaxInMiddle = 
+              filter === "2d" && index === 5; // Después de la tarjeta 6 (índice 5)
+            
+            return (
+              <React.Fragment key={item.id}>
+                <MegaCard
+                  images={getProjectImages(item.title)}
+                  videoSrc={item.url}
+                  videoTitle={item.title}
+                />
+                {shouldShowParallaxInMiddle && (
+                  <div className="w-full max-w-md mx-auto">
+                    <ParallaxAnimation frameRate={15} />
+                  </div>
+                )}
+              </React.Fragment>
+            );
+          })}
+          {/* Parallax Animation al final para otros filtros */}
+          {filteredProjects.length > 0 && filter !== "2d" && (
             <div className="w-full max-w-md mx-auto">
               <ParallaxAnimation frameRate={15} />
             </div>
