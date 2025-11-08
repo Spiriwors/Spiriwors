@@ -183,7 +183,7 @@ const Projects = () => {
       <div className="container mx-auto px-6">
         <ScrollReveal direction="up">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 amatic-sc-bold text-white">
+            <h2 className="text-[60px] md:text-5xl font-bold mb-4 amatic-sc-bold text-white leading-tight">
               Trabajo
             </h2>
           </div>

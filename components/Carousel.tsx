@@ -30,7 +30,7 @@ const Carousel = () => {
         </div>
 
         {/* Posters Grid - Two side by side */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-[57.6rem] mx-auto">
           {featuredProjects.map((project, index) => (
             <div key={project.id} className="group">
               {/* Poster Image */}

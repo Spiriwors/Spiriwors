@@ -55,8 +55,8 @@ const Navbar = () => {
 
   const navItems = [
     { name: 'Inicio', href: '#hero' },
-    { name: 'Proyectos', href: '#projects' },
-    { name: 'Acerca', href: '#about' },
+    { name: 'Trabajo', href: '#projects' },
+    { name: 'Sobre Spiriwors', href: '#about' },
     { name: 'Servicios', href: '#services' },
     { name: 'Contacto', href: '#contact' }
   ];

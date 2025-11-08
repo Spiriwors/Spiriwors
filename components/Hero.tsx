@@ -99,13 +99,7 @@ const Hero = () => {
           onError={() => setVideoFailed(true)}
           aria-hidden="true"
         >
-          <source src={isMobile ? "/mobileVideo/Gif_Cel02 (1).mp4" : "/gif/Gif.mov"} type={isMobile ? "video/mp4" : "video/quicktime"} />
-          {!isMobile && (
-            <>
-              <source src="/gif/Gif.mp4" type="video/mp4" />
-              <source src="/gif/Gif.webm" type="video/webm" />
-            </>
-          )}
+          <source src={isMobile ? "/mobileVideo/Gif_Cel02 (1).mp4" : "/heroVideoDesktop/Gif02B.mp4"} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/40" />
       </motion.div>

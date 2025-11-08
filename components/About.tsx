@@ -16,7 +16,7 @@ const About = () => {
           {/* Left Content */}
           <div>
             <ScrollReveal direction="right" delay={0.2}>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 amatic-sc-bold text-white">
+              <h2 className="text-[60px] md:text-5xl font-bold mb-6 amatic-sc-bold text-white leading-tight">
                 Sobre Spiriwors
               </h2>
             </ScrollReveal>

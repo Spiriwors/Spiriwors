@@ -11,8 +11,8 @@ const Footer = () => {
 
   const quickLinks = [
     { name: 'Inicio', href: '#hero' },
-    { name: 'Proyectos', href: '#projects' },
-    { name: 'Sobre Nosotros', href: '#about' },
+    { name: 'Trabajo', href: '#projects' },
+    { name: 'Sobre Spiriwors', href: '#about' },
     { name: 'Servicios', href: '#services' },
     { name: 'Contacto', href: '#contact' }
   ];
