@@ -8,12 +8,15 @@ interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
   accentColor: string;
+  isUIHidden: boolean;
+  toggleUI: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>('light');
+  const [isUIHidden, setIsUIHidden] = useState(false);
 
   useEffect(() => {
     // Detectar preferencia del sistema inicialmente
@@ -44,6 +47,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     localStorage.setItem('theme', newTheme);
   };
 
+  const toggleUI = () => {
+    setIsUIHidden(prev => !prev);
+  };
+
   // Azul para noche (dark), naranja para día (light)
   const accentColor = theme === 'light' ? '#ffaf26' : '#27a6c3';
 
@@ -53,7 +60,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }, [accentColor]);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, accentColor }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, accentColor, isUIHidden, toggleUI }}>
       {children}
     </ThemeContext.Provider>
   );

@@ -13,7 +13,7 @@ const Hero = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoFailed, setVideoFailed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const { accentColor } = useTheme();
+  const { accentColor, isUIHidden } = useTheme();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -151,7 +151,12 @@ const Hero = () => {
       {/* Content */}
       <motion.div
         className="relative z-20 text-center px-6 max-w-4xl mx-auto"
-        style={{ opacity, scale }}
+        style={{ scale }}
+        animate={{ 
+          opacity: isUIHidden ? 0 : 1,
+          pointerEvents: isUIHidden ? 'none' : 'auto'
+        }}
+        transition={{ duration: DURATION.base }}
       >
         <div className="mb-6">
           <h1 className="text-5xl md:text-7xl font-bold mb-4 leading-tight amatic-sc-bold whitespace-nowrap">
@@ -190,7 +195,11 @@ const Hero = () => {
       {/* Scroll Indicator - Outside content div */}
       <motion.div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30"
-        animate={{ y: [0, 10, 0] }}
+        animate={{ 
+          y: [0, 10, 0],
+          opacity: isUIHidden ? 0 : 1,
+          pointerEvents: isUIHidden ? 'none' : 'auto'
+        }}
         transition={{ duration: 1.5, repeat: Infinity }}
       >
         <ArrowDown className="w-6 h-6" style={{ color: accentColor }} />

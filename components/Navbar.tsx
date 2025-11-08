@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DURATION } from '@/lib/animation-tokens';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -11,7 +11,34 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState('hero');
   const [isHidden, setIsHidden] = useState(false);
   const lastScrollYRef = useRef(0);
-  const { theme, toggleTheme, accentColor } = useTheme();
+  const eyeButtonRef = useRef<HTMLButtonElement>(null);
+  const [eyeButtonPosition, setEyeButtonPosition] = useState({ top: 0, right: 0 });
+  const { theme, toggleTheme, accentColor, isUIHidden, toggleUI } = useTheme();
+
+  // Update eye button position continuously
+  useEffect(() => {
+    const updatePosition = () => {
+      if (eyeButtonRef.current && !isUIHidden) {
+        const rect = eyeButtonRef.current.getBoundingClientRect();
+        setEyeButtonPosition({
+          top: rect.top,
+          right: window.innerWidth - rect.right
+        });
+      }
+    };
+
+    // Update immediately
+    const timeoutId = setTimeout(updatePosition, 100);
+    
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition);
+    
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition);
+    };
+  }, [isUIHidden]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,12 +97,34 @@ const Navbar = () => {
   };
 
   return (
-    <motion.nav
-      initial={{ y: 0, opacity: 1 }}
-      animate={{ y: isHidden ? '-100%' : '0%', opacity: isHidden ? 0 : 1 }}
-      transition={{ duration: DURATION.base }}
-      className="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent py-6 amatic-sc-bold"
-    >
+    <>
+      {/* UI Toggle Button - Always visible in same position */}
+      {isUIHidden && eyeButtonPosition.top > 0 && (
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          onClick={toggleUI}
+          className="fixed p-2 rounded-lg transition-all duration-200 hover:bg-white/10 z-[60]"
+          aria-label="Show UI"
+          style={{ 
+            color: accentColor,
+            top: `${eyeButtonPosition.top}px`,
+            right: `${eyeButtonPosition.right}px`
+          }}
+        >
+          <EyeOff className="w-6 h-6" />
+        </motion.button>
+      )}
+
+      <motion.nav
+        initial={{ y: 0, opacity: 1 }}
+        animate={{ 
+          y: isHidden || isUIHidden ? '-100%' : '0%', 
+          opacity: isHidden || isUIHidden ? 0 : 1 
+        }}
+        transition={{ duration: DURATION.base }}
+        className="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent py-6 amatic-sc-bold"
+      >
       <div className="container mx-auto px-6">
         <div className="flex justify-between items-center">
           <motion.div
@@ -84,11 +133,11 @@ const Navbar = () => {
             transition={{ duration: DURATION.fast }}
           >
             <img
-              src="/assets/logoSW_beige.png"
+              src={activeSection === 'hero' ? "/swLogo/S.W.png" : "/assets/logoSW_beige.png"}
               alt="Spiriwors Logo"
-              className="w-16 h-16 object-contain cursor-pointer"
-              width="64"
-              height="64"
+              className={`${activeSection === 'hero' ? 'w-32 h-32' : 'w-16 h-16'} object-contain cursor-pointer transition-all duration-300`}
+              width={activeSection === 'hero' ? 128 : 64}
+              height={activeSection === 'hero' ? 128 : 64}
               loading="eager"
               decoding="async"
               onClick={() => window.location.reload()}
@@ -104,7 +153,7 @@ const Navbar = () => {
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
-                    className="relative font-medium transition-colors duration-200 group text-xl md:text-2xl"
+                    className="relative font-medium transition-colors duration-200 group text-2xl md:text-3xl"
                   >
                     <span style={{ color: isActive ? accentColor : 'white' }} className="hover:opacity-80">
                       {item.name}
@@ -136,6 +185,21 @@ const Navbar = () => {
                 <Moon className="w-6 h-6" />
               )}
             </button>
+            
+            {/* UI Toggle Button */}
+            <button
+              ref={eyeButtonRef}
+              onClick={toggleUI}
+              className="p-2 rounded-lg transition-all duration-200 hover:bg-white/10"
+              aria-label={isUIHidden ? "Show UI" : "Hide UI"}
+              style={{ color: accentColor }}
+            >
+              {isUIHidden ? (
+                <EyeOff className="w-6 h-6" />
+              ) : (
+                <Eye className="w-6 h-6" />
+              )}
+            </button>
           </div>
 
           {/* Mobile Menu Button and Theme Toggle */}
@@ -150,6 +214,19 @@ const Navbar = () => {
                 <Sun className="w-6 h-6" />
               ) : (
                 <Moon className="w-6 h-6" />
+              )}
+            </button>
+            <button
+              ref={eyeButtonRef}
+              onClick={toggleUI}
+              className="p-2 rounded-lg transition-all duration-200 hover:bg-white/10"
+              aria-label={isUIHidden ? "Show UI" : "Hide UI"}
+              style={{ color: accentColor }}
+            >
+              {isUIHidden ? (
+                <EyeOff className="w-6 h-6" />
+              ) : (
+                <Eye className="w-6 h-6" />
               )}
             </button>
             <button
@@ -241,6 +318,7 @@ const Navbar = () => {
         </AnimatePresence>
       </div>
     </motion.nav>
+    </>
   );
 };
 
