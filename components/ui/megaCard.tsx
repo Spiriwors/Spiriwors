@@ -121,34 +121,52 @@ const MegaCard: React.FC<MegaCardProps> = ({
             backfaceVisibility: "hidden",
           }}
         >
-          <div className="relative w-full h-full rounded-lg overflow-hidden bg-gray-800 group">
+          <div 
+            className="relative w-full h-full rounded-lg overflow-hidden group"
+            style={{
+              backgroundColor: images[currentSlide]?.src.includes('LaurelesIbero') || 
+                              images[currentSlide]?.src.includes('LaurelLeaves') || 
+                              images[currentSlide]?.src.includes('LJDP premio') 
+                              ? '#ffffff' : '#1f2937'
+            }}
+          >
             {/* Carousel Images */}
             <div className="relative w-full h-full">
-              {images.map((image, index) => (
-                <div
-                  key={index}
-                  className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                    index === currentSlide ? "opacity-100" : "opacity-0"
-                  }`}
-                >
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <h3 className="text-white text-lg font-bold mb-2">
-                      {image.title}
-                    </h3>
-                    {videoDescription && (
-                      <div className="text-white/90 text-xs whitespace-pre-line">
-                        {videoDescription}
-                      </div>
+              {images.map((image, index) => {
+                const isPrizeImage = image.src.includes('LaurelesIbero') || 
+                                   image.src.includes('LaurelLeaves') || 
+                                   image.src.includes('LJDP premio');
+                return (
+                  <div
+                    key={index}
+                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                      index === currentSlide ? "opacity-100" : "opacity-0"
+                    }`}
+                    style={isPrizeImage ? { backgroundColor: '#ffffff' } : {}}
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className={`w-full h-full ${isPrizeImage ? 'object-contain' : 'object-cover'}`}
+                    />
+                    {!isPrizeImage && (
+                      <>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                        <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <h3 className="text-white text-lg font-bold mb-2">
+                            {image.title}
+                          </h3>
+                          {videoDescription && (
+                            <div className="text-white/90 text-xs whitespace-pre-line">
+                              {videoDescription}
+                            </div>
+                          )}
+                        </div>
+                      </>
                     )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Navigation Arrows - Only show if multiple images */}

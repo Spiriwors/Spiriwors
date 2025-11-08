@@ -31,13 +31,20 @@ const Carousel = () => {
   // Función para obtener las imágenes según el proyecto
   const getProjectImages = (projectKey: string): string[] => {
     if (projectKey === 'LJDP') {
+      // Las 3 imágenes de premios van primero (LJDP premio es la primera)
+      const prizeImages = [
+        'LJDP premio.png',
+        'LaurelesIbero-FA-Negro.png',
+        'LaurelLeaves2024_OficialSelection_ESP.png'
+      ].map(name => `/images/trabajos_destacados/${encodeURIComponent(name)}`);
+      
+      // Luego las 5 imágenes normales
       const baseImages = Array.from({ length: 5 }, (_, i) => 
         `/images/trabajos_destacados/${i + 1}_LJDP.jpg`
       );
-      // Agregar la imagen del premio al final (codificando la URL para espacios y caracteres especiales)
-      const prizeImageName = 'LJDP PACCPA12-PRIX DU PUBLIC AU MEILLEUR COURT-MÉTRAGE-PETIT CHIOT-La Joya del pantano-Noir.png';
-      baseImages.push(`/images/trabajos_destacados/${encodeURIComponent(prizeImageName)}`);
-      return baseImages;
+      
+      // Combinar: premios primero, luego imágenes normales
+      return [...prizeImages, ...baseImages];
     }
     if (projectKey === 'Salu') {
       return Array.from({ length: 5 }, (_, i) => 
@@ -152,25 +159,39 @@ const Carousel = () => {
                       style={{
                         backfaceVisibility: "hidden",
                         transform: "rotateY(180deg)",
-                        backgroundColor: getProjectBackgroundColor(project.key),
+                        backgroundColor: (() => {
+                          const currentImage = projectImages[currentSlide];
+                          const isPrizeImage = currentImage && (
+                            currentImage.includes('LaurelesIbero') || 
+                            currentImage.includes('LaurelLeaves') || 
+                            currentImage.includes('LJDP premio')
+                          );
+                          return isPrizeImage ? '#ffffff' : getProjectBackgroundColor(project.key);
+                        })(),
                       }}
                     >
                       <div className="relative w-full h-full">
                         {/* Imágenes del Carrusel */}
-                        {projectImages.map((image, imgIndex) => (
-                          <div
-                            key={imgIndex}
-                            className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
-                              imgIndex === currentSlide ? "opacity-100" : "opacity-0"
-                            }`}
-                          >
-                            <img
-                              src={image}
-                              alt={`${project.title} - Imagen ${imgIndex + 1}`}
-                              className="w-full h-full object-contain"
-                            />
-                          </div>
-                        ))}
+                        {projectImages.map((image, imgIndex) => {
+                          const isPrizeImage = image.includes('LaurelesIbero') || 
+                                             image.includes('LaurelLeaves') || 
+                                             image.includes('LJDP premio');
+                          return (
+                            <div
+                              key={imgIndex}
+                              className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
+                                imgIndex === currentSlide ? "opacity-100" : "opacity-0"
+                              }`}
+                              style={isPrizeImage ? { backgroundColor: '#ffffff' } : {}}
+                            >
+                              <img
+                                src={image}
+                                alt={`${project.title} - Imagen ${imgIndex + 1}`}
+                                className="w-full h-full object-contain"
+                              />
+                            </div>
+                          );
+                        })}
 
                         {/* Botones de Navegación */}
                         {projectImages.length > 1 && (
