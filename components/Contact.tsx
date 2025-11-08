@@ -115,7 +115,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-gray-700">
+    <section id="contact" className="py-20 bg-gray-800">
       <div className="container mx-auto px-6">
         <ScrollReveal direction="up">
           <div className="text-center mb-16">

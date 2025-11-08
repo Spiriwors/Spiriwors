@@ -33,7 +33,7 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-20 bg-gray-800">
+    <section id="services" className="py-20 bg-gray-700">
       <div className="container mx-auto px-6">
         {/* Services Header */}
         <ScrollReveal direction="up">
