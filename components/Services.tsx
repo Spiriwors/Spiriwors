@@ -12,7 +12,7 @@ const Services = () => {
   const services = [
     {
       icon: Palette,
-      title: 'Servicios Creativos',
+      title: 'Servicios Creativos y Dirección',
       description: 'Animación para marcas, videoclips y campañas.',
       features: [
         'Animación 2D y stop‑motion',
