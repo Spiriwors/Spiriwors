@@ -155,43 +155,88 @@ const Navbar = () => {
             <button
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"
+              className="p-2 rounded-lg transition-all duration-200 hover:bg-white/10"
+              style={{ color: accentColor }}
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu with Animation */}
+        {/* Mobile Menu Overlay */}
         <AnimatePresence>
           {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: DURATION.base }}
-              className="md:hidden overflow-hidden"
-            >
-              <div className="mt-4 py-4 bg-gray-800/95 backdrop-blur-sm rounded-lg">
-                {navItems.map((item, index) => {
-                  const isActive = activeSection === item.href.replace('#', '');
-                  return (
-                    <motion.button
-                      key={item.name}
-                      onClick={() => scrollToSection(item.href)}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05, duration: DURATION.fast }}
-                      className={`block w-full text-left px-4 py-2 transition-colors duration-200 text-2xl ${
-                        isActive ? `text-[${accentColor}]` : `hover:text-[${accentColor}]`
-                      }`}
-                      style={isActive ? { color: accentColor, backgroundColor: `${accentColor}10` } : {}}
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: DURATION.fast }}
+                className="fixed top-0 left-0 right-0 bottom-0 w-full h-full bg-black/60 backdrop-blur-md z-40 md:hidden"
+                onClick={() => setIsOpen(false)}
+                style={{ width: '100vw', height: '100vh' }}
+              />
+              
+              {/* Slide-in Menu */}
+              <motion.div
+                initial={{ y: '-100%', opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: '-100%', opacity: 0 }}
+                transition={{ duration: DURATION.base, ease: 'easeInOut' }}
+                className="fixed top-0 left-0 right-0 h-full w-full bg-gray-900/98 backdrop-blur-md z-50 md:hidden shadow-2xl"
+              >
+                <div className="flex flex-col h-full">
+                  {/* Header */}
+                  <div className="flex items-center justify-between p-6 border-b border-gray-700/50">
+                    <h2 className="text-4xl font-bold text-white amatic-sc-bold">Menú</h2>
+                    <button
+                      onClick={() => setIsOpen(false)}
+                      className="p-2 rounded-lg transition-all duration-200 hover:bg-gray-800"
+                      aria-label="Close menu"
+                      style={{ color: accentColor }}
                     >
-                      {item.name}
-                    </motion.button>
-                  );
-                })}
-              </div>
-            </motion.div>
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+                  
+                  {/* Menu Items */}
+                  <div className="flex-1 overflow-y-auto py-4">
+                    {navItems.map((item, index) => {
+                      const isActive = activeSection === item.href.replace('#', '');
+                      return (
+                        <motion.button
+                          key={item.name}
+                          onClick={() => scrollToSection(item.href)}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.08, duration: DURATION.fast }}
+                          className={`block w-full text-left px-6 py-5 transition-all duration-200 text-3xl font-medium ${
+                            isActive ? '' : 'hover:bg-gray-800/50'
+                          }`}
+                          style={isActive ? { 
+                            color: accentColor, 
+                            backgroundColor: `${accentColor}15`,
+                            borderLeft: `3px solid ${accentColor}`
+                          } : { color: 'white' }}
+                        >
+                          {item.name}
+                        </motion.button>
+                      );
+                    })}
+                  </div>
+                  
+                  {/* Footer */}
+                  <div className="p-6 border-t border-gray-700/50">
+                    <div className="flex items-center justify-center gap-2 text-gray-400 text-sm">
+                      <span>Spiriwors</span>
+                      <span>•</span>
+                      <span>2024</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
       </div>
