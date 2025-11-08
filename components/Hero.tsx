@@ -149,16 +149,12 @@ const Hero = () => {
       </motion.div>
 
       {/* Content */}
+      {/* H1 - Always visible, not affected by isUIHidden */}
       <motion.div
-        className="relative z-20 text-center px-6 max-w-4xl mx-auto"
+        className="absolute inset-0 z-20 flex items-center justify-center px-6"
         style={{ scale }}
-        animate={{ 
-          opacity: isUIHidden ? 0 : 1,
-          pointerEvents: isUIHidden ? 'none' : 'auto'
-        }}
-        transition={{ duration: DURATION.base }}
       >
-        <div className="mb-6">
+        <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold mb-4 leading-tight amatic-sc-bold whitespace-nowrap">
             <motion.span
               className="inline-block bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent will-change-transform-opacity"
@@ -188,7 +184,17 @@ const Hero = () => {
             </motion.span>
           </h1>
         </div>
+      </motion.div>
 
+      {/* Other content - Hidden when isUIHidden is true */}
+      <motion.div
+        className="relative z-20 text-center px-6 max-w-4xl mx-auto"
+        animate={{ 
+          opacity: isUIHidden ? 0 : 1,
+          pointerEvents: isUIHidden ? 'none' : 'auto'
+        }}
+        transition={{ duration: DURATION.base }}
+      >
         
       </motion.div>
 
