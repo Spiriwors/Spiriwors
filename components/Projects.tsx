@@ -16,7 +16,7 @@ const Projects = () => {
     {
       id: 1,
       title: "La Joya Del Pantano",
-      url: "https://vimeo.com/896578269?fl=pl&fe=sh",
+      url: "https://www.youtube.com/watch?v=gTusWDe469g",
       description: "Trailer de la historia original La Joya Del Pantano",
       year: undefined,
       category: "2d" as const,
@@ -24,7 +24,7 @@ const Projects = () => {
     {
       id: 2,
       title: "SALÚ",
-      url: "https://vimeo.com/172426682?fl=pl&fe=sh",
+      url: "https://www.youtube.com/watch?v=CZsXsqoL2B0",
       description: "Trailer de la historia original SALÚ",
       year: undefined,
       category: "stop" as const,
@@ -50,62 +50,62 @@ const Projects = () => {
     {
       id: 5,
       title: "AJR – My Play",
-      url: "https://venturiaanimation.com/portfolio/my-play-ajr/",
+      url: "https://www.youtube.com/watch?v=Ew8jKnliFZg",
       description:
-        "Cargo: animación – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
+        "Cargo: animación - Camilo Ayala\n\nA Creative Service by Venturia Animation Studios. All Rights Reserved.",
       year: undefined,
       category: "2d" as const,
     },
     {
       id: 6,
       title: "ONR – It Gets To a Point",
-      url: "https://venturiaanimation.com/portfolio/it-gets-to-a-point-onr/",
+      url: "https://www.youtube.com/watch?v=9WSkP58HDwU&list=RD9WSkP58HDwU&start_radio=1",
       description:
-        "Cargo: animación – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
+        "Cargo: animación - Camilo Ayala\n\nA Creative Service by Venturia Animation Studios. All Rights Reserved.",
       year: undefined,
       category: "2d" as const,
     },
     {
       id: 7,
       title: "We The Kingdom – Christmas In Hawaii",
-      url: "https://venturiaanimation.com/portfolio/christmas-in-hawaii-we-the-kingdom/",
+      url: "https://www.youtube.com/watch?v=k-qPTVztgEk&list=RDk-qPTVztgEk&start_radio=1",
       description:
-        "Cargo: modelado de marionetas y animación stop-motion – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
+        "Cargo: modelado de marionetas y animación stop-motion – Camilo Ayala\n\nA Creative Service by Venturia Animation Studios. All Rights Reserved.",
       year: undefined,
       category: "stop" as const,
     },
     {
       id: 8,
       title: "Satellite – Bebe Rexha & Snoop Dogg",
-      url: "https://venturiaanimation.com/portfolio/satellite-bebe-rexha-snoop-dogg/",
+      url: "https://www.youtube.com/watch?v=VBHr0faDCoQ",
       description:
-        "Cargo: animación. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
+        "Cargo: animación\n\nA Creative Service by Venturia Animation Studios. All Rights Reserved.",
       year: undefined,
       category: "2d" as const,
     },
     {
       id: 9,
       title: "Waldo´s Dream",
-      url: "https://venturiaanimation.com/portfolio/waldos-dream/",
+      url: "https://vimeo.com/335248497?fl=pl&fe=sh",
       description:
-        "Cargo: animación. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
+        "Cargo: animación\n\nA Creative Service by Venturia Animation Studios. All Rights Reserved.",
       year: undefined,
       category: "2d" as const,
     },
     {
       id: 10,
       title: "Heroes Collection: Francis Ford Coppola",
-      url: "https://venturiaanimation.com/portfolio/heroes-francis-ford-coppola/",
+      url: "https://vimeo.com/1058727258?fl=pl&fe=sh",
       description:
-        "Cargo: Realizador de Animatic y Animador – Camilo Ayala. Original Content by Venturia Animation Studios. All Rights Reserved.",
+        "Cargo: Realizador de Animatic y Animador – Camilo Ayala\n\nAn Original Content by Venturia Animation Studios. All Rights Reserved.",
       year: undefined,
       category: "2d" as const,
     },
     {
       id: 11,
       title: "Smiling Symphonies",
-      url: "https://dinamitaanimacion.com/portfolio/smiling-symphonies/",
-      description: "Proyecto de Dinamita Animación – Smiling Symphonies",
+      url: "https://www.youtube.com/watch?v=3uj8bF7jR0U",
+      description: "Cargo - Animación - Camilo Ayala",
       year: undefined,
       category: "2d" as const,
     },
@@ -209,6 +209,7 @@ const Projects = () => {
               images={getProjectImages(item.title)}
               videoSrc={item.url}
               videoTitle={item.title}
+              videoDescription={item.description}
             />
           ))}
           {/* Parallax Animation al final - en la misma fila que las tarjetas */}
@@ -244,9 +245,9 @@ const Projects = () => {
               if (cardsInLastRow === 0 || cardsInLastRow === 1) {
                 return (
                   <>
-                    <div className="hidden lg:block"></div>
-                    <div className="hidden lg:block"></div>
-                    <div className="w-full">
+                    <div className="col-span-1 h-0 lg:h-auto" aria-hidden="true"></div>
+                    <div className="col-span-1 h-0 lg:h-auto" aria-hidden="true"></div>
+                    <div className="col-span-1 md:col-span-2 lg:col-span-1">
                       <ParallaxAnimation frameRate={15} />
                     </div>
                   </>
@@ -254,20 +255,17 @@ const Projects = () => {
               }
               if (cardsInLastRow === 2) {
                 return (
-                  <>
-                    <div className="hidden lg:block"></div>
-                    <div className="w-full">
-                      <ParallaxAnimation frameRate={15} />
-                    </div>
-                  </>
+                  <div className="col-span-1 md:col-span-2 lg:col-span-1">
+                    <ParallaxAnimation frameRate={15} />
+                  </div>
                 );
               }
               // Si la última fila está completa (3 tarjetas), el parallax va en nueva fila, tercera posición
               return (
                 <>
-                  <div className="hidden lg:block"></div>
-                  <div className="hidden lg:block"></div>
-                  <div className="w-full">
+                  <div className="col-span-1 h-0 lg:h-auto" aria-hidden="true"></div>
+                  <div className="col-span-1 h-0 lg:h-auto" aria-hidden="true"></div>
+                  <div className="col-span-1 md:col-span-2 lg:col-span-1">
                     <ParallaxAnimation frameRate={15} />
                   </div>
                 </>

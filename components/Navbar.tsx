@@ -133,11 +133,11 @@ const Navbar = () => {
             transition={{ duration: DURATION.fast }}
           >
             <img
-              src={activeSection === 'hero' ? "/swLogo/S.W.png" : "/assets/logoSW_beige.png"}
+              src={activeSection === 'hero' ? "/assets/logoSW_beige.png" : "/swLogo/S.W.png"}
               alt="Spiriwors Logo"
-              className={`${activeSection === 'hero' ? 'w-32 h-32' : 'w-16 h-16'} object-contain cursor-pointer transition-all duration-300`}
-              width={activeSection === 'hero' ? 128 : 64}
-              height={activeSection === 'hero' ? 128 : 64}
+              className={`${activeSection === 'hero' ? 'w-24 h-24' : 'w-16 h-16'} object-contain cursor-pointer transition-all duration-300`}
+              width={activeSection === 'hero' ? 96 : 64}
+              height={activeSection === 'hero' ? 96 : 64}
               loading="eager"
               decoding="async"
               onClick={() => window.location.reload()}

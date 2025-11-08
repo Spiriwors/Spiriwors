@@ -13,12 +13,14 @@ interface MegaCardProps {
   }>;
   videoSrc: string;
   videoTitle?: string;
+  videoDescription?: string;
 }
 
 const MegaCard: React.FC<MegaCardProps> = ({
   images,
   videoSrc,
   videoTitle = "Video",
+  videoDescription,
 }) => {
   const { accentColor } = useTheme();
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -136,9 +138,14 @@ const MegaCard: React.FC<MegaCardProps> = ({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <h3 className="text-white text-lg font-bold">
+                    <h3 className="text-white text-lg font-bold mb-2">
                       {image.title}
                     </h3>
+                    {videoDescription && (
+                      <div className="text-white/90 text-xs whitespace-pre-line">
+                        {videoDescription}
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -291,7 +298,12 @@ const MegaCard: React.FC<MegaCardProps> = ({
                 <h4 className="text-xl font-bold text-white mb-2">
                   {videoTitle}
                 </h4>
-                <p className="text-gray-300 mb-4">
+                {videoDescription && (
+                  <div className="text-gray-300 mb-4 whitespace-pre-line text-sm">
+                    {videoDescription}
+                  </div>
+                )}
+                <p className="text-gray-400 text-xs mb-4">
                   Video disponible para reproducción automática. Los controles
                   aparecen al pasar el mouse sobre el área del video.
                 </p>
