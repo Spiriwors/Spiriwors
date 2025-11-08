@@ -96,7 +96,7 @@ const FilterButton: React.FC<FilterButtonProps> = ({
         alt={folder}
         width={200}
         height={200}
-        className="object-contain transition-opacity duration-100"
+        className="object-contain transition-opacity duration-100 w-[120px] h-[120px] md:w-[200px] md:h-[200px]"
         unoptimized
       />
     </button>

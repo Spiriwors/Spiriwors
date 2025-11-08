@@ -190,7 +190,7 @@ const Projects = () => {
         </ScrollReveal>
 
         {/* Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="flex flex-nowrap justify-center gap-2 md:gap-4 mb-12 overflow-x-auto pb-2 md:pb-0">
           {filterOptions.map((category) => (
             <FilterButton
               key={category.key}
