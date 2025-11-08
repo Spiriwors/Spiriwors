@@ -135,30 +135,8 @@ const Projects = () => {
     };
 
     if (title === "La Joya Del Pantano") {
-      // Las 3 imágenes de premios van primero (LJDP premio es la primera)
-      const prizeImages = [
-        {
-          src: "/images/trabajos_destacados/LJDP premio.png",
-          alt: "La Joya Del Pantano - Premio",
-          title: title,
-        },
-        {
-          src: "/images/trabajos_destacados/LaurelesIbero-FA-Negro.png",
-          alt: "La Joya Del Pantano - Premio Iberoamericano",
-          title: title,
-        },
-        {
-          src: "/images/trabajos_destacados/LaurelLeaves2024_OficialSelection_ESP.png",
-          alt: "La Joya Del Pantano - Selección Oficial",
-          title: title,
-        },
-      ];
-      
-      // Luego las 3 imágenes normales
-      const baseImages = createImageArray("LaJoyaDelPantano", "LJDP");
-      
-      // Combinar: premios primero, luego imágenes normales
-      return [...prizeImages, ...baseImages];
+      // Solo las imágenes normales, sin premios
+      return createImageArray("LaJoyaDelPantano", "LJDP");
     }
     if (title === "SALÚ") {
       return createImageArray("Salu", "Salu");
