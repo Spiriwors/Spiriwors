@@ -19,7 +19,7 @@ Este documento contiene las instrucciones paso a paso para configurar Supabase c
 2. Click en "New Project"
 3. Configuración:
    - **Name:** Spiriwors CMS
-   - **Database Password:** (guárdalo, lo necesitarás)
+   - **Database Password:** (guárdalo, lo necesitarás) -> das2$xi!gaF4V6E
    - **Region:** South America (São Paulo) - más cercano a Colombia
    - **Pricing Plan:** Free
 4. Click "Create new project"
@@ -161,8 +161,8 @@ USING (
 2. Click en "Users"
 3. Click en "Add user" → "Create new user"
 4. Configuración:
-   - **Email:** camilo@spiriwors.com (o el email que prefiera Camilo)
-   - **Password:** (crear contraseña segura)
+   - **Email:** camilo@spiriwors.com (o el email que prefiera Camilo) -> adolfmouse@gmail.com
+   - **Password:** (crear contraseña segura) -> Arbolito1234#
    - **Auto Confirm User:** ✅ **Activar**
 5. Click "Create user"
 6. **Guardar email y contraseña** - Camilo los necesitará para hacer login
@@ -176,12 +176,12 @@ USING (
 
    **a) Project URL:**
    ```
-   https://xxxxxxxxxxxxx.supabase.co
+   https://xxxxxxxxxxxxx.supabase.co -> https://ohlvxqhobhyvcwoitwpe.supabase.co
    ```
 
    **b) Anon/Public Key (anon public):**
    ```
-   eyJhbGc....[key muy larga]
+   eyJhbGc....[key muy larga] -> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9obHZ4cWhvYmh5dmN3b2l0d3BlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIyOTM2NTQsImV4cCI6MjA3Nzg2OTY1NH0.764GRRl3lVy0vG4Mf4e1C7yDukxjld08utZ5PQxvJDw
    ```
 
 3. **ENVIAR ESTAS DOS CREDENCIALES** al equipo de frontend
