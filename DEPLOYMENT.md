@@ -7,9 +7,10 @@ Use these settings in your Cloudflare Pages project:
 ### Build Settings
 
 1. **Framework preset**: Next.js
-2. **Build command**: `npm run pages:build`
+2. **Build command**: `npx @cloudflare/next-on-pages` (or `npm run pages:build`)
 3. **Build output directory**: `.vercel/output/static`
-4. **Root directory**: `/` (leave empty or use root)
+4. **Root directory**: (leave empty)
+5. **Node version**: 20.18.3 (auto-detected from `.node-version` file)
 
 ### Environment Variables
 

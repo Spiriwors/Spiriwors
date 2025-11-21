@@ -1,3 +1,6 @@
 name = "spiriwors"
 compatibility_date = "2025-11-21"
 pages_build_output_dir = ".vercel/output/static"
+
+[site]
+bucket = ".vercel/output/static"
