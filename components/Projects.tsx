@@ -17,7 +17,8 @@ const Projects = () => {
       id: 1,
       title: "La Joya Del Pantano",
       url: "https://www.youtube.com/watch?v=gTusWDe469g",
-      description: "Cortometraje de animación 2D realizado por Camilo Ayala Nieto",
+      description:
+        "Cortometraje de animación 2D realizado por Camilo Ayala Nieto",
       year: undefined,
       category: "2d" as const,
     },
@@ -25,7 +26,8 @@ const Projects = () => {
       id: 2,
       title: "SALÚ",
       url: "https://www.youtube.com/watch?v=CZsXsqoL2B0",
-      description: "Cortometraje de animación Stop-Motion realizado por Camilo Ayala Nieto",
+      description:
+        "Cortometraje de animación Stop-Motion realizado por Camilo Ayala Nieto",
       year: undefined,
       category: "stop" as const,
     },
@@ -182,14 +184,6 @@ const Projects = () => {
   return (
     <section id="projects" className="py-20 bg-gray-700">
       <div className="container mx-auto px-6">
-        <ScrollReveal direction="up">
-          <div className="text-center mb-12">
-            <h2 className="text-[60px] md:text-5xl font-bold mb-4 amatic-sc-bold text-white leading-tight">
-              Trabajo
-            </h2>
-          </div>
-        </ScrollReveal>
-
         {/* Filter Buttons */}
         <div className="flex flex-nowrap justify-center gap-2 md:gap-4 mb-12 overflow-x-auto pb-2 md:pb-0">
           {filterOptions.map((category) => (
@@ -214,72 +208,87 @@ const Projects = () => {
             />
           ))}
           {/* Parallax Animation al final - en la misma fila que las tarjetas */}
-          {filteredProjects.length > 0 && (() => {
-            const totalCards = filteredProjects.length;
-            const cardsInLastRow = totalCards % 3; // Para grid de 3 columnas en desktop
-            
-            // Para Animación 2D: segunda posición de la última fila
-            if (filter === "2d") {
-              // Si la última fila tiene 0 o 1 tarjeta, necesitamos un espacio vacío antes
-              if (cardsInLastRow === 0 || cardsInLastRow === 1) {
+          {filteredProjects.length > 0 &&
+            (() => {
+              const totalCards = filteredProjects.length;
+              const cardsInLastRow = totalCards % 3; // Para grid de 3 columnas en desktop
+
+              // Para Animación 2D: segunda posición de la última fila
+              if (filter === "2d") {
+                // Si la última fila tiene 0 o 1 tarjeta, necesitamos un espacio vacío antes
+                if (cardsInLastRow === 0 || cardsInLastRow === 1) {
+                  return (
+                    <>
+                      {cardsInLastRow === 0 && (
+                        <div className="hidden lg:block"></div>
+                      )}
+                      <div className="w-full">
+                        <ParallaxAnimation frameRate={15} />
+                      </div>
+                    </>
+                  );
+                }
+                // Si la última fila tiene 2 tarjetas, el parallax va directamente después
                 return (
-                  <>
-                    {cardsInLastRow === 0 && <div className="hidden lg:block"></div>}
-                    <div className="w-full">
-                      <ParallaxAnimation frameRate={15} />
-                    </div>
-                  </>
+                  <div className="w-full">
+                    <ParallaxAnimation frameRate={15} />
+                  </div>
                 );
               }
-              // Si la última fila tiene 2 tarjetas, el parallax va directamente después
-              return (
-                <div className="w-full">
-                  <ParallaxAnimation frameRate={15} />
-                </div>
-              );
-            }
-            
-            // Para Stop Motion: tercera posición de la última fila
-            if (filter === "stop") {
-              // Necesitamos 2 espacios vacíos si la última fila tiene 0 o 1 tarjeta
-              // Necesitamos 1 espacio vacío si la última fila tiene 2 tarjetas
-              if (cardsInLastRow === 0 || cardsInLastRow === 1) {
+
+              // Para Stop Motion: tercera posición de la última fila
+              if (filter === "stop") {
+                // Necesitamos 2 espacios vacíos si la última fila tiene 0 o 1 tarjeta
+                // Necesitamos 1 espacio vacío si la última fila tiene 2 tarjetas
+                if (cardsInLastRow === 0 || cardsInLastRow === 1) {
+                  return (
+                    <>
+                      <div
+                        className="col-span-1 h-0 lg:h-auto"
+                        aria-hidden="true"
+                      ></div>
+                      <div
+                        className="col-span-1 h-0 lg:h-auto"
+                        aria-hidden="true"
+                      ></div>
+                      <div className="col-span-1 md:col-span-2 lg:col-span-1">
+                        <ParallaxAnimation frameRate={15} />
+                      </div>
+                    </>
+                  );
+                }
+                if (cardsInLastRow === 2) {
+                  return (
+                    <div className="col-span-1 md:col-span-2 lg:col-span-1">
+                      <ParallaxAnimation frameRate={15} />
+                    </div>
+                  );
+                }
+                // Si la última fila está completa (3 tarjetas), el parallax va en nueva fila, tercera posición
                 return (
                   <>
-                    <div className="col-span-1 h-0 lg:h-auto" aria-hidden="true"></div>
-                    <div className="col-span-1 h-0 lg:h-auto" aria-hidden="true"></div>
+                    <div
+                      className="col-span-1 h-0 lg:h-auto"
+                      aria-hidden="true"
+                    ></div>
+                    <div
+                      className="col-span-1 h-0 lg:h-auto"
+                      aria-hidden="true"
+                    ></div>
                     <div className="col-span-1 md:col-span-2 lg:col-span-1">
                       <ParallaxAnimation frameRate={15} />
                     </div>
                   </>
                 );
               }
-              if (cardsInLastRow === 2) {
-                return (
-                  <div className="col-span-1 md:col-span-2 lg:col-span-1">
-                    <ParallaxAnimation frameRate={15} />
-                  </div>
-                );
-              }
-              // Si la última fila está completa (3 tarjetas), el parallax va en nueva fila, tercera posición
+
+              // Para otros filtros: al final
               return (
-                <>
-                  <div className="col-span-1 h-0 lg:h-auto" aria-hidden="true"></div>
-                  <div className="col-span-1 h-0 lg:h-auto" aria-hidden="true"></div>
-                  <div className="col-span-1 md:col-span-2 lg:col-span-1">
-                    <ParallaxAnimation frameRate={15} />
-                  </div>
-                </>
+                <div className="w-full">
+                  <ParallaxAnimation frameRate={15} />
+                </div>
               );
-            }
-            
-            // Para otros filtros: al final
-            return (
-              <div className="w-full">
-                <ParallaxAnimation frameRate={15} />
-              </div>
-            );
-          })()}
+            })()}
         </div>
       </div>
     </section>
