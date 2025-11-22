@@ -2,6 +2,9 @@
 
 import ProjectForm from '@/components/admin/ProjectForm';
 
+// Configure Edge Runtime for Cloudflare Pages
+export const runtime = 'edge';
+
 export default function NewProjectPage() {
   return (
     <div>

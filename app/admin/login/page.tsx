@@ -6,6 +6,9 @@ import { supabase } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
+// Configure Edge Runtime for Cloudflare Pages
+export const runtime = 'edge';
+
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');

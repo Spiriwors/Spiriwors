@@ -6,6 +6,9 @@ import { Project } from '@/types/project';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
+// Configure Edge Runtime for Cloudflare Pages
+export const runtime = 'edge';
+
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);

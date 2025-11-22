@@ -6,6 +6,9 @@ import { getProjectById } from '@/lib/supabase/projects';
 import { Project } from '@/types/project';
 import ProjectForm from '@/components/admin/ProjectForm';
 
+// Configure Edge Runtime for Cloudflare Pages
+export const runtime = 'edge';
+
 export default function EditProjectPage() {
   const params = useParams();
   const [project, setProject] = useState<Project | null>(null);
