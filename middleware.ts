@@ -1,41 +1,89 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export async function middleware(req: NextRequest) {
-  const res = NextResponse.next();
-
+export async function middleware(request: NextRequest) {
   // Si no hay Supabase, permitir acceso (modo fallback)
   const hasSupabase = !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
   if (!hasSupabase) {
-    return res;
+    return NextResponse.next();
   }
 
-  const supabase = createMiddlewareClient({ req, res });
+  let response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  });
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return request.cookies.get(name)?.value;
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          request.cookies.set({
+            name,
+            value,
+            ...options,
+          });
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          });
+          response.cookies.set({
+            name,
+            value,
+            ...options,
+          });
+        },
+        remove(name: string, options: CookieOptions) {
+          request.cookies.set({
+            name,
+            value: '',
+            ...options,
+          });
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          });
+          response.cookies.set({
+            name,
+            value: '',
+            ...options,
+          });
+        },
+      },
+    }
+  );
 
   // Verificar sesión
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
   // Redirigir /admin y /admin/dashboard a /admin/projects
-  if (req.nextUrl.pathname === '/admin' || req.nextUrl.pathname === '/admin/dashboard') {
-    return NextResponse.redirect(new URL('/admin/projects', req.url));
+  if (request.nextUrl.pathname === '/admin' || request.nextUrl.pathname === '/admin/dashboard') {
+    return NextResponse.redirect(new URL('/admin/projects', request.url));
   }
 
   // Proteger rutas /admin/* excepto /admin/login
-  if (req.nextUrl.pathname.startsWith('/admin') && !req.nextUrl.pathname.startsWith('/admin/login')) {
-    if (!session) {
-      return NextResponse.redirect(new URL('/admin/login', req.url));
+  if (request.nextUrl.pathname.startsWith('/admin') && !request.nextUrl.pathname.startsWith('/admin/login')) {
+    if (!user) {
+      return NextResponse.redirect(new URL('/admin/login', request.url));
     }
   }
 
   // Si está en /admin/login y ya tiene sesión, redirigir a proyectos
-  if (req.nextUrl.pathname === '/admin/login' && session) {
-    return NextResponse.redirect(new URL('/admin/projects', req.url));
+  if (request.nextUrl.pathname === '/admin/login' && user) {
+    return NextResponse.redirect(new URL('/admin/projects', request.url));
   }
 
-  return res;
+  return response;
 }
 
 export const config = {
