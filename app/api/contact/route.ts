@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
+// Configure Edge Runtime for Cloudflare Pages
+export const runtime = 'edge';
+
 const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_key_for_build');
 
 export async function POST(request: NextRequest) {
@@ -24,10 +27,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Obtener email de destino desde variables de entorno o usar el por defecto
+    const contactEmail = process.env.CONTACT_EMAIL || 'spiriwors@gmail.com';
+
     // Enviar email usando Resend
     const { data, error } = await resend.emails.send({
-      from: 'Spiriwors Contact <onboarding@resend.dev>', // Cambiar por tu dominio verificado
-      to: ['hola@spiriwors.com'], // Email de destino
+      from: 'Spiriwors Contact <onboarding@resend.dev>',
+      to: [contactEmail], // Email de destino configurado
       subject: `Nuevo mensaje de contacto de ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

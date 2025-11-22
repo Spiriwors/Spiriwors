@@ -12,7 +12,8 @@ const Hero = () => {
   const [isInView, setIsInView] = useState(true);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoFailed, setVideoFailed] = useState(false);
-  const { accentColor } = useTheme();
+  const [isMobile, setIsMobile] = useState(false);
+  const { accentColor, isUIHidden } = useTheme();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -25,6 +26,17 @@ const Hero = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.5, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
 
+  // Detect mobile/tablet screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // md breakpoint
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // Track if hero is in viewport to pause animations
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -35,6 +47,15 @@ const Hero = () => {
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
+
+  // Update video source when screen size changes
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    
+    // Force reload when switching between mobile/desktop videos
+    v.load();
+  }, [isMobile]);
 
   // Try to autoplay the background video when ready
   useEffect(() => {
@@ -52,7 +73,7 @@ const Hero = () => {
     if (v.readyState >= 2) tryPlay();
     v.addEventListener('loadeddata', tryPlay);
     return () => v.removeEventListener('loadeddata', tryPlay);
-  }, []);
+  }, [isMobile]);
 
   
 
@@ -75,13 +96,10 @@ const Hero = () => {
           muted
           playsInline
           preload="auto"
-          src="/gif/Gif.mov"
           onError={() => setVideoFailed(true)}
           aria-hidden="true"
         >
-          <source src="/gif/Gif.mov" type="video/quicktime" />
-          <source src="/gif/Gif.mp4" type="video/mp4" />
-          <source src="/gif/Gif.webm" type="video/webm" />
+          <source src={isMobile ? "/heroMobileVideo/Gif_Cel02 (1).mp4" : "/heroVideoDesktop/Gif02B.mp4"} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/40" />
       </motion.div>
@@ -131,11 +149,12 @@ const Hero = () => {
       </motion.div>
 
       {/* Content */}
+      {/* H1 - Always visible, not affected by isUIHidden */}
       <motion.div
-        className="relative z-20 text-center px-6 max-w-4xl mx-auto"
-        style={{ opacity, scale }}
+        className="absolute inset-0 z-20 flex items-center justify-center px-6"
+        style={{ scale }}
       >
-        <div className="mb-6">
+        <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold mb-4 leading-tight amatic-sc-bold whitespace-nowrap">
             <motion.span
               className="inline-block bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent will-change-transform-opacity"
@@ -165,14 +184,28 @@ const Hero = () => {
             </motion.span>
           </h1>
         </div>
+      </motion.div>
 
+      {/* Other content - Hidden when isUIHidden is true */}
+      <motion.div
+        className="relative z-20 text-center px-6 max-w-4xl mx-auto"
+        animate={{ 
+          opacity: isUIHidden ? 0 : 1,
+          pointerEvents: isUIHidden ? 'none' : 'auto'
+        }}
+        transition={{ duration: DURATION.base }}
+      >
         
       </motion.div>
 
       {/* Scroll Indicator - Outside content div */}
       <motion.div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30"
-        animate={{ y: [0, 10, 0] }}
+        animate={{ 
+          y: [0, 10, 0],
+          opacity: isUIHidden ? 0 : 1,
+          pointerEvents: isUIHidden ? 'none' : 'auto'
+        }}
         transition={{ duration: 1.5, repeat: Infinity }}
       >
         <ArrowDown className="w-6 h-6" style={{ color: accentColor }} />

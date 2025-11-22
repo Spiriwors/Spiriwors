@@ -13,12 +13,14 @@ interface MegaCardProps {
   }>;
   videoSrc: string;
   videoTitle?: string;
+  videoDescription?: string;
 }
 
 const MegaCard: React.FC<MegaCardProps> = ({
   images,
   videoSrc,
   videoTitle = "Video",
+  videoDescription,
 }) => {
   const { accentColor } = useTheme();
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -119,29 +121,55 @@ const MegaCard: React.FC<MegaCardProps> = ({
             backfaceVisibility: "hidden",
           }}
         >
-          <div className="relative w-full h-full rounded-lg overflow-hidden bg-gray-800 group">
+          <div
+            className="relative w-full h-full rounded-lg overflow-hidden group"
+            style={{
+              backgroundColor:
+                images[currentSlide]?.src.includes("LaurelesIbero") ||
+                images[currentSlide]?.src.includes("LaurelLeaves") ||
+                images[currentSlide]?.src.includes("LJDP-premio")
+                  ? "#ffffff"
+                  : "#1f2937",
+            }}
+          >
             {/* Carousel Images */}
             <div className="relative w-full h-full">
-              {images.map((image, index) => (
-                <div
-                  key={index}
-                  className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                    index === currentSlide ? "opacity-100" : "opacity-0"
-                  }`}
-                >
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <h3 className="text-white text-lg font-bold">
-                      {image.title}
-                    </h3>
+              {images.map((image, index) => {
+                const isPrizeImage =
+                  image.src.includes("LaurelesIbero") ||
+                  image.src.includes("LaurelLeaves") ||
+                  image.src.includes("LJDP-premio");
+                return (
+                  <div
+                    key={index}
+                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                      index === currentSlide ? "opacity-100" : "opacity-0"
+                    }`}
+                    style={isPrizeImage ? { backgroundColor: "#ffffff" } : {}}
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className={`w-full h-full ${isPrizeImage ? "object-contain" : "object-cover"}`}
+                    />
+                    {!isPrizeImage && (
+                      <>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                        <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <h3 className="text-white text-lg font-bold mb-2">
+                            {image.title}
+                          </h3>
+                          {videoDescription && (
+                            <div className="text-white/90 text-xs whitespace-pre-line">
+                              {videoDescription}
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Navigation Arrows - Only show if multiple images */}
@@ -181,7 +209,11 @@ const MegaCard: React.FC<MegaCardProps> = ({
                       className={`w-2 h-2 rounded-full transition-colors ${
                         index === currentSlide ? "" : "bg-white/50"
                       }`}
-                      style={index === currentSlide ? { backgroundColor: accentColor } : {}}
+                      style={
+                        index === currentSlide
+                          ? { backgroundColor: accentColor }
+                          : {}
+                      }
                       aria-label={`Ir a imagen ${index + 1}`}
                     />
                   ))}
@@ -285,13 +317,21 @@ const MegaCard: React.FC<MegaCardProps> = ({
             {/* Modal Content */}
             <div className="p-6">
               <div className="text-center">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: `${accentColor}33` }}>
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                  style={{ backgroundColor: `${accentColor}33` }}
+                >
                   <Play className="w-8 h-8" style={{ color: accentColor }} />
                 </div>
                 <h4 className="text-xl font-bold text-white mb-2">
                   {videoTitle}
                 </h4>
-                <p className="text-gray-300 mb-4">
+                {videoDescription && (
+                  <div className="text-gray-300 mb-4 whitespace-pre-line text-sm">
+                    {videoDescription}
+                  </div>
+                )}
+                <p className="text-gray-400 text-xs mb-4">
                   Video disponible para reproducción automática. Los controles
                   aparecen al pasar el mouse sobre el área del video.
                 </p>
@@ -301,7 +341,8 @@ const MegaCard: React.FC<MegaCardProps> = ({
                     className="text-white"
                     style={{ backgroundColor: accentColor }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = accentColor === '#ffaf26' ? '#ff9500' : '#2190a8';
+                      e.currentTarget.style.backgroundColor =
+                        accentColor === "#ffaf26" ? "#ff9500" : "#2190a8";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.backgroundColor = accentColor;

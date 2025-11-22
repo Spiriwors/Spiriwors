@@ -30,11 +30,11 @@ export default function Home() {
       </SimpleFade>
 
       <SimpleFade>
-        <Carousel />
+        <About />
       </SimpleFade>
 
       <SimpleFade>
-        <About />
+        <Carousel />
       </SimpleFade>
 
       <SimpleFade>

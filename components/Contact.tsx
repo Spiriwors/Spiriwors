@@ -7,12 +7,9 @@ import { z } from "zod";
 import {
   Send,
   Mail,
-  Phone,
   MapPin,
-  Clock,
   Instagram,
   Linkedin,
-  Youtube,
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
@@ -31,7 +28,6 @@ const contactSchema = z.object({
   email: z.string().email("Por favor ingresa un email válido"),
   company: z.string().optional(),
   project: z.string().min(1, "Por favor selecciona un tipo de proyecto"),
-  budget: z.string().optional(),
   message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
 });
 
@@ -58,7 +54,6 @@ const Contact = () => {
       email: "",
       company: "",
       project: "",
-      budget: "",
       message: "",
     },
   });
@@ -103,14 +98,8 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email",
-      value: "hola@spiriwors.com",
-      link: "mailto:hola@spiriwors.com",
-    },
-    {
-      icon: Phone,
-      title: "Teléfono",
-      value: "+57 300 123 4567",
-      link: "tel:+573001234567",
+      value: "spiriwors@gmail.com",
+      link: "mailto:spiriwors@gmail.com",
     },
     {
       icon: MapPin,
@@ -118,26 +107,19 @@ const Contact = () => {
       value: "Bogotá, Colombia",
       link: "#",
     },
-    {
-      icon: Clock,
-      title: "Horario",
-      value: "Lun - Vie: 9:00 - 18:00",
-      link: "#",
-    },
   ];
 
   const socialLinks = [
-    { icon: Instagram, url: "https://instagram.com/spiriwors", label: "@spiriwors" },
-    { icon: Linkedin, url: "https://linkedin.com/company/spiriwors", label: "Spiriwors" },
-    { icon: Youtube, url: "https://youtube.com/@spiriwors", label: "Spiriwors Studio" },
+    { icon: Instagram, url: "https://www.instagram.com/camiloayalanieto?igsh=eHhiNGMwdmZ1dWM5&utm_source=qr", label: "@spiriwors" },
+    { icon: Linkedin, url: "https://www.linkedin.com/in/camilo-ayala-nieto-125730388?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app", label: "Spiriwors" },
   ];
 
   return (
-    <section id="contact" className="py-20 bg-gray-700">
+    <section id="contact" className="py-20 bg-gray-800">
       <div className="container mx-auto px-6">
         <ScrollReveal direction="up">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 amatic-sc-bold text-white">
+            <h2 className="text-[60px] md:text-5xl font-bold mb-4 amatic-sc-bold text-white leading-tight">
               Contacto
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -222,67 +204,32 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label
-                      htmlFor="company"
-                      className="block text-gray-300 mb-2"
-                    >
-                      Empresa
-                    </label>
-                    <Input
-                      type="text"
-                      id="company"
-                      {...register("company")}
-                      disabled={isSubmitting}
-                      className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                      style={{
-                        '--tw-ring-color': accentColor
-                      } as React.CSSProperties}
-                      onFocus={(e) => {
-                        e.currentTarget.style.borderColor = accentColor;
-                        e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.borderColor = '';
-                        e.currentTarget.style.boxShadow = '';
-                      }}
-                      placeholder="Nombre de tu empresa"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="budget"
-                      className="block text-gray-300 mb-2"
-                    >
-                      Presupuesto
-                    </label>
-                    <Select onValueChange={(value) => register("budget").onChange({ target: { name: "budget", value } })} disabled={isSubmitting}>
-                      <SelectTrigger
-                        className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                        style={{
-                          '--tw-ring-color': accentColor
-                        } as React.CSSProperties}
-                        onFocus={(e) => {
-                          e.currentTarget.style.borderColor = accentColor;
-                          e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
-                        }}
-                        onBlur={(e) => {
-                          e.currentTarget.style.borderColor = '';
-                          e.currentTarget.style.boxShadow = '';
-                        }}
-                        aria-label="Seleccionar presupuesto"
-                      >
-                        <SelectValue placeholder="Selecciona un rango" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="1000-5000">$1,000 - $5,000</SelectItem>
-                        <SelectItem value="5000-10000">$5,000 - $10,000</SelectItem>
-                        <SelectItem value="10000-25000">$10,000 - $25,000</SelectItem>
-                        <SelectItem value="25000+">$25,000+</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <div>
+                  <label
+                    htmlFor="company"
+                    className="block text-gray-300 mb-2"
+                  >
+                    Empresa
+                  </label>
+                  <Input
+                    type="text"
+                    id="company"
+                    {...register("company")}
+                    disabled={isSubmitting}
+                    className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{
+                      '--tw-ring-color': accentColor
+                    } as React.CSSProperties}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = accentColor;
+                      e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '';
+                      e.currentTarget.style.boxShadow = '';
+                    }}
+                    placeholder="Nombre de tu empresa"
+                  />
                 </div>
 
                 <div>
@@ -340,9 +287,9 @@ const Contact = () => {
                       onChange: (e) => setMessageLength(e.target.value.length)
                     })}
                     disabled={isSubmitting}
-                    rows={6}
+                    rows={3}
                     maxLength={500}
-                    className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed resize-none"
                     style={{
                       '--tw-ring-color': accentColor
                     } as React.CSSProperties}
@@ -513,38 +460,6 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* FAQ */}
-              <div className="bg-gray-900 p-6 rounded-lg">
-                <h4 className="text-xl font-bold text-white mb-4">
-                  Preguntas Frecuentes
-                </h4>
-                <div className="space-y-4 text-gray-300">
-                  <div>
-                    <h5 className="font-semibold" style={{ color: accentColor }}>
-                      ¿Cuánto tiempo toma un proyecto?
-                    </h5>
-                    <p className="text-sm">
-                      Depende del alcance, pero típicamente entre 2-8 semanas.
-                    </p>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold" style={{ color: accentColor }}>
-                      ¿Trabajas con clientes internacionales?
-                    </h5>
-                    <p className="text-sm">
-                      ¡Sí! Trabajo con clientes de todo el mundo remotamente.
-                    </p>
-                  </div>
-                  <div>
-                    <h5 className="font-semibold" style={{ color: accentColor }}>
-                      ¿Ofreces revisiones?
-                    </h5>
-                    <p className="text-sm">
-                      Incluyo 3 rondas de revisiones en todos mis proyectos.
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </ScrollReveal>
         </div>

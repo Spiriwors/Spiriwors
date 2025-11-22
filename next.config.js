@@ -20,9 +20,6 @@ const nextConfig = {
     optimizePackageImports: ['lucide-react', 'framer-motion'], // Tree-shake these packages
   },
 
-  // CSS optimization
-  swcMinify: true, // Enable SWC minification for faster builds
-
   // Cache headers for bfcache compatibility
   async headers() {
     return [

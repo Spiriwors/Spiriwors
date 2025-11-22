@@ -40,7 +40,7 @@ const ParallaxAnimation: React.FC<ParallaxAnimationProps> = ({
       <img
         src={imageSrc}
         alt={`Parallax frame ${currentFrame}`}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover scale-x-[-1]"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
     </div>

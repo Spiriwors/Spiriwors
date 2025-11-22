@@ -26,6 +26,13 @@ const amaticSC = Amatic_SC({
   fallback: ['cursive', 'Comic Sans MS']
 });
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#facc15",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "https://spiriwors.com"
@@ -53,12 +60,6 @@ export const metadata: Metadata = {
     ],
   },
   manifest: "/manifest.json",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-  },
-  themeColor: "#facc15",
   openGraph: {
     type: "website",
     locale: "es_CO",
@@ -187,7 +188,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Favicon fallbacks */}
-        <link rel="icon" href="/assets/SW.ico" />
+        <link rel="icon" href="/assets/logoSW_beige.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/assets/SW.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/assets/SW.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/SW.png" />
