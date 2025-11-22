@@ -1,17 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { getFeaturedProjects } from '@/lib/supabase/projects';
+import { Project } from '@/types/project';
 
 const Carousel = () => {
   // Estado para controlar qué tarjetas están giradas (por proyecto)
   const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
   // Estado para controlar el slide actual de cada proyecto
-  const [currentSlides, setCurrentSlides] = useState<Record<string, number>>(
-    {}
-  );
+  const [currentSlides, setCurrentSlides] = useState<Record<string, number>>({});
+  // Estado para proyectos y loading
+  const [featuredProjects, setFeaturedProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const featuredProjects = [
+  // Proyectos fallback (hardcodeados)
+  const fallbackProjects = [
     {
       id: 1,
       image: "/images/projects/LJDP_HD_FULL_DEFF.webp",
@@ -32,8 +36,38 @@ const Carousel = () => {
     },
   ];
 
+  useEffect(() => {
+    loadFeaturedProjects();
+  }, []);
+
+  const loadFeaturedProjects = async () => {
+    try {
+      const data = await getFeaturedProjects();
+      // Si hay datos de Supabase, usarlos; sino usar fallback
+      if (data && data.length > 0) {
+        setFeaturedProjects(data);
+      } else {
+        setFeaturedProjects(fallbackProjects);
+      }
+    } catch (error) {
+      console.error('Error loading featured projects, using fallback:', error);
+      setFeaturedProjects(fallbackProjects);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Función para obtener las imágenes según el proyecto
-  const getProjectImages = (projectKey: string): string[] => {
+  const getProjectImages = (project: any): string[] => {
+    // Si el proyecto tiene imágenes de Supabase, usarlas
+    if (project.images && project.images.length > 0) {
+      return project.images;
+    }
+
+    // Fallback para proyectos legacy basados en el key
+    const projectKey = project.key || (project.title?.includes("Joya") ? "LJDP" :
+                      project.title?.includes("SALÚ") || project.title?.includes("Salu") ? "Salu" : "");
+
     if (projectKey === "LJDP") {
       // Las 3 imágenes de premios van primero (LJDP premio es la primera)
       const prizeImages = [
@@ -63,7 +97,10 @@ const Carousel = () => {
   };
 
   // Función para obtener el color de fondo según el proyecto
-  const getProjectBackgroundColor = (projectKey: string): string => {
+  const getProjectBackgroundColor = (project: any): string => {
+    const projectKey = project.key || (project.title?.includes("Joya") ? "LJDP" :
+                      project.title?.includes("SALÚ") || project.title?.includes("Salu") ? "Salu" : "");
+
     if (projectKey === "LJDP") {
       return "#ffffff"; // Blanco para La Joya Del Pantano
     }
@@ -71,6 +108,10 @@ const Carousel = () => {
       return "#f3ecdc"; // Beige para SALÚ
     }
     return "#1f2937"; // Fallback gris oscuro
+  };
+
+  const getProjectKey = (project: any): string => {
+    return project.key || `project-${project.id}`;
   };
 
   const handleCardClick = (projectKey: string) => {
@@ -118,70 +159,94 @@ const Carousel = () => {
         </div>
 
         {/* Posters Grid - Two side by side */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-[57.6rem] mx-auto">
-          {featuredProjects.map((project, index) => {
-            const isFlipped = flippedCards[project.key] || false;
-            const projectImages = getProjectImages(project.key);
-            const currentSlide = currentSlides[project.key] || 0;
+        {loading ? (
+          <div className="text-center text-gray-400">Cargando proyectos destacados...</div>
+        ) : featuredProjects.length === 0 ? (
+          <div className="text-center text-gray-400">No hay proyectos destacados</div>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-8 max-w-[57.6rem] mx-auto">
+            {featuredProjects.map((project, index) => {
+              const projectKey = getProjectKey(project);
+              const isFlipped = flippedCards[projectKey] || false;
+              const projectImages = getProjectImages(project);
+              const currentSlide = currentSlides[projectKey] || 0;
 
-            return (
-              <div key={project.id} className="group">
-                {/* Card Container con efecto Flip 3D */}
-                <div
-                  className="relative w-full aspect-[3/4.2] mb-6 cursor-pointer"
-                  style={{
-                    perspective: "1000px",
-                  }}
-                  onClick={() => handleCardClick(project.key)}
-                >
+              // Determinar imagen de poster (prioridad a featured_poster de Supabase)
+              const posterImage = project.featured_poster || project.image;
+
+              return (
+                <div key={project.id} className="group">
+                  {/* Card Container con efecto Flip 3D */}
                   <div
-                    className="relative w-full h-full transition-transform duration-700"
+                    className="relative w-full aspect-[3/4.2] mb-6 cursor-pointer"
                     style={{
-                      transformStyle: "preserve-3d",
-                      transform: isFlipped
-                        ? "rotateY(180deg)"
-                        : "rotateY(0deg)",
+                      perspective: "1000px",
                     }}
+                    onClick={() => handleCardClick(projectKey)}
                   >
-                    {/* Frente de la Tarjeta - Poster */}
                     <div
-                      className="absolute inset-0 w-full h-full rounded-lg shadow-2xl bg-gray-900 overflow-hidden"
+                      className="relative w-full h-full transition-transform duration-700"
                       style={{
-                        backfaceVisibility: "hidden",
+                        transformStyle: "preserve-3d",
+                        transform: isFlipped
+                          ? "rotateY(180deg)"
+                          : "rotateY(0deg)",
                       }}
                     >
-                      <picture>
-                        <source srcSet={project.image} type="image/webp" />
-                        <img
-                          src={project.imageFallback}
-                          alt={project.title}
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                          loading={index === 0 ? "eager" : "lazy"}
-                          decoding="async"
-                        />
-                      </picture>
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                      {/* Frente de la Tarjeta - Poster */}
+                      <div
+                        className="absolute inset-0 w-full h-full rounded-lg shadow-2xl bg-gray-900 overflow-hidden"
+                        style={{
+                          backfaceVisibility: "hidden",
+                        }}
+                      >
+                        {project.imageFallback ? (
+                          <picture>
+                            <source srcSet={project.image} type="image/webp" />
+                            <img
+                              src={project.imageFallback}
+                              alt={project.title}
+                              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                              loading={index === 0 ? "eager" : "lazy"}
+                              decoding="async"
+                            />
+                          </picture>
+                        ) : posterImage ? (
+                          <img
+                            src={posterImage}
+                            alt={project.title}
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            loading={index === 0 ? "eager" : "lazy"}
+                            decoding="async"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-gray-800 text-gray-400">
+                            Sin imagen
+                          </div>
+                        )}
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                     </div>
 
-                    {/* Parte Trasera de la Tarjeta - Carrusel */}
-                    <div
-                      className="absolute inset-0 w-full h-full rounded-lg shadow-2xl overflow-hidden"
-                      style={{
-                        backfaceVisibility: "hidden",
-                        transform: "rotateY(180deg)",
-                        backgroundColor: (() => {
-                          const currentImage = projectImages[currentSlide];
-                          const isPrizeImage =
-                            currentImage &&
-                            (currentImage.includes("LaurelesIbero") ||
-                              currentImage.includes("LaurelLeaves") ||
-                              currentImage.includes("LJDP-premio"));
-                          return isPrizeImage
-                            ? "#ffffff"
-                            : getProjectBackgroundColor(project.key);
-                        })(),
-                      }}
-                    >
+                      {/* Parte Trasera de la Tarjeta - Carrusel */}
+                      {projectImages.length > 0 && (
+                        <div
+                          className="absolute inset-0 w-full h-full rounded-lg shadow-2xl overflow-hidden"
+                          style={{
+                            backfaceVisibility: "hidden",
+                            transform: "rotateY(180deg)",
+                            backgroundColor: (() => {
+                              const currentImage = projectImages[currentSlide];
+                              const isPrizeImage =
+                                currentImage &&
+                                (currentImage.includes("LaurelesIbero") ||
+                                  currentImage.includes("LaurelLeaves") ||
+                                  currentImage.includes("LJDP-premio"));
+                              return isPrizeImage
+                                ? "#ffffff"
+                                : getProjectBackgroundColor(project);
+                            })(),
+                          }}
+                        >
                       <div className="relative w-full h-full">
                         {/* Imágenes del Carrusel */}
                         {projectImages.map((image, imgIndex) => {
@@ -218,7 +283,7 @@ const Carousel = () => {
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                prevSlide(project.key, projectImages.length);
+                                prevSlide(projectKey, projectImages.length);
                               }}
                               className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-2 rounded-full transition-all duration-300 z-10 shadow-lg"
                               aria-label="Imagen anterior"
@@ -229,7 +294,7 @@ const Carousel = () => {
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                nextSlide(project.key, projectImages.length);
+                                nextSlide(projectKey, projectImages.length);
                               }}
                               className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-2 rounded-full transition-all duration-300 z-10 shadow-lg"
                               aria-label="Siguiente imagen"
@@ -247,7 +312,7 @@ const Carousel = () => {
                                 key={imgIndex}
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  goToSlide(project.key, imgIndex);
+                                  goToSlide(projectKey, imgIndex);
                                 }}
                                 className={`h-2 rounded-full transition-all duration-300 shadow-lg ${
                                   imgIndex === currentSlide
@@ -271,7 +336,7 @@ const Carousel = () => {
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleCardClick(project.key);
+                            handleCardClick(projectKey);
                           }}
                           className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white p-2 rounded-full transition-colors z-10"
                           aria-label="Volver"
@@ -280,22 +345,24 @@ const Carousel = () => {
                         </button>
                       </div>
                     </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Content Bubble - Outside the image card */}
+                  <div className="bg-gray-800/95 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-gray-600">
+                    <h3 className="text-lg font-bold text-white mb-2 text-center">
+                      {project.title}
+                    </h3>
+                    <p className="text-gray-300 text-sm leading-relaxed text-center">
+                      {project.featured_description || project.description}
+                    </p>
                   </div>
                 </div>
-
-                {/* Content Bubble - Outside the image card */}
-                <div className="bg-gray-800/95 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-gray-600">
-                  <h3 className="text-lg font-bold text-white mb-2 text-center">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-300 text-sm leading-relaxed text-center">
-                    {project.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );

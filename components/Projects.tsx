@@ -1,17 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { DELAY } from "@/lib/animation-tokens";
 import MegaCard from "@/components/ui/megaCard";
 import ParallaxAnimation from "@/components/ParallaxAnimation";
 import FilterButton from "@/components/ui/FilterButton";
+import { getProjects } from '@/lib/supabase/projects';
+import { Project } from '@/types/project';
 
 const Projects = () => {
   const [filter, setFilter] = useState<"all" | "2d" | "stop">("all");
+  const [projects, setProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Catálogo unificado: categoría por tipo de animación (2D o Stop Motion)
-  const projects = [
+  // Catálogo unificado fallback: categoría por tipo de animación (2D o Stop Motion)
+  const fallbackProjects = [
     // SPIRIWORS – Contenidos Originales
     {
       id: 1,
@@ -113,6 +117,27 @@ const Projects = () => {
     },
   ];
 
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
+  const loadProjects = async () => {
+    try {
+      const data = await getProjects();
+      // Si hay datos de Supabase, usarlos; sino usar fallback
+      if (data && data.length > 0) {
+        setProjects(data);
+      } else {
+        setProjects(fallbackProjects);
+      }
+    } catch (error) {
+      console.error('Error loading projects, using fallback:', error);
+      setProjects(fallbackProjects);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const filterOptions = [
     { key: "all", label: "Todos", folder: "Todos" },
     { key: "2d", label: "Animación 2D", folder: "2D" },
@@ -122,8 +147,19 @@ const Projects = () => {
   const filteredProjects =
     filter === "all" ? projects : projects.filter((p) => p.category === filter);
 
-  // Función para asignar las imágenes del carousel basado en el título
-  const getProjectImages = (title: string) => {
+  // Función para asignar las imágenes del carousel basado en el proyecto
+  const getProjectImages = (project: any) => {
+    // Si el proyecto tiene imágenes de Supabase, usarlas
+    if (project.images && project.images.length > 0) {
+      return project.images.map((url: string, i: number) => ({
+        src: url,
+        alt: `${project.title} - Imagen ${i + 1}`,
+        title: project.title,
+      }));
+    }
+
+    // Fallback para proyectos legacy basados en el título
+    const title = project.title;
     const createImageArray = (
       folder: string,
       prefix: string,
@@ -197,16 +233,19 @@ const Projects = () => {
         </div>
 
         {/* MegaCard Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
-          {filteredProjects.map((item) => (
-            <MegaCard
-              key={item.id}
-              images={getProjectImages(item.title)}
-              videoSrc={item.url}
-              videoTitle={item.title}
-              videoDescription={item.description}
-            />
-          ))}
+        {loading ? (
+          <div className="text-center text-gray-400">Cargando proyectos...</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
+            {filteredProjects.map((item) => (
+              <MegaCard
+                key={item.id}
+                images={getProjectImages(item)}
+                videoSrc={item.video_url || item.url}
+                videoTitle={item.title}
+                videoDescription={item.description}
+              />
+            ))}
           {/* Parallax Animation al final - en la misma fila que las tarjetas */}
           {filteredProjects.length > 0 &&
             (() => {
@@ -289,7 +328,8 @@ const Projects = () => {
                 </div>
               );
             })()}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );
