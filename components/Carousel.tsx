@@ -1,54 +1,62 @@
 "use client";
 
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import React, { useState } from "react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 const Carousel = () => {
   // Estado para controlar qué tarjetas están giradas (por proyecto)
   const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
   // Estado para controlar el slide actual de cada proyecto
-  const [currentSlides, setCurrentSlides] = useState<Record<string, number>>({});
+  const [currentSlides, setCurrentSlides] = useState<Record<string, number>>(
+    {}
+  );
 
   const featuredProjects = [
     {
       id: 1,
-      image: '/images/projects/LJDP_HD_FULL_DEFF.webp',
-      imageFallback: '/images/projects/LJDP_HD_FULL_DEFF.png',
-      title: 'La Joya Del Pantano',
-      description: 'Historia original de Spiriwors que combina la magia del stop-motion con una narrativa emotiva sobre la naturaleza y la aventura.',
-      key: 'LJDP',
+      image: "/images/projects/LJDP_HD_FULL_DEFF.webp",
+      imageFallback: "/images/projects/LJDP_HD_FULL_DEFF.png",
+      title: "La Joya Del Pantano",
+      description:
+        "Historia original de Spiriwors que combina la magia del stop-motion con una narrativa emotiva sobre la naturaleza y la aventura.",
+      key: "LJDP",
     },
     {
       id: 2,
-      image: '/images/projects/SALU_AFICHE.webp',
-      imageFallback: '/images/projects/SALU_AFICHE.png',
-      title: 'SALÚ',
-      description: 'Proyecto destacado de Spiriwors que muestra la creatividad y técnica única en animación, desarrollando mundos únicos para una experiencia inmersiva.',
-      key: 'Salu',
-    }
+      image: "/images/projects/SALU_AFICHE.webp",
+      imageFallback: "/images/projects/SALU_AFICHE.png",
+      title: "SALÚ",
+      description:
+        "Proyecto destacado de Spiriwors que muestra la creatividad y técnica única en animación, desarrollando mundos únicos para una experiencia inmersiva.",
+      key: "Salu",
+    },
   ];
 
   // Función para obtener las imágenes según el proyecto
   const getProjectImages = (projectKey: string): string[] => {
-    if (projectKey === 'LJDP') {
+    if (projectKey === "LJDP") {
       // Las 3 imágenes de premios van primero (LJDP premio es la primera)
       const prizeImages = [
-        'LJDP premio.png',
-        'LaurelesIbero-FA-Negro.png',
-        'LaurelLeaves2024_OficialSelection_ESP.png'
-      ].map(name => `/images/trabajos_destacados/${encodeURIComponent(name)}`);
-      
-      // Luego las 5 imágenes normales
-      const baseImages = Array.from({ length: 5 }, (_, i) => 
-        `/images/trabajos_destacados/${i + 1}_LJDP.jpg`
+        "LJDP-premio.png",
+        "LaurelesIbero-FA-Negro.png",
+        "LaurelLeaves2024_OficialSelection_ESP.png",
+      ].map(
+        (name) => `/images/trabajos_destacados/${encodeURIComponent(name)}`
       );
-      
+
+      // Luego las 5 imágenes normales
+      const baseImages = Array.from(
+        { length: 5 },
+        (_, i) => `/images/trabajos_destacados/${i + 1}_LJDP.jpg`
+      );
+
       // Combinar: premios primero, luego imágenes normales
       return [...prizeImages, ...baseImages];
     }
-    if (projectKey === 'Salu') {
-      return Array.from({ length: 5 }, (_, i) => 
-        `/images/trabajos_destacados/${i + 1}.Salu.jpg`
+    if (projectKey === "Salu") {
+      return Array.from(
+        { length: 5 },
+        (_, i) => `/images/trabajos_destacados/${i + 1}.Salu.jpg`
       );
     }
     return [];
@@ -56,13 +64,13 @@ const Carousel = () => {
 
   // Función para obtener el color de fondo según el proyecto
   const getProjectBackgroundColor = (projectKey: string): string => {
-    if (projectKey === 'LJDP') {
-      return '#ffffff'; // Blanco para La Joya Del Pantano
+    if (projectKey === "LJDP") {
+      return "#ffffff"; // Blanco para La Joya Del Pantano
     }
-    if (projectKey === 'Salu') {
-      return '#f3ecdc'; // Beige para SALÚ
+    if (projectKey === "Salu") {
+      return "#f3ecdc"; // Beige para SALÚ
     }
-    return '#1f2937'; // Fallback gris oscuro
+    return "#1f2937"; // Fallback gris oscuro
   };
 
   const handleCardClick = (projectKey: string) => {
@@ -130,7 +138,9 @@ const Carousel = () => {
                     className="relative w-full h-full transition-transform duration-700"
                     style={{
                       transformStyle: "preserve-3d",
-                      transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                      transform: isFlipped
+                        ? "rotateY(180deg)"
+                        : "rotateY(0deg)",
                     }}
                   >
                     {/* Frente de la Tarjeta - Poster */}
@@ -161,28 +171,37 @@ const Carousel = () => {
                         transform: "rotateY(180deg)",
                         backgroundColor: (() => {
                           const currentImage = projectImages[currentSlide];
-                          const isPrizeImage = currentImage && (
-                            currentImage.includes('LaurelesIbero') || 
-                            currentImage.includes('LaurelLeaves') || 
-                            currentImage.includes('LJDP premio')
-                          );
-                          return isPrizeImage ? '#ffffff' : getProjectBackgroundColor(project.key);
+                          const isPrizeImage =
+                            currentImage &&
+                            (currentImage.includes("LaurelesIbero") ||
+                              currentImage.includes("LaurelLeaves") ||
+                              currentImage.includes("LJDP-premio"));
+                          return isPrizeImage
+                            ? "#ffffff"
+                            : getProjectBackgroundColor(project.key);
                         })(),
                       }}
                     >
                       <div className="relative w-full h-full">
                         {/* Imágenes del Carrusel */}
                         {projectImages.map((image, imgIndex) => {
-                          const isPrizeImage = image.includes('LaurelesIbero') || 
-                                             image.includes('LaurelLeaves') || 
-                                             image.includes('LJDP premio');
+                          const isPrizeImage =
+                            image.includes("LaurelesIbero") ||
+                            image.includes("LaurelLeaves") ||
+                            image.includes("LJDP-premio");
                           return (
                             <div
                               key={imgIndex}
                               className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
-                                imgIndex === currentSlide ? "opacity-100" : "opacity-0"
+                                imgIndex === currentSlide
+                                  ? "opacity-100"
+                                  : "opacity-0"
                               }`}
-                              style={isPrizeImage ? { backgroundColor: '#ffffff' } : {}}
+                              style={
+                                isPrizeImage
+                                  ? { backgroundColor: "#ffffff" }
+                                  : {}
+                              }
                             >
                               <img
                                 src={image}
@@ -231,8 +250,8 @@ const Carousel = () => {
                                   goToSlide(project.key, imgIndex);
                                 }}
                                 className={`h-2 rounded-full transition-all duration-300 shadow-lg ${
-                                  imgIndex === currentSlide 
-                                    ? "bg-gray-800 w-6" 
+                                  imgIndex === currentSlide
+                                    ? "bg-gray-800 w-6"
                                     : "bg-gray-600/70 hover:bg-gray-700 w-2"
                                 }`}
                                 aria-label={`Ir a imagen ${imgIndex + 1}`}
@@ -263,7 +282,7 @@ const Carousel = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Content Bubble - Outside the image card */}
                 <div className="bg-gray-800/95 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-gray-600">
                   <h3 className="text-lg font-bold text-white mb-2 text-center">

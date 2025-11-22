@@ -26,6 +26,13 @@ const amaticSC = Amatic_SC({
   fallback: ['cursive', 'Comic Sans MS']
 });
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#facc15",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "https://spiriwors.com"
@@ -53,12 +60,6 @@ export const metadata: Metadata = {
     ],
   },
   manifest: "/manifest.json",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-  },
-  themeColor: "#facc15",
   openGraph: {
     type: "website",
     locale: "es_CO",

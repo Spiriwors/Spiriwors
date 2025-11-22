@@ -162,7 +162,7 @@ const Projects = () => {
       return createImageArray("SnoopDogg", "SD");
     }
     if (title === "Waldo´s Dream") {
-      return createImageArray("Waldo´sDream", "WD");
+      return createImageArray("WaldosDream", "WD");
     }
     if (title === "Heroes Collection: Francis Ford Coppola") {
       return createImageArray("Coppola", "Coppola");
