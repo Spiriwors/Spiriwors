@@ -73,10 +73,11 @@ export const FALLBACK_PROJECTS: Project[] = [
     updated_at: new Date().toISOString(),
   },
   {
+    //https://venturiaanimation.com/portfolio/my-play-ajr/
     id: '5',
     title: "AJR – My Play",
     description: "Cargo: animación – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
-    video_url: "https://venturiaanimation.com/portfolio/my-play-ajr/",
+    video_url: "https://www.youtube.com/watch?v=Ew8jKnliFZg",
     category: "2d",
     images: [
       '/images/megaCard/AJR/Ajr01.jpeg',
@@ -89,10 +90,11 @@ export const FALLBACK_PROJECTS: Project[] = [
     updated_at: new Date().toISOString(),
   },
   {
+    //https://venturiaanimation.com/portfolio/it-gets-to-a-point-onr/
     id: '6',
     title: "ONR – It Gets To a Point",
     description: "Cargo: animación – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
-    video_url: "https://venturiaanimation.com/portfolio/it-gets-to-a-point-onr/",
+    video_url: "https://www.youtube.com/watch?v=9WSkP58HDwU&authuser=0",
     category: "2d",
     images: [
       '/images/megaCard/ONR/ONR01.jpeg',
@@ -105,10 +107,11 @@ export const FALLBACK_PROJECTS: Project[] = [
     updated_at: new Date().toISOString(),
   },
   {
+    //https://venturiaanimation.com/portfolio/christmas-in-hawaii-we-the-kingdom/
     id: '7',
     title: "We The Kingdom – Christmas In Hawaii",
     description: "Cargo: modelado de marionetas y animación stop-motion – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
-    video_url: "https://venturiaanimation.com/portfolio/christmas-in-hawaii-we-the-kingdom/",
+    video_url: "https://www.youtube.com/watch?v=k-qPTVztgEk",
     category: "stop",
     images: [
       '/images/megaCard/Christmas/Ch01.jpeg',
@@ -121,10 +124,11 @@ export const FALLBACK_PROJECTS: Project[] = [
     updated_at: new Date().toISOString(),
   },
   {
+    //https://venturiaanimation.com/portfolio/satellite-bebe-rexha-snoop-dogg/
     id: '8',
     title: "Satellite – Bebe Rexha & Snoop Dogg",
     description: "Cargo: animación. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
-    video_url: "https://venturiaanimation.com/portfolio/satellite-bebe-rexha-snoop-dogg/",
+    video_url: "https://www.youtube.com/watch?v=VBHr0faDCoQ",
     category: "2d",
     images: [
       '/images/megaCard/SnoopDogg/SD01.jpeg',
@@ -169,10 +173,11 @@ export const FALLBACK_PROJECTS: Project[] = [
     updated_at: new Date().toISOString(),
   },
   {
+    //https://dinamitaanimacion.com/portfolio/smiling-symphonies/
     id: '11',
     title: "Smiling Symphonies",
     description: "Proyecto de Dinamita Animación – Smiling Symphonies",
-    video_url: "https://dinamitaanimacion.com/portfolio/smiling-symphonies/",
+    video_url: "https://www.youtube.com/watch?v=3uj8bF7jR0U&authuser=0",
     category: "2d",
     images: [
       '/images/megaCard/Smiling/S_Sy01.jpeg',
