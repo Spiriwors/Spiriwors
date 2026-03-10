@@ -2,19 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { getFeaturedProjects } from '@/lib/supabase/projects';
-import { Project } from '@/types/project';
+import { getFeaturedProjects } from "@/lib/supabase/projects";
 
 const Carousel = () => {
-  // Estado para controlar qué tarjetas están giradas (por proyecto)
   const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
-  // Estado para controlar el slide actual de cada proyecto
   const [currentSlides, setCurrentSlides] = useState<Record<string, number>>({});
-  // Estado para proyectos y loading
   const [featuredProjects, setFeaturedProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Proyectos fallback (hardcodeados)
   const fallbackProjects = [
     {
       id: 1,
@@ -43,71 +38,88 @@ const Carousel = () => {
   const loadFeaturedProjects = async () => {
     try {
       const data = await getFeaturedProjects();
-      // Si hay datos de Supabase, usarlos; sino usar fallback
       if (data && data.length > 0) {
         setFeaturedProjects(data);
       } else {
         setFeaturedProjects(fallbackProjects);
       }
     } catch (error) {
-      console.error('Error loading featured projects, using fallback:', error);
+      console.error("Error loading featured projects, using fallback:", error);
       setFeaturedProjects(fallbackProjects);
     } finally {
       setLoading(false);
     }
   };
 
-  // Función para obtener las imágenes según el proyecto
-  const getProjectImages = (project: any): string[] => {
-    // Si el proyecto tiene imágenes de Supabase, usarlas
-    if (project.images && project.images.length > 0) {
-      return project.images;
+  const normalizeTitle = (title?: string) => {
+    return (title || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+  };
+
+  const getProjectType = (project: any): string => {
+    const key = project.key || "";
+    const normalizedTitle = normalizeTitle(project.title);
+
+    if (key === "LJDP" || normalizedTitle.includes("joya del pantano")) {
+      return "LJDP";
     }
 
-    // Fallback para proyectos legacy basados en el key
-    const projectKey = project.key || (project.title?.includes("Joya") ? "LJDP" :
-                      project.title?.includes("SALÚ") || project.title?.includes("Salu") ? "Salu" : "");
+    if (key === "Salu" || normalizedTitle.includes("salu")) {
+      return "Salu";
+    }
 
-    if (projectKey === "LJDP") {
-      // Las 3 imágenes de premios van primero (LJDP premio es la primera)
+    return "";
+  };
+
+  const getProjectImages = (project: any): string[] => {
+    const projectType = getProjectType(project);
+
+    // Forzar imágenes locales para proyectos destacados conocidos
+    if (projectType === "LJDP") {
       const prizeImages = [
         "LJDP-premio.png",
         "LaurelesIbero-FA-Negro.png",
         "LaurelLeaves2024_OficialSelection_ESP.png",
-      ].map(
-        (name) => `/images/trabajos_destacados/${encodeURIComponent(name)}`
-      );
+      ].map((name) => `/images/trabajos_destacados/${name}`);
 
-      // Luego las 5 imágenes normales
       const baseImages = Array.from(
         { length: 5 },
         (_, i) => `/images/trabajos_destacados/${i + 1}_LJDP.jpg`
       );
 
-      // Combinar: premios primero, luego imágenes normales
       return [...prizeImages, ...baseImages];
     }
-    if (projectKey === "Salu") {
+
+    if (projectType === "Salu") {
       return Array.from(
         { length: 5 },
         (_, i) => `/images/trabajos_destacados/${i + 1}.Salu.jpg`
       );
     }
+
+    // Para otros proyectos, usar imágenes si vienen desde Supabase
+    if (
+      Array.isArray(project.images) &&
+      project.images.length > 0 &&
+      project.images.every(
+        (img: string) => typeof img === "string" && img.trim() !== ""
+      )
+    ) {
+      return project.images;
+    }
+
     return [];
   };
 
-  // Función para obtener el color de fondo según el proyecto
   const getProjectBackgroundColor = (project: any): string => {
-    const projectKey = project.key || (project.title?.includes("Joya") ? "LJDP" :
-                      project.title?.includes("SALÚ") || project.title?.includes("Salu") ? "Salu" : "");
+    const projectType = getProjectType(project);
 
-    if (projectKey === "LJDP") {
-      return "#ffffff"; // Blanco para La Joya Del Pantano
-    }
-    if (projectKey === "Salu") {
-      return "#f3ecdc"; // Beige para SALÚ
-    }
-    return "#1f2937"; // Fallback gris oscuro
+    if (projectType === "LJDP") return "#ffffff";
+    if (projectType === "Salu") return "#f3ecdc";
+
+    return "#1f2937";
   };
 
   const getProjectKey = (project: any): string => {
@@ -119,7 +131,7 @@ const Carousel = () => {
       ...prev,
       [projectKey]: !prev[projectKey],
     }));
-    // Resetear slide cuando se gira la tarjeta
+
     if (!flippedCards[projectKey]) {
       setCurrentSlides((prev) => ({
         ...prev,
@@ -158,11 +170,14 @@ const Carousel = () => {
           </h2>
         </div>
 
-        {/* Posters Grid - Two side by side */}
         {loading ? (
-          <div className="text-center text-gray-400">Cargando proyectos destacados...</div>
+          <div className="text-center text-gray-400">
+            Cargando proyectos destacados...
+          </div>
         ) : featuredProjects.length === 0 ? (
-          <div className="text-center text-gray-400">No hay proyectos destacados</div>
+          <div className="text-center text-gray-400">
+            No hay proyectos destacados
+          </div>
         ) : (
           <div className="grid md:grid-cols-2 gap-8 max-w-[57.6rem] mx-auto">
             {featuredProjects.map((project, index) => {
@@ -170,18 +185,17 @@ const Carousel = () => {
               const isFlipped = flippedCards[projectKey] || false;
               const projectImages = getProjectImages(project);
               const currentSlide = currentSlides[projectKey] || 0;
-
-              // Determinar imagen de poster (prioridad a featured_poster de Supabase)
-              const posterImage = project.featured_poster || project.image;
+              const posterImage =
+                project.featured_poster ||
+                project.image ||
+                project.imageFallback ||
+                null;
 
               return (
                 <div key={project.id} className="group">
-                  {/* Card Container con efecto Flip 3D */}
                   <div
                     className="relative w-full aspect-[3/4.2] mb-6 cursor-pointer"
-                    style={{
-                      perspective: "1000px",
-                    }}
+                    style={{ perspective: "1000px" }}
                     onClick={() => handleCardClick(projectKey)}
                   >
                     <div
@@ -193,14 +207,12 @@ const Carousel = () => {
                           : "rotateY(0deg)",
                       }}
                     >
-                      {/* Frente de la Tarjeta - Poster */}
+                      {/* Frente de la tarjeta */}
                       <div
                         className="absolute inset-0 w-full h-full rounded-lg shadow-2xl bg-gray-900 overflow-hidden"
-                        style={{
-                          backfaceVisibility: "hidden",
-                        }}
+                        style={{ backfaceVisibility: "hidden" }}
                       >
-                        {project.imageFallback ? (
+                        {project.imageFallback && project.image ? (
                           <picture>
                             <source srcSet={project.image} type="image/webp" />
                             <img
@@ -224,10 +236,11 @@ const Carousel = () => {
                             Sin imagen
                           </div>
                         )}
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                    </div>
 
-                      {/* Parte Trasera de la Tarjeta - Carrusel */}
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                      </div>
+
+                      {/* Parte trasera de la tarjeta */}
                       {projectImages.length > 0 && (
                         <div
                           className="absolute inset-0 w-full h-full rounded-lg shadow-2xl overflow-hidden"
@@ -247,109 +260,104 @@ const Carousel = () => {
                             })(),
                           }}
                         >
-                      <div className="relative w-full h-full">
-                        {/* Imágenes del Carrusel */}
-                        {projectImages.map((image, imgIndex) => {
-                          const isPrizeImage =
-                            image.includes("LaurelesIbero") ||
-                            image.includes("LaurelLeaves") ||
-                            image.includes("LJDP-premio");
-                          return (
-                            <div
-                              key={imgIndex}
-                              className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
-                                imgIndex === currentSlide
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              }`}
-                              style={
-                                isPrizeImage
-                                  ? { backgroundColor: "#ffffff" }
-                                  : {}
-                              }
-                            >
-                              <img
-                                src={image}
-                                alt={`${project.title} - Imagen ${imgIndex + 1}`}
-                                className="w-full h-full object-contain"
-                              />
-                            </div>
-                          );
-                        })}
+                          <div className="relative w-full h-full">
+                            {projectImages.map((image, imgIndex) => {
+                              const isPrizeImage =
+                                image.includes("LaurelesIbero") ||
+                                image.includes("LaurelLeaves") ||
+                                image.includes("LJDP-premio");
 
-                        {/* Botones de Navegación */}
-                        {projectImages.length > 1 && (
-                          <>
+                              return (
+                                <div
+                                  key={imgIndex}
+                                  className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
+                                    imgIndex === currentSlide
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  }`}
+                                  style={
+                                    isPrizeImage
+                                      ? { backgroundColor: "#ffffff" }
+                                      : {}
+                                  }
+                                >
+                                  <img
+                                    src={image}
+                                    alt={`${project.title} - Imagen ${imgIndex + 1}`}
+                                    className="w-full h-full object-contain"
+                                  />
+                                </div>
+                              );
+                            })}
+
+                            {projectImages.length > 1 && (
+                              <>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    prevSlide(projectKey, projectImages.length);
+                                  }}
+                                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-2 rounded-full transition-all duration-300 z-10 shadow-lg"
+                                  aria-label="Imagen anterior"
+                                >
+                                  <ChevronLeft className="w-5 h-5" />
+                                </button>
+
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    nextSlide(projectKey, projectImages.length);
+                                  }}
+                                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-2 rounded-full transition-all duration-300 z-10 shadow-lg"
+                                  aria-label="Siguiente imagen"
+                                >
+                                  <ChevronRight className="w-5 h-5" />
+                                </button>
+                              </>
+                            )}
+
+                            {projectImages.length > 1 && (
+                              <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
+                                {projectImages.map((_, imgIndex) => (
+                                  <button
+                                    key={imgIndex}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      goToSlide(projectKey, imgIndex);
+                                    }}
+                                    className={`h-2 rounded-full transition-all duration-300 shadow-lg ${
+                                      imgIndex === currentSlide
+                                        ? "bg-gray-800 w-6"
+                                        : "bg-gray-600/70 hover:bg-gray-700 w-2"
+                                    }`}
+                                    aria-label={`Ir a imagen ${imgIndex + 1}`}
+                                  />
+                                ))}
+                              </div>
+                            )}
+
+                            {projectImages.length > 1 && (
+                              <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded-full text-xs z-10 shadow-lg">
+                                {currentSlide + 1} / {projectImages.length}
+                              </div>
+                            )}
+
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                prevSlide(projectKey, projectImages.length);
+                                handleCardClick(projectKey);
                               }}
-                              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-2 rounded-full transition-all duration-300 z-10 shadow-lg"
-                              aria-label="Imagen anterior"
+                              className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white p-2 rounded-full transition-colors z-10"
+                              aria-label="Volver"
                             >
-                              <ChevronLeft className="w-5 h-5" />
+                              <X className="w-4 h-4" />
                             </button>
-
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                nextSlide(projectKey, projectImages.length);
-                              }}
-                              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-2 rounded-full transition-all duration-300 z-10 shadow-lg"
-                              aria-label="Siguiente imagen"
-                            >
-                              <ChevronRight className="w-5 h-5" />
-                            </button>
-                          </>
-                        )}
-
-                        {/* Indicadores */}
-                        {projectImages.length > 1 && (
-                          <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
-                            {projectImages.map((_, imgIndex) => (
-                              <button
-                                key={imgIndex}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  goToSlide(projectKey, imgIndex);
-                                }}
-                                className={`h-2 rounded-full transition-all duration-300 shadow-lg ${
-                                  imgIndex === currentSlide
-                                    ? "bg-gray-800 w-6"
-                                    : "bg-gray-600/70 hover:bg-gray-700 w-2"
-                                }`}
-                                aria-label={`Ir a imagen ${imgIndex + 1}`}
-                              />
-                            ))}
                           </div>
-                        )}
-
-                        {/* Contador de Imágenes */}
-                        {projectImages.length > 1 && (
-                          <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded-full text-xs z-10 shadow-lg">
-                            {currentSlide + 1} / {projectImages.length}
-                          </div>
-                        )}
-
-                        {/* Botón para Volver */}
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleCardClick(projectKey);
-                          }}
-                          className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white p-2 rounded-full transition-colors z-10"
-                          aria-label="Volver"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
+                        </div>
                       )}
                     </div>
                   </div>
 
-                  {/* Content Bubble - Outside the image card */}
                   <div className="bg-gray-800/95 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-gray-600">
                     <h3 className="text-lg font-bold text-white mb-2 text-center">
                       {project.title}

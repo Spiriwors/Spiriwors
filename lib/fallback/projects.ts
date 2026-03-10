@@ -3,10 +3,11 @@ import { Project } from '@/types/project';
 // Datos originales del sitio - FALLBACK si no hay Supabase
 export const FALLBACK_PROJECTS: Project[] = [
   {
+    //https://vimeo.com/896578269?fl=pl&fe=sh 
     id: '1',
     title: "La Joya Del Pantano",
     description: "Trailer de la historia original La Joya Del Pantano",
-    video_url: "https://vimeo.com/896578269?fl=pl&fe=sh",
+    video_url: "https://www.youtube.com/watch?v=gTusWDe469g",
     category: "2d",
     images: [
       '/images/megaCard/LaJoyaDelPantano/LJDP01.jpeg',
@@ -22,10 +23,11 @@ export const FALLBACK_PROJECTS: Project[] = [
     updated_at: new Date().toISOString(),
   },
   {
+    // https://vimeo.com/172426682?fl=pl&fe=sh
     id: '2',
     title: "SALÚ",
     description: "Trailer de la historia original SALÚ",
-    video_url: "https://vimeo.com/172426682?fl=pl&fe=sh",
+    video_url: "https://www.youtube.com/watch?v=CZsXsqoL2B0",
     category: "2d",
     images: [
       '/images/megaCard/Salu/Salu01.jpeg',
@@ -144,12 +146,12 @@ export const FALLBACK_PROJECTS: Project[] = [
     id: '9',
     title: "Waldo´s Dream",
     description: "Cargo: animación. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
-    video_url: "https://venturiaanimation.com/portfolio/waldos-dream/",
+    video_url: "https://vimeo.com/335248497?fl=pl&fe=vl",
     category: "2d",
     images: [
-      '/images/megaCard/Waldo´sDream/WD01.jpeg',
-      '/images/megaCard/Waldo´sDream/WD02.jpeg',
-      '/images/megaCard/Waldo´sDream/WD03.jpeg',
+      '/images/megaCard/WaldosDream/WD01.jpeg',
+      '/images/megaCard/WaldosDream/WD02.jpeg',
+      '/images/megaCard/WaldosDream/WD03.jpeg',
     ],
     is_featured: false,
     display_order: 9,
@@ -160,7 +162,7 @@ export const FALLBACK_PROJECTS: Project[] = [
     id: '10',
     title: "Heroes Collection: Francis Ford Coppola",
     description: "Cargo: Realizador de Animatic y Animador – Camilo Ayala. Original Content by Venturia Animation Studios. All Rights Reserved.",
-    video_url: "https://venturiaanimation.com/portfolio/heroes-francis-ford-coppola/",
+    video_url: "https://vimeo.com/1058727258?fl=pl&fe=vl",
     category: "2d",
     images: [
       '/images/megaCard/Coppola/Coppola01.jpeg',
