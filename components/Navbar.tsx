@@ -144,7 +144,7 @@ const Navbar = () => {
                     ? "/assets/logoSW_beige.png"
                     : "/swLogo/S.W.png"
                 }
-                alt="Spiriwor Logo"
+                alt="Spiriwors Logo"
                 className="object-contain cursor-pointer transition-all duration-300"
                 style={{
                   width: activeSection === "hero" ? "110px" : "64px",

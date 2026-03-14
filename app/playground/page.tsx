@@ -1,24 +1,27 @@
 "use client";
 
-import React from 'react';
-import MegaCard from '@/components/ui/megaCard';
+import React from "react";
+import MegaCard from "@/components/ui/megaCard";
 
 const PlaygroundPage = () => {
-  // Datos de ejemplo para el MegaCard
   const images = [
     {
-      src: '/images/projects/LJDP_HD_FULL_DEFF.webp',
-      alt: 'La Joya Del Pantano - Portada',
-      title: 'La Joya Del Pantano'
+      src: "/images/projects/LJDP_HD_FULL_DEFF.webp",
+      alt: "La Joya Del Pantano - Portada",
+      title: "La Joya Del Pantano",
+      objectFit: "cover" as const,
+      objectPosition: "center center",
     },
     {
-      src: '/images/projects/SALU_AFICHE.webp',
-      alt: 'SALÚ - Portada',
-      title: 'SALÚ'
-    }
+      src: "/images/projects/SALU_AFICHE.webp",
+      alt: "SALÚ - Portada",
+      title: "SALÚ",
+      objectFit: "cover" as const,
+      objectPosition: "center top",
+    },
   ];
 
-  const videoUrl = 'https://vimeo.com/896578269?fl=pl&fe=sh'; // URL de ejemplo del proyecto
+  const videoUrl = "https://vimeo.com/896578269?fl=pl&fe=sh";
 
   return (
     <main className="min-h-screen bg-gray-700 py-20">
@@ -32,7 +35,6 @@ const PlaygroundPage = () => {
           </p>
         </div>
 
-        {/* MegaCard Component */}
         <div className="flex justify-center items-center">
           <MegaCard
             images={images}
@@ -41,7 +43,6 @@ const PlaygroundPage = () => {
           />
         </div>
 
-        {/* Información adicional */}
         <div className="mt-16 max-w-2xl mx-auto">
           <div className="bg-gray-800 rounded-lg p-6 border border-gray-600">
             <h2 className="text-2xl font-bold text-white mb-4">
@@ -57,7 +58,6 @@ const PlaygroundPage = () => {
           </div>
         </div>
 
-        {/* Código de ejemplo */}
         <div className="mt-8 max-w-4xl mx-auto">
           <div className="bg-gray-800 rounded-lg p-6 border border-gray-600">
             <h2 className="text-2xl font-bold text-white mb-4">
@@ -68,14 +68,19 @@ const PlaygroundPage = () => {
 
 const images = [
   {
-    src: '/images/projects/image1.jpg',
-    alt: 'Descripción imagen 1',
-    title: 'Proyecto 1'
+    src: '/images/projects/LJDP_HD_FULL_DEFF.webp',
+    alt: 'La Joya Del Pantano - Portada',
+    title: 'La Joya Del Pantano',
+    objectFit: 'cover',
+    objectPosition: 'center center'
   },
   {
-    src: '/images/projects/image2.jpg', 
-    alt: 'Descripción imagen 2',
-    title: 'Proyecto 2'
+    src: '/images/projects/SALU_AFICHE.webp',
+    alt: 'SALÚ - Portada',
+    title: 'SALÚ',
+    objectFit: 'cover',
+    objectPosition: "top"
+}
   }
 ];
 

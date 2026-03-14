@@ -73,10 +73,19 @@ const Carousel = () => {
     return "";
   };
 
+  const getPosterObjectPosition = (project: any): string => {
+    const projectType = getProjectType(project);
+
+    if (projectType === "Salu") {
+      return "center top";
+    }
+
+    return "center center";
+  };
+
   const getProjectImages = (project: any): string[] => {
     const projectType = getProjectType(project);
 
-    // Forzar imágenes locales para proyectos destacados conocidos
     if (projectType === "LJDP") {
       const prizeImages = [
         "LJDP-premio.png",
@@ -99,7 +108,6 @@ const Carousel = () => {
       );
     }
 
-    // Para otros proyectos, usar imágenes si vienen desde Supabase
     if (
       Array.isArray(project.images) &&
       project.images.length > 0 &&
@@ -219,6 +227,9 @@ const Carousel = () => {
                               src={project.imageFallback}
                               alt={project.title}
                               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                              style={{
+                                objectPosition: getPosterObjectPosition(project),
+                              }}
                               loading={index === 0 ? "eager" : "lazy"}
                               decoding="async"
                             />
@@ -228,6 +239,9 @@ const Carousel = () => {
                             src={posterImage}
                             alt={project.title}
                             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            style={{
+                              objectPosition: getPosterObjectPosition(project),
+                            }}
                             loading={index === 0 ? "eager" : "lazy"}
                             decoding="async"
                           />
@@ -267,6 +281,21 @@ const Carousel = () => {
                                 image.includes("LaurelLeaves") ||
                                 image.includes("LJDP-premio");
 
+                              //===================================
+                              // AJUSTE DE TAMAÑOS DE PREMIOS
+                              // Cambia SOLO estos números
+                              // 1 = tamaño normal
+                              // 1.2 = más grande
+                              // 0.8 = más pequeño
+                              //===================================
+                              const imageScale = image.includes("LJDP-premio")
+                                ? 0.5 // más grande
+                                : image.includes("LaurelLeaves")
+                                ? 0.9 // más pequeña
+                                : image.includes("LaurelesIbero")
+                                ? 0.9 // tamaño intermedio
+                                : 1; // tamaño normal
+
                               return (
                                 <div
                                   key={imgIndex}
@@ -281,10 +310,18 @@ const Carousel = () => {
                                       : {}
                                   }
                                 >
+                                  {/*===================================
+                                      AJUSTE VISUAL DE LA IMAGEN
+                                      Aquí NO uses scale-100 ni scale-40.
+                                      Aquí se controla con transform: scale(...)
+                                  ===================================*/}
                                   <img
                                     src={image}
                                     alt={`${project.title} - Imagen ${imgIndex + 1}`}
                                     className="w-full h-full object-contain"
+                                    style={{
+                                      transform: `scale(${imageScale})`,
+                                    }}
                                   />
                                 </div>
                               );
