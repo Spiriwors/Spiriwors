@@ -289,9 +289,9 @@ const Carousel = () => {
                               // 0.8 = más pequeño
                               //===================================
                               const imageScale = image.includes("LJDP-premio")
-                                ? 0.5 // más grande
+                                ? 1.2 // más grande
                                 : image.includes("LaurelLeaves")
-                                ? 0.9 // más pequeña
+                                ? 0.7 // más pequeña
                                 : image.includes("LaurelesIbero")
                                 ? 0.9 // tamaño intermedio
                                 : 1; // tamaño normal
