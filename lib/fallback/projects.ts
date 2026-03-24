@@ -28,7 +28,7 @@ export const FALLBACK_PROJECTS: Project[] = [
     title: "SALÚ",
     description: "Trailer de la historia original SALÚ",
     video_url: "https://www.youtube.com/watch?v=CZsXsqoL2B0",
-    category: "2d",
+    category: "stop",
     images: [
       '/images/megaCard/Salu/Salu01.jpeg',
       '/images/megaCard/Salu/Salu02.jpeg',
