@@ -17,7 +17,7 @@ const Carousel = () => {
       imageFallback: "/images/projects/LJDP_HD_FULL_DEFF.png",
       title: "La Joya Del Pantano",
       description:
-        "Historia original de Spiriwors que combina la magia del stop-motion con una narrativa emotiva sobre la naturaleza y la aventura.",
+        "Suyay, la princesa rana de la tribu, es raptada por unos codiciosos murciélagos. Su padre el sapo Cacique, buscará la forma de rescatar a su pequeña.",
       key: "LJDP",
     },
     {
@@ -26,7 +26,7 @@ const Carousel = () => {
       imageFallback: "/images/projects/SALU_AFICHE.png",
       title: "SALÚ",
       description:
-        "Proyecto destacado de Spiriwors que muestra la creatividad y técnica única en animación, desarrollando mundos únicos para una experiencia inmersiva.",
+        "En una pequeña plaza de toros, la familia propietaria celebra una corrida privada; aplauden la actuación de “Paella” el picador, “Villancico” el banderillero y “Canijo” el torero. “Baco” el toro, a quien le gusta el vino tinto, los sorprende a todos ellos después de enfrentarse a la espada mortal.",
       key: "Salu",
     },
   ];
