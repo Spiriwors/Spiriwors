@@ -191,4 +191,23 @@ export const FALLBACK_PROJECTS: Project[] = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
+    {
+    id: '12',
+    title: "Lunes",
+    description: "Tesis de Grado - Lunes",
+    video_url: "https://youtu.be/gzhEYLPObHs",
+    category: "stop",
+    images: [
+      '/images/megaCard/Lunes/2.FOTO_01_LUNES.png',
+      '/images/megaCard/Lunes/3.FOTO_02_LUNES.png',
+      '/images/megaCard/Lunes/4.FOTO_03_LUNES.png',
+    ],
+    is_featured: true,
+    featured_order: 3,
+    featured_poster: '/images/projects/1.AFICHE_LUNES.png',
+    featured_description: 'En un colegio desolado y gris, un niño (número 14 de la lista), luchará para proteger su identidad, a pesar de sus calificaciones... -Tesis de Grado-',
+    display_order: 13,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
 ];

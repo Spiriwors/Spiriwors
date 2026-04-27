@@ -29,6 +29,15 @@ const Carousel = () => {
         "En una pequeña plaza de toros, la familia propietaria celebra una corrida privada; aplauden la actuación de “Paella” el picador, “Villancico” el banderillero y “Canijo” el torero. “Baco” el toro, a quien le gusta el vino tinto, los sorprende a todos ellos después de enfrentarse a la espada mortal.",
       key: "Salu",
     },
+    {
+      id: 3,
+      image: "/images/projects/1.AFICHE_LUNES.webp",
+      imageFallback: "/images/projects/1.AFICHE_LUNES.png",
+      title: "Lunes",
+      description:
+        "En un colegio desolado y gris, un niño (número 14 de la lista), luchará para proteger su identidad, a pesar de sus calificaciones... -Tesis de Grado-",
+      key: "Lunes",
+    },
   ];
 
   useEffect(() => {
@@ -70,6 +79,10 @@ const Carousel = () => {
       return "Salu";
     }
 
+    if (key === "Lunes" || normalizedTitle.includes("lunes")) {
+      return "Lunes";
+    }
+
     return "";
   };
 
@@ -78,6 +91,10 @@ const Carousel = () => {
 
     if (projectType === "Salu") {
       return "center top";
+    }
+
+    if (projectType === "Lunes") {
+      return "center center";
     }
 
     return "center center";
@@ -108,6 +125,15 @@ const Carousel = () => {
       );
     }
 
+    if (projectType === "Lunes") {
+      return [
+        "/images/trabajos_destacados/L.COMIC_01_LUNES.png",
+        "/images/trabajos_destacados/L.Premio_Lunes__VideoJove.png",
+        "/images/trabajos_destacados/L.COMIC_02_LUNES.png",
+        "/images/trabajos_destacados/L.LOGO_CINE_CREA.png",
+      ];
+    }
+
     if (
       Array.isArray(project.images) &&
       project.images.length > 0 &&
@@ -121,11 +147,22 @@ const Carousel = () => {
     return [];
   };
 
+  const getProjectLogo = (project: any): string | null => {
+    const projectType = getProjectType(project);
+
+    if (projectType === "Lunes") {
+      return "/images/trabajos_destacados/L.LOGO_Javeriana.png";
+    }
+
+    return null;
+  };
+
   const getProjectBackgroundColor = (project: any): string => {
     const projectType = getProjectType(project);
 
     if (projectType === "LJDP") return "#ffffff";
     if (projectType === "Salu") return "#f3ecdc";
+    if (projectType === "Lunes") return "#ffffff";
 
     return "#1f2937";
   };
@@ -193,6 +230,7 @@ const Carousel = () => {
               const isFlipped = flippedCards[projectKey] || false;
               const projectImages = getProjectImages(project);
               const currentSlide = currentSlides[projectKey] || 0;
+              const projectLogo = getProjectLogo(project);
               const posterImage =
                 project.featured_poster ||
                 project.image ||
@@ -267,7 +305,9 @@ const Carousel = () => {
                                 currentImage &&
                                 (currentImage.includes("LaurelesIbero") ||
                                   currentImage.includes("LaurelLeaves") ||
-                                  currentImage.includes("LJDP-premio"));
+                                  currentImage.includes("LJDP-premio") ||
+                                  currentImage.includes("Premio_Lunes") ||
+                                  currentImage.includes("LOGO_CINE_CREA"));
                               return isPrizeImage
                                 ? "#ffffff"
                                 : getProjectBackgroundColor(project);
@@ -279,22 +319,21 @@ const Carousel = () => {
                               const isPrizeImage =
                                 image.includes("LaurelesIbero") ||
                                 image.includes("LaurelLeaves") ||
-                                image.includes("LJDP-premio");
+                                image.includes("LJDP-premio") ||
+                                image.includes("Premio_Lunes") ||
+                                image.includes("LOGO_CINE_CREA");
 
-                              //===================================
-                              // AJUSTE DE TAMAÑOS DE PREMIOS
-                              // Cambia SOLO estos números
-                              // 1 = tamaño normal
-                              // 1.2 = más grande
-                              // 0.8 = más pequeño
-                              //===================================
                               const imageScale = image.includes("LJDP-premio")
-                                ? 1.2 // más grande
+                                ? 1.2
                                 : image.includes("LaurelLeaves")
-                                ? 0.7 // más pequeña
+                                ? 0.7
                                 : image.includes("LaurelesIbero")
-                                ? 0.9 // tamaño intermedio
-                                : 1; // tamaño normal
+                                ? 0.9
+                                : image.includes("Premio_Lunes")
+                                ? 0.95
+                                : image.includes("LOGO_CINE_CREA")
+                                ? 0.8
+                                : 1;
 
                               return (
                                 <div
@@ -310,14 +349,11 @@ const Carousel = () => {
                                       : {}
                                   }
                                 >
-                                  {/*===================================
-                                      AJUSTE VISUAL DE LA IMAGEN
-                                      Aquí NO uses scale-100 ni scale-40.
-                                      Aquí se controla con transform: scale(...)
-                                  ===================================*/}
                                   <img
                                     src={image}
-                                    alt={`${project.title} - Imagen ${imgIndex + 1}`}
+                                    alt={`${project.title} - Imagen ${
+                                      imgIndex + 1
+                                    }`}
                                     className="w-full h-full object-contain"
                                     style={{
                                       transform: `scale(${imageScale})`,
@@ -399,9 +435,22 @@ const Carousel = () => {
                     <h3 className="text-lg font-bold text-white mb-2 text-center">
                       {project.title}
                     </h3>
+
                     <p className="text-gray-300 text-sm leading-relaxed text-center">
                       {project.featured_description || project.description}
                     </p>
+
+                    {projectLogo && (
+                      <div className="flex justify-center mt-4">
+                        <img
+                          src={projectLogo}
+                          alt="Pontificia Universidad Javeriana"
+                          className="max-h-12 object-contain"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               );

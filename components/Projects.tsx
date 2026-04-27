@@ -115,6 +115,13 @@ const Projects = () => {
       year: undefined,
       category: "2d" as const,
     },
+    {
+    id: 12,
+    title: "Lunes",
+    video_url: "https://youtu.be/gzhEYLPObHs",
+    year: undefined,
+      category: "stop" as const,
+    },
   ];
 
   useEffect(() => {
