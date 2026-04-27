@@ -128,8 +128,8 @@ const Carousel = () => {
     if (projectType === "Lunes") {
       return [
         "/images/trabajos_destacados/L.COMIC_01_LUNES.png",
-        "/images/trabajos_destacados/L.Premio_Lunes__VideoJove.png",
         "/images/trabajos_destacados/L.COMIC_02_LUNES.png",
+        "/images/trabajos_destacados/L.Premio_Lunes__VideoJove.png",
         "/images/trabajos_destacados/L.LOGO_CINE_CREA.png",
       ];
     }
@@ -307,7 +307,7 @@ const Carousel = () => {
                                   currentImage.includes("LaurelLeaves") ||
                                   currentImage.includes("LJDP-premio") ||
                                   currentImage.includes("Premio_Lunes") ||
-                                  currentImage.includes("LOGO_CINE_CREA"));
+                                  currentImage.includes("L.LOGO_CINE_CREA"));
                               return isPrizeImage
                                 ? "#ffffff"
                                 : getProjectBackgroundColor(project);
@@ -321,7 +321,7 @@ const Carousel = () => {
                                 image.includes("LaurelLeaves") ||
                                 image.includes("LJDP-premio") ||
                                 image.includes("Premio_Lunes") ||
-                                image.includes("LOGO_CINE_CREA");
+                                image.includes("L.LOGO_CINE_CREA");
 
                               const imageScale = image.includes("LJDP-premio")
                                 ? 1.2
@@ -331,8 +331,8 @@ const Carousel = () => {
                                 ? 0.9
                                 : image.includes("Premio_Lunes")
                                 ? 0.95
-                                : image.includes("LOGO_CINE_CREA")
-                                ? 0.8
+                                : image.includes("L.LOGO_CINE_CREA")
+                                ? 2.9
                                 : 1;
 
                               return (
