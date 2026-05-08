@@ -17,7 +17,7 @@ const Carousel = () => {
       imageFallback: "/images/projects/LJDP_HD_FULL_DEFF.png",
       title: "La Joya Del Pantano",
       description:
-        "Suyay, la princesa rana de la tribu, es raptada por unos codiciosos murciélagos. Su padre el sapo Cacique, buscará la forma de rescatar a su pequeña. Proyecto ganador del estímulo FDC",
+        "Suyay, la princesa rana de la tribu, es raptada por unos codiciosos murciélagos. Su padre el sapo Cacique, buscará la forma de rescatar a su pequeña.",
       key: "LJDP",
     },
     {
@@ -26,7 +26,7 @@ const Carousel = () => {
       imageFallback: "/images/projects/SALU_AFICHE.png",
       title: "SALÚ",
       description:
-        "En una pequeña plaza de toros, la familia propietaria celebra una corrida privada; aplauden la actuación de “Paella” el picador, “Villancico” el banderillero y “Canijo” el torero. “Baco” el toro, a quien le gusta el vino tinto, los sorprende a todos ellos después de enfrentarse a la espada mortal. Distribuye Bogoshorts. Proyecto ganador del FDC",
+        "En una pequeña plaza de toros, la familia propietaria celebra una corrida privada; aplauden la actuación de “Paella” el picador, “Villancico” el banderillero y “Canijo” el torero. “Baco” el toro, a quien le gusta el vino tinto, los sorprende a todos ellos después de enfrentarse a la espada mortal.",
       key: "Salu",
     },
     {
@@ -35,7 +35,7 @@ const Carousel = () => {
       imageFallback: "/images/projects/1.AFICHE_LUNES.png",
       title: "Lunes",
       description:
-        "En un colegio desolado y gris, un niño (número 14 de la lista), luchará para proteger su identidad, a pesar de sus calificaciones... Tesis de grado universitario",
+        "En un colegio desolado y gris, un niño (número 14 de la lista), luchará para proteger su identidad, a pesar de sus calificaciones...",
       key: "Lunes",
     },
   ];
@@ -87,15 +87,29 @@ const Carousel = () => {
     return "";
   };
 
+  const getProjectDescription = (project: any): string => {
+    const projectType = getProjectType(project);
+
+    if (projectType === "LJDP") {
+      return "Suyay, la princesa rana de la tribu, es raptada por unos codiciosos murciélagos. Su padre el sapo Cacique, buscará la forma de rescatar a su pequeña.";
+    }
+
+    if (projectType === "Salu") {
+      return "En una pequeña plaza de toros, la familia propietaria celebra una corrida privada; aplauden la actuación de “Paella” el picador, “Villancico” el banderillero y “Canijo” el torero. “Baco” el toro, a quien le gusta el vino tinto, los sorprende a todos ellos después de enfrentarse a la espada mortal.";
+    }
+
+    if (projectType === "Lunes") {
+      return "En un colegio desolado y gris, un niño (número 14 de la lista), luchará para proteger su identidad, a pesar de sus calificaciones...";
+    }
+
+    return project.featured_description || project.description || "";
+  };
+
   const getPosterObjectPosition = (project: any): string => {
     const projectType = getProjectType(project);
 
     if (projectType === "Salu") {
       return "center top";
-    }
-
-    if (projectType === "Lunes") {
-      return "center center";
     }
 
     return "center center";
@@ -107,6 +121,7 @@ const Carousel = () => {
     if (projectType === "LJDP") {
       const prizeImages = [
         "LJDP-premio.png",
+        "PACCPA_premio.png",
         "LaurelesIbero-FA-Negro.png",
         "LaurelLeaves2024_OficialSelection_ESP.png",
       ].map((name) => `/images/trabajos_destacados/${name}`);
@@ -148,42 +163,107 @@ const Carousel = () => {
     return [];
   };
 
-  const getProjectLogos = (
-    project: any
-  ): { src: string; alt: string; className: string }[] => {
+  const getProjectInfo = (project: any) => {
     const projectType = getProjectType(project);
 
-    if (projectType === "Lunes") {
-      return [
-        {
-          src: "/images/trabajos_destacados/L.LOGO_Javeriana.png",
-          alt: "Pontificia Universidad Javeriana",
-          className: "max-h-20 object-contain",
-        },
-      ];
+    if (projectType === "LJDP") {
+      return {
+        laurels: [
+          {
+            src: "/images/trabajos_destacados/LaurelesIbero-FA-Negro.png",
+            alt: "Premio Iberoamericano",
+            className: "max-h-28 object-contain brightness-0 invert",
+          },
+          {
+            src: "/images/trabajos_destacados/LaurelLeaves2024_OficialSelection_ESP.png",
+            alt: "Selección oficial",
+            className: "max-h-28 object-contain brightness-0 invert",
+          },
+        ],
+        badges: [],
+        credits: [
+          "Guión y dirección: Camilo Ayala",
+          "Animación 2D",
+          "2022",
+        ],
+        award: "Proyecto ganador del estímulo FDC",
+        distributor: "-Proimágenes Colombia-",
+        logos: [
+          {
+            src: "/images/trabajos_destacados/L.LOGO_CINE_CREA.png",
+            alt: "Cine Crea Colombia",
+            className: "max-h-56 object-contain",
+          },
+        ],
+      };
     }
 
     if (projectType === "Salu") {
-      return [
-        {
-          src: "/images/trabajos_destacados/L.LOGO_CINE_CREA.png",
-          alt: "Cine Crea",
-          className: "max-h-48 object-contain",
-        },
-      ];
+      return {
+        laurels: [],
+        badges: [
+          {
+            label: "",
+            src: "/images/trabajos_destacados/A17-Seccio_blanco.png",
+            alt: "Animac Secció oficial 2017",
+            className: "max-h-28 object-contain",
+          },
+          {
+            label: "Distribuye",
+            src: "/images/trabajos_destacados/Bogoshorts.png",
+            alt: "Bogoshorts",
+            className: "max-h-28 object-contain",
+          },
+        ],
+        credits: [
+          "Guión y dirección: Camilo Ayala",
+          "Stop-Motion y Animación 2D",
+          "2016",
+        ],
+        award: "Proyecto ganador del estímulo FDC",
+        distributor: "-Proimágenes Colombia-",
+        logos: [
+          {
+            src: "/images/trabajos_destacados/L.LOGO_CINE_CREA.png",
+            alt: "Cine Crea Colombia",
+            className: "max-h-56 object-contain",
+          },
+        ],
+      };
     }
 
-    if (projectType === "LJDP") {
-      return [
-        {
-          src: "/images/trabajos_destacados/L.LOGO_CINE_CREA.png",
-          alt: "Cine Crea",
-          className: "max-h-48 object-contain",
-        },
-      ];
+    if (projectType === "Lunes") {
+      return {
+        laurels: [],
+        badges: [],
+        credits: [
+          "-2n ACCÉSIT por la mejor animación contra la educación autoritaria",
+          "VIDEO JOVE, Alella, España",
+          "Guión y dirección: Camilo Ayala",
+          "Stop-Motion y Animación 2D",
+          "2004",
+          "Tesis de Grado Universitario",
+        ],
+        award: "",
+        distributor: "",
+        logos: [
+          {
+            src: "/images/trabajos_destacados/L.LOGO_Javeriana.png",
+            alt: "Pontificia Universidad Javeriana",
+            className: "max-h-24 object-contain grayscale brightness-125",
+          },
+        ],
+      };
     }
 
-    return [];
+    return {
+      laurels: [],
+      badges: [],
+      credits: [],
+      award: "",
+      distributor: "",
+      logos: [],
+    };
   };
 
   const getProjectBackgroundColor = (project: any): string => {
@@ -259,7 +339,7 @@ const Carousel = () => {
               const isFlipped = flippedCards[projectKey] || false;
               const projectImages = getProjectImages(project);
               const currentSlide = currentSlides[projectKey] || 0;
-              const projectLogos = getProjectLogos(project);
+              const projectInfo = getProjectInfo(project);
 
               const posterImage =
                 project.featured_poster ||
@@ -335,6 +415,7 @@ const Carousel = () => {
                                 (currentImage.includes("LaurelesIbero") ||
                                   currentImage.includes("LaurelLeaves") ||
                                   currentImage.includes("LJDP-premio") ||
+                                  currentImage.includes("PACCPA_premio") ||
                                   currentImage.includes("Premio_Lunes") ||
                                   currentImage.includes("LOGO_CINE_CREA"));
 
@@ -350,15 +431,18 @@ const Carousel = () => {
                                 image.includes("LaurelesIbero") ||
                                 image.includes("LaurelLeaves") ||
                                 image.includes("LJDP-premio") ||
+                                image.includes("PACCPA_premio") ||
                                 image.includes("Premio_Lunes") ||
                                 image.includes("LOGO_CINE_CREA");
 
                               const imageScale = image.includes("LJDP-premio")
-                                ? 1.2
+                                ? 1.15
+                                : image.includes("PACCPA_premio")
+                                ? 1.05
                                 : image.includes("LaurelLeaves")
-                                ? 0.7
+                                ? 0.75
                                 : image.includes("LaurelesIbero")
-                                ? 0.9
+                                ? 0.95
                                 : image.includes("Premio_Lunes")
                                 ? 0.95
                                 : image.includes("LOGO_CINE_CREA")
@@ -461,18 +545,83 @@ const Carousel = () => {
                     </div>
                   </div>
 
-                  <div className="bg-gray-800/95 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-gray-600">
-                    <h3 className="text-lg font-bold text-white mb-2 text-center">
+                  <div className="rounded-lg p-6 border border-gray-600 bg-transparent shadow-none text-center">
+                    <h3 className="text-lg font-bold text-white mb-4 text-center">
                       {project.title}
                     </h3>
 
                     <p className="text-gray-300 text-sm leading-relaxed text-center">
-                      {project.featured_description || project.description}
+                      {getProjectDescription(project)}
                     </p>
 
-                    {projectLogos.length > 0 && (
-                      <div className="flex flex-wrap justify-center items-center gap-4 mt-5">
-                        {projectLogos.map((logo) => (
+                    {projectInfo.laurels.length > 0 && (
+                      <div className="mt-7 flex justify-center items-center gap-4">
+                        {projectInfo.laurels.map((laurel) => (
+                          <img
+                            key={laurel.src}
+                            src={laurel.src}
+                            alt={laurel.alt}
+                            className={laurel.className}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ))}
+                      </div>
+                    )}
+
+                    {projectInfo.badges.length > 0 && (
+                      <div className="mt-8 flex justify-center items-start gap-8">
+                        {projectInfo.badges.map((badge, badgeIndex) => (
+                          <div
+                            key={`${badge.src}-${badgeIndex}`}
+                            className="flex flex-col items-center text-center"
+                          >
+                            {badge.label && (
+                              <p className="text-white text-base md:text-lg font-semibold mb-3">
+                                {badge.label}
+                              </p>
+                            )}
+                            <img
+                              src={badge.src}
+                              alt={badge.alt}
+                              className={badge.className}
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {projectInfo.credits.length > 0 && (
+                      <div className="mt-8 space-y-2 text-white text-sm md:text-base font-semibold leading-relaxed">
+                        {projectInfo.credits.map((credit, creditIndex) => (
+                          <p key={creditIndex}>{credit}</p>
+                        ))}
+                      </div>
+                    )}
+
+                    {projectInfo.award && (
+                      <p className="mt-8 text-white text-sm md:text-base font-semibold">
+                        {projectInfo.award}
+                      </p>
+                    )}
+
+                    {projectInfo.distributor && (
+                      <p
+                        className={`mt-5 text-white font-semibold ${
+                          getProjectType(project) === "LJDP"
+                            ? "text-lg md:text-xl"
+                            : "text-sm md:text-base"
+                        }`}
+                      >
+                        {projectInfo.distributor}
+                      </p>
+                    )}
+
+                    {projectInfo.logos.length > 0 && (
+                      <div className="mt-6 flex justify-center items-center">
+                        {projectInfo.logos.map((logo) => (
                           <img
                             key={logo.src}
                             src={logo.src}
