@@ -17,7 +17,7 @@ const Carousel = () => {
       imageFallback: "/images/projects/LJDP_HD_FULL_DEFF.png",
       title: "La Joya Del Pantano",
       description:
-        "Suyay, la princesa rana de la tribu, es raptada por unos codiciosos murciélagos. Su padre el sapo Cacique, buscará la forma de rescatar a su pequeña.",
+        "Suyay, la princesa rana de la tribu, es raptada por unos codiciosos murciélagos. Su padre el sapo Cacique, buscará la forma de rescatar a su pequeña. Proyecto ganador del estímulo FDC",
       key: "LJDP",
     },
     {
@@ -26,7 +26,7 @@ const Carousel = () => {
       imageFallback: "/images/projects/SALU_AFICHE.png",
       title: "SALÚ",
       description:
-        "En una pequeña plaza de toros, la familia propietaria celebra una corrida privada; aplauden la actuación de “Paella” el picador, “Villancico” el banderillero y “Canijo” el torero. “Baco” el toro, a quien le gusta el vino tinto, los sorprende a todos ellos después de enfrentarse a la espada mortal.",
+        "En una pequeña plaza de toros, la familia propietaria celebra una corrida privada; aplauden la actuación de “Paella” el picador, “Villancico” el banderillero y “Canijo” el torero. “Baco” el toro, a quien le gusta el vino tinto, los sorprende a todos ellos después de enfrentarse a la espada mortal. Distribuye Bogoshorts. Proyecto ganador del FDC",
       key: "Salu",
     },
     {
@@ -35,7 +35,7 @@ const Carousel = () => {
       imageFallback: "/images/projects/1.AFICHE_LUNES.png",
       title: "Lunes",
       description:
-        "En un colegio desolado y gris, un niño (número 14 de la lista), luchará para proteger su identidad, a pesar de sus calificaciones... -Tesis de Grado-",
+        "En un colegio desolado y gris, un niño (número 14 de la lista), luchará para proteger su identidad, a pesar de sus calificaciones... Tesis de grado universitario",
       key: "Lunes",
     },
   ];
@@ -47,6 +47,7 @@ const Carousel = () => {
   const loadFeaturedProjects = async () => {
     try {
       const data = await getFeaturedProjects();
+
       if (data && data.length > 0) {
         setFeaturedProjects(data);
       } else {
@@ -147,14 +148,42 @@ const Carousel = () => {
     return [];
   };
 
-  const getProjectLogo = (project: any): string | null => {
+  const getProjectLogos = (
+    project: any
+  ): { src: string; alt: string; className: string }[] => {
     const projectType = getProjectType(project);
 
     if (projectType === "Lunes") {
-      return "/images/trabajos_destacados/L.LOGO_Javeriana.png";
+      return [
+        {
+          src: "/images/trabajos_destacados/L.LOGO_Javeriana.png",
+          alt: "Pontificia Universidad Javeriana",
+          className: "max-h-20 object-contain",
+        },
+      ];
     }
 
-    return null;
+    if (projectType === "Salu") {
+      return [
+        {
+          src: "/images/trabajos_destacados/L.LOGO_CINE_CREA.png",
+          alt: "Cine Crea",
+          className: "max-h-48 object-contain",
+        },
+      ];
+    }
+
+    if (projectType === "LJDP") {
+      return [
+        {
+          src: "/images/trabajos_destacados/L.LOGO_CINE_CREA.png",
+          alt: "Cine Crea",
+          className: "max-h-48 object-contain",
+        },
+      ];
+    }
+
+    return [];
   };
 
   const getProjectBackgroundColor = (project: any): string => {
@@ -230,7 +259,8 @@ const Carousel = () => {
               const isFlipped = flippedCards[projectKey] || false;
               const projectImages = getProjectImages(project);
               const currentSlide = currentSlides[projectKey] || 0;
-              const projectLogo = getProjectLogo(project);
+              const projectLogos = getProjectLogos(project);
+
               const posterImage =
                 project.featured_poster ||
                 project.image ||
@@ -253,7 +283,6 @@ const Carousel = () => {
                           : "rotateY(0deg)",
                       }}
                     >
-                      {/* Frente de la tarjeta */}
                       <div
                         className="absolute inset-0 w-full h-full rounded-lg shadow-2xl bg-gray-900 overflow-hidden"
                         style={{ backfaceVisibility: "hidden" }}
@@ -292,7 +321,6 @@ const Carousel = () => {
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                       </div>
 
-                      {/* Parte trasera de la tarjeta */}
                       {projectImages.length > 0 && (
                         <div
                           className="absolute inset-0 w-full h-full rounded-lg shadow-2xl overflow-hidden"
@@ -301,13 +329,15 @@ const Carousel = () => {
                             transform: "rotateY(180deg)",
                             backgroundColor: (() => {
                               const currentImage = projectImages[currentSlide];
+
                               const isPrizeImage =
                                 currentImage &&
                                 (currentImage.includes("LaurelesIbero") ||
                                   currentImage.includes("LaurelLeaves") ||
                                   currentImage.includes("LJDP-premio") ||
                                   currentImage.includes("Premio_Lunes") ||
-                                  currentImage.includes("L.LOGO_CINE_CREA"));
+                                  currentImage.includes("LOGO_CINE_CREA"));
+
                               return isPrizeImage
                                 ? "#ffffff"
                                 : getProjectBackgroundColor(project);
@@ -321,7 +351,7 @@ const Carousel = () => {
                                 image.includes("LaurelLeaves") ||
                                 image.includes("LJDP-premio") ||
                                 image.includes("Premio_Lunes") ||
-                                image.includes("L.LOGO_CINE_CREA");
+                                image.includes("LOGO_CINE_CREA");
 
                               const imageScale = image.includes("LJDP-premio")
                                 ? 1.2
@@ -331,8 +361,8 @@ const Carousel = () => {
                                 ? 0.9
                                 : image.includes("Premio_Lunes")
                                 ? 0.95
-                                : image.includes("L.LOGO_CINE_CREA")
-                                ? 2.9
+                                : image.includes("LOGO_CINE_CREA")
+                                ? 3.2
                                 : 1;
 
                               return (
@@ -440,15 +470,18 @@ const Carousel = () => {
                       {project.featured_description || project.description}
                     </p>
 
-                    {projectLogo && (
-                      <div className="flex justify-center mt-4">
-                        <img
-                          src={projectLogo}
-                          alt="Pontificia Universidad Javeriana"
-                          className="max-h-12 object-contain"
-                          loading="lazy"
-                          decoding="async"
-                        />
+                    {projectLogos.length > 0 && (
+                      <div className="flex flex-wrap justify-center items-center gap-4 mt-5">
+                        {projectLogos.map((logo) => (
+                          <img
+                            key={logo.src}
+                            src={logo.src}
+                            alt={logo.alt}
+                            className={logo.className}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ))}
                       </div>
                     )}
                   </div>
