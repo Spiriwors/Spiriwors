@@ -16,9 +16,9 @@ const Navbar = () => {
     top: 0,
     right: 0,
   });
+
   const { theme, toggleTheme, accentColor, isUIHidden, toggleUI } = useTheme();
 
-  // Update eye button position continuously
   useEffect(() => {
     const updatePosition = () => {
       if (eyeButtonRef.current && !isUIHidden) {
@@ -30,7 +30,6 @@ const Navbar = () => {
       }
     };
 
-    // Update immediately
     const timeoutId = setTimeout(updatePosition, 100);
 
     window.addEventListener("resize", updatePosition);
@@ -46,7 +45,6 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentY = window.scrollY;
-
       const isScrollingDown = currentY > lastScrollYRef.current;
       const nearTop = currentY < 10;
 
@@ -62,14 +60,15 @@ const Navbar = () => {
 
       lastScrollYRef.current = currentY;
 
-      // Detect active section
       const sections = ["hero", "projects", "about", "services", "contact"];
       const scrollPosition = currentY + 100;
 
       for (const section of sections) {
         const element = document.getElementById(section);
+
         if (element) {
           const { offsetTop, offsetHeight } = element;
+
           if (
             scrollPosition >= offsetTop &&
             scrollPosition < offsetTop + offsetHeight
@@ -82,7 +81,8 @@ const Navbar = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isOpen]);
 
@@ -96,15 +96,16 @@ const Navbar = () => {
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
+
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
+
     setIsOpen(false);
   };
 
   return (
     <>
-      {/* UI Toggle Button - Always visible in same position */}
       {isUIHidden && eyeButtonPosition.top > 0 && (
         <motion.button
           initial={{ opacity: 0 }}
@@ -134,7 +135,7 @@ const Navbar = () => {
         <div className="container mx-auto px-6">
           <div className="flex justify-between items-start">
             <motion.div
-              className="flex items-center space-x-2 md:-translate-x-16"
+              className="flex items-start gap-4 md:-translate-x-16"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: DURATION.fast }}
             >
@@ -148,7 +149,7 @@ const Navbar = () => {
                 className="object-contain cursor-pointer transition-all duration-300"
                 style={{
                   width: activeSection === "hero" ? "110px" : "64px",
-                  height: activeSection === "hero" ? "110px" : "64px"
+                  height: activeSection === "hero" ? "110px" : "64px",
                 }}
                 width={activeSection === "hero" ? 110 : 64}
                 height={activeSection === "hero" ? 110 : 64}
@@ -156,6 +157,20 @@ const Navbar = () => {
                 decoding="async"
                 onClick={() => window.location.reload()}
               />
+
+              <div className="hidden lg:block mt-4 max-w-[420px] font-sans">
+                <p className="text-white/90 text-xs leading-snug tracking-wide font-semibold">
+                  Ayala – Animación 2D (TVPaint) &amp; Stop-motion
+                </p>
+
+                <p
+                  className="mt-2 text-[11px] leading-snug tracking-wide font-semibold"
+                  style={{ color: accentColor }}
+                >
+                  EU Citizen | Spanish Passport – Facilitating collaboration
+                  with EU studios.
+                </p>
+              </div>
             </motion.div>
 
             {/* Desktop Menu */}
@@ -163,6 +178,7 @@ const Navbar = () => {
               <div className="flex space-x-8">
                 {navItems.map((item) => {
                   const isActive = activeSection === item.href.replace("#", "");
+
                   return (
                     <button
                       key={item.name}
@@ -175,7 +191,7 @@ const Navbar = () => {
                       >
                         {item.name}
                       </span>
-                      {/* Animated underline */}
+
                       <motion.span
                         className="absolute bottom-0 left-0 h-0.5"
                         style={{ backgroundColor: accentColor }}
@@ -189,11 +205,12 @@ const Navbar = () => {
                 })}
               </div>
 
-              {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-lg transition-all duration-200 hover:bg-white/10"
-                aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+                aria-label={`Switch to ${
+                  theme === "light" ? "dark" : "light"
+                } mode`}
                 style={{ color: accentColor }}
               >
                 {theme === "light" ? (
@@ -203,7 +220,6 @@ const Navbar = () => {
                 )}
               </button>
 
-              {/* UI Toggle Button */}
               <button
                 ref={eyeButtonRef}
                 onClick={toggleUI}
@@ -224,7 +240,9 @@ const Navbar = () => {
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-lg transition-all duration-200 hover:bg-white/10"
-                aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+                aria-label={`Switch to ${
+                  theme === "light" ? "dark" : "light"
+                } mode`}
                 style={{ color: accentColor }}
               >
                 {theme === "light" ? (
@@ -233,6 +251,7 @@ const Navbar = () => {
                   <Moon className="w-6 h-6" />
                 )}
               </button>
+
               <button
                 ref={eyeButtonRef}
                 onClick={toggleUI}
@@ -246,6 +265,7 @@ const Navbar = () => {
                   <Eye className="w-6 h-6" />
                 )}
               </button>
+
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 aria-label="Toggle menu"
@@ -265,7 +285,6 @@ const Navbar = () => {
           <AnimatePresence>
             {isOpen && (
               <>
-                {/* Backdrop */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -276,7 +295,6 @@ const Navbar = () => {
                   style={{ width: "100vw", height: "100vh" }}
                 />
 
-                {/* Slide-in Menu */}
                 <motion.div
                   initial={{ y: "-100%", opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -285,11 +303,11 @@ const Navbar = () => {
                   className="fixed top-0 left-0 right-0 h-full w-full bg-gray-900/98 backdrop-blur-md z-50 md:hidden shadow-2xl"
                 >
                   <div className="flex flex-col h-full">
-                    {/* Header */}
                     <div className="flex items-center justify-between p-6 border-b border-gray-700/50">
                       <h2 className="text-4xl font-bold text-white amatic-sc-bold">
                         Menú
                       </h2>
+
                       <button
                         onClick={() => setIsOpen(false)}
                         className="p-2 rounded-lg transition-all duration-200 hover:bg-gray-800"
@@ -300,11 +318,11 @@ const Navbar = () => {
                       </button>
                     </div>
 
-                    {/* Menu Items */}
                     <div className="flex-1 overflow-y-auto py-4">
                       {navItems.map((item, index) => {
                         const isActive =
                           activeSection === item.href.replace("#", "");
+
                         return (
                           <motion.button
                             key={item.name}
@@ -334,7 +352,6 @@ const Navbar = () => {
                       })}
                     </div>
 
-                    {/* Footer */}
                     <div className="p-6 border-t border-gray-700/50">
                       <div className="flex items-center justify-center gap-2 text-gray-400 text-sm">
                         <span>Spiriwors</span>

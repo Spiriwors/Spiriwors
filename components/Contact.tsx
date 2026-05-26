@@ -7,7 +7,9 @@ import { z } from "zod";
 import {
   Send,
   Mail,
-  MapPin,
+  Globe2,
+  Clock3,
+  BadgeEuro,
   Instagram,
   Linkedin,
   CheckCircle,
@@ -17,12 +19,17 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { SCALE } from "@/lib/animation-tokens";
 import { useTheme } from "@/contexts/ThemeContext";
 
-// Esquema de validación con Zod
 const contactSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
   email: z.string().email("Por favor ingresa un email válido"),
@@ -35,6 +42,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 
 const Contact = () => {
   const { accentColor, theme } = useTheme();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
@@ -47,6 +55,7 @@ const Contact = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -77,7 +86,8 @@ const Contact = () => {
       if (response.ok) {
         setSubmitStatus("success");
         reset();
-        // Auto-dismiss success message after 5 seconds
+        setMessageLength(0);
+
         setTimeout(() => {
           setSubmitStatus("idle");
         }, 5000);
@@ -102,16 +112,35 @@ const Contact = () => {
       link: "mailto:spiriwors@gmail.com",
     },
     {
-      icon: MapPin,
-      title: "Ubicación",
-      value: "Bogotá, Colombia",
-      link: "#",
+      icon: Globe2,
+      title: "Alcance",
+      value: "Proyectos remotos a nivel global.",
+    },
+    {
+      icon: Clock3,
+      title: "Zona Horaria",
+      value:
+        "Basado en Bogotá, Colombia (GMT-5). Amplia ventana de solapamiento en América y mañanas sincronizadas con Europa.",
+    },
+    {
+      icon: BadgeEuro,
+      title: "Facilidad para la UE",
+      value:
+        "Ciudadano español con plena capacidad legal para facturar y colaborar con empresas de la Unión Europea (sin requerimientos de visa).",
     },
   ];
 
   const socialLinks = [
-    { icon: Instagram, url: "https://www.instagram.com/camiloayalanieto?igsh=eHhiNGMwdmZ1dWM5&utm_source=qr", label: "@spiriwors" },
-    { icon: Linkedin, url: "https://www.linkedin.com/in/camilo-ayala-nieto-125730388?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app", label: "Spiriwors" },
+    {
+      icon: Instagram,
+      url: "https://www.instagram.com/camiloayalanieto?igsh=eHhiNGMwdmZ1dWM5&utm_source=qr",
+      label: "@spiriwors",
+    },
+    {
+      icon: Linkedin,
+      url: "https://www.linkedin.com/in/camilo-ayala-nieto-125730388?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+      label: "Spiriwors",
+    },
   ];
 
   return (
@@ -122,15 +151,15 @@ const Contact = () => {
             <h2 className="text-[60px] md:text-5xl font-bold mb-4 amatic-sc-bold text-white leading-tight">
               Contacto
             </h2>
+
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              ¿Tienes un proyecto en mente? Nos encantaría escuchar tu idea y
-              ayudarte a hacerla realidad
+            ¿Tienes un proyecto en mente? Hablemos.
+            Estoy disponible para colaboraciones en animación 2D y Stop-motion, aportando una visión artesanal a flujos de trabajo globales.
             </p>
           </div>
         </ScrollReveal>
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Contact Form */}
           <ScrollReveal direction="right">
             <div className="bg-gray-900 p-8 rounded-lg shadow-lg">
               <h3 className="text-2xl font-bold text-white mb-6">
@@ -143,61 +172,65 @@ const Contact = () => {
                     <label htmlFor="name" className="block text-gray-300 mb-2">
                       Nombre *
                     </label>
+
                     <Input
                       type="text"
                       id="name"
                       {...register("name")}
                       disabled={isSubmitting}
                       className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                      style={{
-                        '--tw-ring-color': accentColor,
-                        '--tw-border-opacity': '1'
-                      } as React.CSSProperties}
+                      style={
+                        {
+                          "--tw-ring-color": accentColor,
+                        } as React.CSSProperties
+                      }
                       onFocus={(e) => {
                         e.currentTarget.style.borderColor = accentColor;
                         e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
                       }}
                       onBlur={(e) => {
-                        e.currentTarget.style.borderColor = '';
-                        e.currentTarget.style.boxShadow = '';
+                        e.currentTarget.style.borderColor = "";
+                        e.currentTarget.style.boxShadow = "";
                       }}
                       placeholder="Tu nombre completo"
-                      aria-invalid={errors.name ? "true" : "false"}
-                      aria-describedby={errors.name ? "name-error" : undefined}
                     />
+
                     {errors.name && (
-                      <p id="name-error" className="text-red-400 text-sm mt-1" role="alert">
+                      <p className="text-red-400 text-sm mt-1" role="alert">
                         {errors.name.message}
                       </p>
                     )}
                   </div>
+
                   <div>
                     <label htmlFor="email" className="block text-gray-300 mb-2">
                       Email *
                     </label>
+
                     <Input
                       type="email"
                       id="email"
                       {...register("email")}
                       disabled={isSubmitting}
                       className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                      style={{
-                        '--tw-ring-color': accentColor
-                      } as React.CSSProperties}
+                      style={
+                        {
+                          "--tw-ring-color": accentColor,
+                        } as React.CSSProperties
+                      }
                       onFocus={(e) => {
                         e.currentTarget.style.borderColor = accentColor;
                         e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
                       }}
                       onBlur={(e) => {
-                        e.currentTarget.style.borderColor = '';
-                        e.currentTarget.style.boxShadow = '';
+                        e.currentTarget.style.borderColor = "";
+                        e.currentTarget.style.boxShadow = "";
                       }}
                       placeholder="tu@email.com"
-                      aria-invalid={errors.email ? "true" : "false"}
-                      aria-describedby={errors.email ? "email-error" : undefined}
                     />
+
                     {errors.email && (
-                      <p id="email-error" className="text-red-400 text-sm mt-1" role="alert">
+                      <p className="text-red-400 text-sm mt-1" role="alert">
                         {errors.email.message}
                       </p>
                     )}
@@ -211,53 +244,70 @@ const Contact = () => {
                   >
                     Empresa
                   </label>
+
                   <Input
                     type="text"
                     id="company"
                     {...register("company")}
                     disabled={isSubmitting}
                     className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                    style={{
-                      '--tw-ring-color': accentColor
-                    } as React.CSSProperties}
+                    style={
+                      {
+                        "--tw-ring-color": accentColor,
+                      } as React.CSSProperties
+                    }
                     onFocus={(e) => {
                       e.currentTarget.style.borderColor = accentColor;
                       e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
                     }}
                     onBlur={(e) => {
-                      e.currentTarget.style.borderColor = '';
-                      e.currentTarget.style.boxShadow = '';
+                      e.currentTarget.style.borderColor = "";
+                      e.currentTarget.style.boxShadow = "";
                     }}
                     placeholder="Nombre de tu empresa"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="project" className="block text-gray-300 mb-2">
+                  <label
+                    htmlFor="project"
+                    className="block text-gray-300 mb-2"
+                  >
                     Tipo de Proyecto *
                   </label>
-                  <Select onValueChange={(value) => register("project").onChange({ target: { name: "project", value } })} disabled={isSubmitting}>
+
+                  <input type="hidden" {...register("project")} />
+
+                  <Select
+                    disabled={isSubmitting}
+                    onValueChange={(value) =>
+                      setValue("project", value, { shouldValidate: true })
+                    }
+                  >
                     <SelectTrigger
+                      id="project"
                       className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                      style={{
-                        '--tw-ring-color': accentColor
-                      } as React.CSSProperties}
+                      style={
+                        {
+                          "--tw-ring-color": accentColor,
+                        } as React.CSSProperties
+                      }
                       onFocus={(e) => {
                         e.currentTarget.style.borderColor = accentColor;
                         e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
                       }}
                       onBlur={(e) => {
-                        e.currentTarget.style.borderColor = '';
-                        e.currentTarget.style.boxShadow = '';
+                        e.currentTarget.style.borderColor = "";
+                        e.currentTarget.style.boxShadow = "";
                       }}
-                      aria-label="Seleccionar tipo de proyecto"
-                      aria-invalid={errors.project ? "true" : "false"}
-                      aria-describedby={errors.project ? "project-error" : undefined}
                     >
                       <SelectValue placeholder="Selecciona el tipo de proyecto" />
                     </SelectTrigger>
+
                     <SelectContent>
-                      <SelectItem value="stop-motion">Animación Stop-Motion</SelectItem>
+                      <SelectItem value="stop-motion">
+                        Animación Stop-Motion
+                      </SelectItem>
                       <SelectItem value="2d-animation">Animación 2D</SelectItem>
                       <SelectItem value="commercial">Video Comercial</SelectItem>
                       <SelectItem value="music-video">Video Musical</SelectItem>
@@ -265,8 +315,9 @@ const Contact = () => {
                       <SelectItem value="other">Otro</SelectItem>
                     </SelectContent>
                   </Select>
+
                   {errors.project && (
-                    <p id="project-error" className="text-red-400 text-sm mt-1" role="alert">
+                    <p className="text-red-400 text-sm mt-1" role="alert">
                       {errors.project.message}
                     </p>
                   )}
@@ -277,53 +328,57 @@ const Contact = () => {
                     <label htmlFor="message" className="block text-gray-300">
                       Mensaje *
                     </label>
-                    <span className={`text-sm ${messageLength < 10 ? 'text-gray-500' : 'text-gray-400'}`} style={messageLength > 450 ? { color: accentColor } : {}}>
+
+                    <span
+                      className={`text-sm ${
+                        messageLength < 10 ? "text-gray-500" : "text-gray-400"
+                      }`}
+                      style={messageLength > 450 ? { color: accentColor } : {}}
+                    >
                       {messageLength}/500
                     </span>
                   </div>
+
                   <Textarea
                     id="message"
                     {...register("message", {
-                      onChange: (e) => setMessageLength(e.target.value.length)
+                      onChange: (e) => setMessageLength(e.target.value.length),
                     })}
                     disabled={isSubmitting}
                     rows={3}
                     maxLength={500}
                     className="w-full bg-gray-800 border-gray-700 text-white focus:ring-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed resize-none"
-                    style={{
-                      '--tw-ring-color': accentColor
-                    } as React.CSSProperties}
+                    style={
+                      {
+                        "--tw-ring-color": accentColor,
+                      } as React.CSSProperties
+                    }
                     onFocus={(e) => {
                       e.currentTarget.style.borderColor = accentColor;
                       e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
                     }}
                     onBlur={(e) => {
-                      e.currentTarget.style.borderColor = '';
-                      e.currentTarget.style.boxShadow = '';
+                      e.currentTarget.style.borderColor = "";
+                      e.currentTarget.style.boxShadow = "";
                     }}
                     placeholder="Cuéntame sobre tu proyecto, objetivos, timeline y cualquier detalle relevante..."
-                    aria-invalid={errors.message ? "true" : "false"}
-                    aria-describedby={errors.message ? "message-error message-counter" : "message-counter"}
                   />
+
                   {errors.message && (
-                    <p id="message-error" className="text-red-400 text-sm mt-1" role="alert">
+                    <p className="text-red-400 text-sm mt-1" role="alert">
                       {errors.message.message}
                     </p>
                   )}
                 </div>
 
-                {/* Mensajes de estado */}
                 {submitStatus === "success" && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
                     className="bg-green-900 border border-green-700 text-green-300 px-4 py-3 rounded-lg flex items-center gap-2"
-                    role="alert"
-                    aria-live="polite"
                   >
-                    <CheckCircle className="w-5 h-5" aria-hidden="true" />
+                    <CheckCircle className="w-5 h-5" />
                     <span>
                       ¡Mensaje enviado exitosamente! Te contactaré pronto.
                     </span>
@@ -334,13 +389,10 @@ const Contact = () => {
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
                     className="bg-red-900 border border-red-700 text-red-300 px-4 py-3 rounded-lg flex items-center gap-2"
-                    role="alert"
-                    aria-live="assertive"
                   >
-                    <AlertCircle className="w-5 h-5" aria-hidden="true" />
+                    <AlertCircle className="w-5 h-5" />
                     <span>{errorMessage}</span>
                   </motion.div>
                 )}
@@ -353,12 +405,16 @@ const Contact = () => {
                     type="submit"
                     disabled={isSubmitting}
                     className="w-full text-white disabled:bg-gray-600 disabled:text-gray-400 py-3 text-lg font-semibold flex items-center justify-center gap-2 will-change-transform"
-                    style={{ 
-                      backgroundColor: accentColor,
-                      '--hover-bg': theme === 'light' ? '#ff9500' : '#2190a8'
-                    } as React.CSSProperties}
+                    style={
+                      {
+                        backgroundColor: accentColor,
+                        "--hover-bg":
+                          theme === "light" ? "#ff9500" : "#2190a8",
+                      } as React.CSSProperties
+                    }
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = theme === 'light' ? '#ff9500' : '#2190a8';
+                      e.currentTarget.style.backgroundColor =
+                        theme === "light" ? "#ff9500" : "#2190a8";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.backgroundColor = accentColor;
@@ -369,7 +425,11 @@ const Contact = () => {
                         <motion.div
                           className="w-5 h-5 border-2 border-black border-t-transparent rounded-full"
                           animate={{ rotate: 360 }}
-                          transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                          transition={{
+                            duration: 0.8,
+                            repeat: Infinity,
+                            ease: "linear",
+                          }}
                         />
                         Enviando...
                       </>
@@ -385,54 +445,74 @@ const Contact = () => {
             </div>
           </ScrollReveal>
 
-          {/* Contact Information */}
           <ScrollReveal direction="left">
             <div className="space-y-8">
               <div>
-                <h3 className="text-2xl font-bold text-white mb-6">
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-8">
                   Información de Contacto
                 </h3>
 
-                <div className="space-y-6">
+                <div className="space-y-7">
                   {contactInfo.map((info, index) => (
                     <motion.div
                       key={index}
-                      className="flex items-center"
+                      className="flex items-start gap-5"
                       whileHover={{ x: 5 }}
                       transition={{ duration: 0.2 }}
                     >
                       <motion.div
-                        className="w-12 h-12 rounded-lg flex items-center justify-center mr-4"
-                        style={{ backgroundColor: accentColor }}
-                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        className="w-16 h-16 min-w-16 rounded-lg flex items-center justify-center shadow-lg border border-gray-700/60"
+                        style={{
+                          backgroundColor: "rgba(17, 24, 39, 0.95)",
+                          boxShadow: `0 0 0 1px ${accentColor}22, 0 10px 25px rgba(0,0,0,0.25)`,
+                        }}
+                        whileHover={{ scale: 1.08 }}
                         transition={{ duration: 0.2 }}
                       >
-                        <info.icon className="w-6 h-6 text-black" />
+                        <info.icon
+                          className="w-8 h-8"
+                          style={{
+                            color: accentColor,
+                            strokeWidth: 2,
+                          }}
+                        />
                       </motion.div>
-                      <div>
-                        <h4 className="text-white font-semibold">
+
+                      <div className="pt-1">
+                        <h4 className="text-white text-xl font-bold leading-tight">
                           {info.title}
                         </h4>
-                        <a
-                          href={info.link}
-                          className="text-gray-300 transition-colors duration-200"
-                          style={{ color: 'rgb(209, 213, 219)' }}
-                          onMouseEnter={(e) => e.currentTarget.style.color = accentColor}
-                          onMouseLeave={(e) => e.currentTarget.style.color = 'rgb(209, 213, 219)'}
-                        >
-                          {info.value}
-                        </a>
+
+                        {info.link ? (
+                          <a
+                            href={info.link}
+                            className="text-gray-300 text-lg leading-relaxed transition-colors duration-200"
+                            onMouseEnter={(e) =>
+                              (e.currentTarget.style.color = accentColor)
+                            }
+                            onMouseLeave={(e) =>
+                              (e.currentTarget.style.color =
+                                "rgb(209, 213, 219)")
+                            }
+                          >
+                            {info.value}
+                          </a>
+                        ) : (
+                          <p className="text-gray-300 text-lg leading-relaxed max-w-xl">
+                            {info.value}
+                          </p>
+                        )}
                       </div>
                     </motion.div>
                   ))}
                 </div>
               </div>
 
-              {/* Social Links */}
               <div>
                 <h4 className="text-xl font-bold text-white mb-4">
                   Sígueme en redes
                 </h4>
+
                 <div className="flex space-x-4">
                   {socialLinks.map((social, index) => (
                     <a
@@ -440,16 +520,13 @@ const Contact = () => {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(social.url, '_blank');
-                      }}
                       className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center hover:text-black transition-all duration-300 transform hover:scale-110"
                       onMouseEnter={(e) => {
                         e.currentTarget.style.backgroundColor = accentColor;
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = 'rgb(55, 65, 81)';
+                        e.currentTarget.style.backgroundColor =
+                          "rgb(55, 65, 81)";
                       }}
                       title={social.label}
                       aria-label={social.label}
@@ -459,7 +536,6 @@ const Contact = () => {
                   ))}
                 </div>
               </div>
-
             </div>
           </ScrollReveal>
         </div>

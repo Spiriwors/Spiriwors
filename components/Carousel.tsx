@@ -120,11 +120,11 @@ const Carousel = () => {
 
     if (projectType === "LJDP") {
       const prizeImages = [
-        "LJDP-premio.png",
-        "PACCPA_premio.png",
-        "LaurelesIbero-FA-Negro.png",
-        "LaurelLeaves2024_OficialSelection_ESP.png",
-      ].map((name) => `/images/trabajos_destacados/${name}`);
+        "/images/trabajos_destacados/PACCPA_premio.png",
+        "/images/trabajos_destacados/LJDP-premio.png",
+        "/images/trabajos_destacados/LaurelesIbero-FA-Negro.png",
+        "/images/trabajos_destacados/LaurelLeaves2024_OficialSelection_ESP.png",
+      ];
 
       const baseImages = Array.from(
         { length: 5 },
@@ -146,7 +146,6 @@ const Carousel = () => {
         "/images/trabajos_destacados/L.COMIC_01_LUNES.png",
         "/images/trabajos_destacados/L.COMIC_02_LUNES.png",
         "/images/trabajos_destacados/L.Premio_Lunes__VideoJove.png",
-        "/images/trabajos_destacados/L.LOGO_CINE_CREA.png",
       ];
     }
 
@@ -172,12 +171,14 @@ const Carousel = () => {
           {
             src: "/images/trabajos_destacados/LaurelesIbero-FA-Negro.png",
             alt: "Premio Iberoamericano",
-            className: "max-h-28 object-contain brightness-0 invert",
+            className:
+              "h-28 md:h-32 w-56 md:w-64 object-contain brightness-0 invert",
           },
           {
-            src: "/images/trabajos_destacados/LaurelLeaves2024_OficialSelection_ESP.png",
-            alt: "Selección oficial",
-            className: "max-h-28 object-contain brightness-0 invert",
+            src: "/images/trabajos_destacados/LJDP-premio.png",
+            alt: "Premio PACCPA",
+            className:
+              "h-28 md:h-32 w-56 md:w-64 object-contain brightness-0 invert",
           },
         ],
         badges: [],
@@ -186,13 +187,13 @@ const Carousel = () => {
           "Animación 2D",
           "2022",
         ],
-        award: "Proyecto ganador del estímulo FDC",
+        award: "",
         distributor: "-Proimágenes Colombia-",
         logos: [
           {
             src: "/images/trabajos_destacados/L.LOGO_CINE_CREA.png",
-            alt: "Cine Crea Colombia",
-            className: "max-h-56 object-contain",
+            alt: "Crea Cine Crea Colombia",
+            className: "max-h-64 md:max-h-72 object-contain",
           },
         ],
       };
@@ -206,7 +207,7 @@ const Carousel = () => {
             label: "",
             src: "/images/trabajos_destacados/A17-Seccio_blanco.png",
             alt: "Animac Secció oficial 2017",
-            className: "max-h-28 object-contain",
+            className: "max-h-32 md:max-h-36 object-contain",
           },
           {
             label: "Distribuye",
@@ -220,13 +221,13 @@ const Carousel = () => {
           "Stop-Motion y Animación 2D",
           "2016",
         ],
-        award: "Proyecto ganador del estímulo FDC",
+        award: "",
         distributor: "-Proimágenes Colombia-",
         logos: [
           {
             src: "/images/trabajos_destacados/L.LOGO_CINE_CREA.png",
-            alt: "Cine Crea Colombia",
-            className: "max-h-56 object-contain",
+            alt: "Crea Cine Crea Colombia",
+            className: "max-h-64 md:max-h-72 object-contain",
           },
         ],
       };
@@ -340,6 +341,7 @@ const Carousel = () => {
               const projectImages = getProjectImages(project);
               const currentSlide = currentSlides[projectKey] || 0;
               const projectInfo = getProjectInfo(project);
+              const projectType = getProjectType(project);
 
               const posterImage =
                 project.featured_poster ||
@@ -407,61 +409,54 @@ const Carousel = () => {
                           style={{
                             backfaceVisibility: "hidden",
                             transform: "rotateY(180deg)",
-                            backgroundColor: (() => {
-                              const currentImage = projectImages[currentSlide];
-
-                              const isPrizeImage =
-                                currentImage &&
-                                (currentImage.includes("LaurelesIbero") ||
-                                  currentImage.includes("LaurelLeaves") ||
-                                  currentImage.includes("LJDP-premio") ||
-                                  currentImage.includes("PACCPA_premio") ||
-                                  currentImage.includes("Premio_Lunes") ||
-                                  currentImage.includes("LOGO_CINE_CREA"));
-
-                              return isPrizeImage
-                                ? "#ffffff"
-                                : getProjectBackgroundColor(project);
-                            })(),
+                            backgroundColor:
+                              projectType === "LJDP" && currentSlide === 0
+                                ? "#000000"
+                                : getProjectBackgroundColor(project),
                           }}
                         >
                           <div className="relative w-full h-full">
                             {projectImages.map((image, imgIndex) => {
-                              const isPrizeImage =
-                                image.includes("LaurelesIbero") ||
-                                image.includes("LaurelLeaves") ||
-                                image.includes("LJDP-premio") ||
-                                image.includes("PACCPA_premio") ||
-                                image.includes("Premio_Lunes") ||
-                                image.includes("LOGO_CINE_CREA");
+                              const isCurrent = imgIndex === currentSlide;
+
+                              const isFirstLJDPImage =
+                                projectType === "LJDP" && imgIndex === 0;
+
+                              const isLJDPLogoOrLaurel =
+                                projectType === "LJDP" &&
+                                imgIndex !== 0 &&
+                                (image.includes("LaurelesIbero") ||
+                                  image.includes("LaurelLeaves") ||
+                                  image.includes("LJDP-premio"));
+
+                              const isLunesPrize =
+                                image.includes("Premio_Lunes");
 
                               const imageScale = image.includes("LJDP-premio")
                                 ? 1.15
                                 : image.includes("PACCPA_premio")
-                                ? 1.05
+                                ? 0.95
                                 : image.includes("LaurelLeaves")
                                 ? 0.75
                                 : image.includes("LaurelesIbero")
                                 ? 0.95
                                 : image.includes("Premio_Lunes")
                                 ? 0.95
-                                : image.includes("LOGO_CINE_CREA")
-                                ? 3.2
                                 : 1;
 
                               return (
                                 <div
                                   key={imgIndex}
-                                  className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
-                                    imgIndex === currentSlide
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                  className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ease-in-out ${
+                                    isCurrent ? "opacity-100" : "opacity-0"
                                   }`}
-                                  style={
-                                    isPrizeImage
-                                      ? { backgroundColor: "#ffffff" }
-                                      : {}
-                                  }
+                                  style={{
+                                    backgroundColor: isFirstLJDPImage
+                                      ? "#000000"
+                                      : isLJDPLogoOrLaurel || isLunesPrize
+                                      ? "#ffffff"
+                                      : getProjectBackgroundColor(project),
+                                  }}
                                 >
                                   <img
                                     src={image}
@@ -471,6 +466,7 @@ const Carousel = () => {
                                     className="w-full h-full object-contain"
                                     style={{
                                       transform: `scale(${imageScale})`,
+                                      filter: "none",
                                     }}
                                   />
                                 </div>
@@ -555,22 +551,26 @@ const Carousel = () => {
                     </p>
 
                     {projectInfo.laurels.length > 0 && (
-                      <div className="mt-7 flex justify-center items-center gap-4">
+                      <div className="mt-6 flex justify-center items-center gap-6">
                         {projectInfo.laurels.map((laurel) => (
-                          <img
+                          <div
                             key={laurel.src}
-                            src={laurel.src}
-                            alt={laurel.alt}
-                            className={laurel.className}
-                            loading="lazy"
-                            decoding="async"
-                          />
+                            className="h-28 md:h-32 w-56 md:w-64 flex items-center justify-center"
+                          >
+                            <img
+                              src={laurel.src}
+                              alt={laurel.alt}
+                              className={laurel.className}
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </div>
                         ))}
                       </div>
                     )}
 
                     {projectInfo.badges.length > 0 && (
-                      <div className="mt-8 flex justify-center items-start gap-8">
+                      <div className="mt-6 flex justify-center items-start gap-6">
                         {projectInfo.badges.map((badge, badgeIndex) => (
                           <div
                             key={`${badge.src}-${badgeIndex}`}
@@ -581,13 +581,16 @@ const Carousel = () => {
                                 {badge.label}
                               </p>
                             )}
-                            <img
-                              src={badge.src}
-                              alt={badge.alt}
-                              className={badge.className}
-                              loading="lazy"
-                              decoding="async"
-                            />
+
+                            <div className="flex items-center justify-center">
+                              <img
+                                src={badge.src}
+                                alt={badge.alt}
+                                className={badge.className}
+                                loading="lazy"
+                                decoding="async"
+                              />
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -609,8 +612,8 @@ const Carousel = () => {
 
                     {projectInfo.distributor && (
                       <p
-                        className={`mt-5 text-white font-semibold ${
-                          getProjectType(project) === "LJDP"
+                        className={`mt-6 text-white font-semibold ${
+                          projectType === "LJDP"
                             ? "text-lg md:text-xl"
                             : "text-sm md:text-base"
                         }`}
@@ -620,7 +623,7 @@ const Carousel = () => {
                     )}
 
                     {projectInfo.logos.length > 0 && (
-                      <div className="mt-6 flex justify-center items-center">
+                      <div className="mt-1 flex justify-center items-center">
                         {projectInfo.logos.map((logo) => (
                           <img
                             key={logo.src}
