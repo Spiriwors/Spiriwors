@@ -172,13 +172,13 @@ const Carousel = () => {
             src: "/images/trabajos_destacados/LaurelesIbero-FA-Negro.png",
             alt: "Premio Iberoamericano",
             className:
-              "h-28 md:h-32 w-56 md:w-64 object-contain brightness-0 invert",
+              "h-32 md:h-36 w-64 md:w-72 object-contain brightness-0 invert",
           },
           {
             src: "/images/trabajos_destacados/LJDP-premio.png",
             alt: "Premio PACCPA",
             className:
-              "h-28 md:h-32 w-56 md:w-64 object-contain brightness-0 invert",
+              "h-32 md:h-36 w-64 md:w-72 object-contain brightness-0 invert scale-[1.55]",
           },
         ],
         badges: [],
@@ -551,11 +551,11 @@ const Carousel = () => {
                     </p>
 
                     {projectInfo.laurels.length > 0 && (
-                      <div className="mt-6 flex justify-center items-center gap-6">
+                      <div className="mt-6 flex justify-center items-center gap-4 md:gap-6">
                         {projectInfo.laurels.map((laurel) => (
                           <div
                             key={laurel.src}
-                            className="h-28 md:h-32 w-56 md:w-64 flex items-center justify-center"
+                            className="h-32 md:h-36 w-64 md:w-72 flex items-center justify-center overflow-visible"
                           >
                             <img
                               src={laurel.src}

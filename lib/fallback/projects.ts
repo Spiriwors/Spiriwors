@@ -3,7 +3,7 @@ import { Project } from '@/types/project';
 // Datos originales del sitio - FALLBACK si no hay Supabase
 export const FALLBACK_PROJECTS: Project[] = [
   {
-    //https://vimeo.com/896578269?fl=pl&fe=sh 
+    //https://vimeo.com/896578269?fl=pl&fe=sh
     id: '1',
     title: "La Joya Del Pantano",
     description: "Trailer de la historia original La Joya Del Pantano",
@@ -17,7 +17,8 @@ export const FALLBACK_PROJECTS: Project[] = [
     is_featured: true,
     featured_order: 1,
     featured_poster: '/images/projects/LJDP_HD_FULL_DEFF.webp',
-    featured_description: 'Suyay, la princesa rana de la tribu, es raptada por unos codiciosos murciélagos. Su padre el sapo Cacique, buscará la forma de rescatar a su pequeña.',
+    featured_description:
+      'Suyay, la princesa rana de la tribu, es raptada por unos codiciosos murciélagos. Su padre el sapo Cacique, buscará la forma de rescatar a su pequeña.',
     display_order: 1,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
@@ -37,7 +38,8 @@ export const FALLBACK_PROJECTS: Project[] = [
     is_featured: true,
     featured_order: 2,
     featured_poster: '/images/projects/SALU_AFICHE.webp',
-    featured_description: 'En una pequeña plaza de toros, la familia propietaria celebra una corrida privada; aplauden la actuación de “Paella” el picador, “Villancico” el banderillero y “Canijo” el torero. “Baco” el toro, a quien le gusta el vino tinto, los sorprende a todos ellos después de enfrentarse a la espada mortal. ',
+    featured_description:
+      'En una pequeña plaza de toros, la familia propietaria celebra una corrida privada; aplauden la actuación de “Paella” el picador, “Villancico” el banderillero y “Canijo” el torero. “Baco” el toro, a quien le gusta el vino tinto, los sorprende a todos ellos después de enfrentarse a la espada mortal.',
     display_order: 2,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
@@ -78,7 +80,8 @@ export const FALLBACK_PROJECTS: Project[] = [
     //https://venturiaanimation.com/portfolio/my-play-ajr/
     id: '5',
     title: "AJR – My Play",
-    description: "Cargo: animación – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
+    description:
+      "Cargo: animación – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
     video_url: "https://www.youtube.com/watch?v=Ew8jKnliFZg",
     category: "2d",
     images: [
@@ -95,7 +98,8 @@ export const FALLBACK_PROJECTS: Project[] = [
     //https://venturiaanimation.com/portfolio/it-gets-to-a-point-onr/
     id: '6',
     title: "ONR – It Gets To a Point",
-    description: "Cargo: animación – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
+    description:
+      "Cargo: animación – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
     video_url: "https://www.youtube.com/watch?v=9WSkP58HDwU&authuser=0",
     category: "2d",
     images: [
@@ -112,7 +116,8 @@ export const FALLBACK_PROJECTS: Project[] = [
     //https://venturiaanimation.com/portfolio/christmas-in-hawaii-we-the-kingdom/
     id: '7',
     title: "We The Kingdom – Christmas In Hawaii",
-    description: "Cargo: modelado de marionetas y animación stop-motion – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
+    description:
+      "Cargo: modelado de marionetas y animación stop-motion – Camilo Ayala. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
     video_url: "https://www.youtube.com/watch?v=k-qPTVztgEk",
     category: "stop",
     images: [
@@ -129,7 +134,8 @@ export const FALLBACK_PROJECTS: Project[] = [
     //https://venturiaanimation.com/portfolio/satellite-bebe-rexha-snoop-dogg/
     id: '8',
     title: "Satellite – Bebe Rexha & Snoop Dogg",
-    description: "Cargo: animación. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
+    description:
+      "Cargo: animación. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
     video_url: "https://www.youtube.com/watch?v=VBHr0faDCoQ",
     category: "2d",
     images: [
@@ -145,7 +151,8 @@ export const FALLBACK_PROJECTS: Project[] = [
   {
     id: '9',
     title: "Waldo´s Dream",
-    description: "Cargo: animación. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
+    description:
+      "Cargo: animación. A Creative Service by Venturia Animation Studios. All Rights Reserved.",
     video_url: "https://vimeo.com/335248497?fl=pl&fe=vl",
     category: "2d",
     images: [
@@ -161,7 +168,8 @@ export const FALLBACK_PROJECTS: Project[] = [
   {
     id: '10',
     title: "Heroes Collection: Francis Ford Coppola",
-    description: "Cargo: Realizador de Animatic y Animador – Camilo Ayala. Original Content by Venturia Animation Studios. All Rights Reserved.",
+    description:
+      "Cargo: Realizador de Animatic y Animador – Camilo Ayala. Original Content by Venturia Animation Studios. All Rights Reserved.",
     video_url: "https://vimeo.com/1058727258?fl=pl&fe=vl",
     category: "2d",
     images: [
@@ -191,23 +199,24 @@ export const FALLBACK_PROJECTS: Project[] = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
-    {
-  id: '12',
-  title: "Lunes",
-  description: "Tesis de Grado - Lunes",
-  video_url: "https://www.youtube.com/watch?v=N2g6_lLy4jw",
-  category: "stop",
-  images: [
-    '/images/megaCard/Lunes/2.FOTO_01_LUNES.png',
-    '/images/megaCard/Lunes/3.FOTO_02_LUNES.png',
-    '/images/megaCard/Lunes/4.FOTO_03_LUNES.png',
-  ],
-  is_featured: true,
-  featured_order: 3,
-  featured_poster: '/images/projects/1.AFICHE_LUNES.png',
-  featured_description: 'En un colegio desolado y gris, un niño (número 14 de la lista), luchará para proteger su identidad, a pesar de sus calificaciones...',
-  display_order: 12,
-  created_at: new Date().toISOString(),
-  updated_at: new Date().toISOString(),
-},
+  {
+    id: '12',
+    title: "Lunes",
+    description: "Tesis de Grado - Lunes",
+    video_url: "https://www.youtube.com/watch?v=N2g6_lLy4jw",
+    category: "stop",
+    images: [
+      '/images/megaCard/Lunes/2.FOTO_01_LUNES.png',
+      '/images/megaCard/Lunes/3.FOTO_02_LUNES.png',
+      '/images/megaCard/Lunes/4.FOTO_03_LUNES.png',
+    ],
+    is_featured: true,
+    featured_order: 3,
+    featured_poster: '/images/projects/1.AFICHE_LUNES.png',
+    featured_description:
+      'En un colegio desolado y gris, un niño (número 14 de la lista), luchará para proteger su identidad, a pesar de sus calificaciones...',
+    display_order: 12,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
 ];

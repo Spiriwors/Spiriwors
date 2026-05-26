@@ -122,16 +122,16 @@ const Projects = () => {
       year: undefined,
       category: "2d" as const,
     },
-    {
-      id: 12,
-      title: "Lunes",
-      url: "https://www.youtube.com/watch?v=N2g6_lLy4jw",
-      video_url: "https://www.youtube.com/watch?v=N2g6_lLy4jw",
-      description:
-        "Tesis de grado universitario",
-      year: undefined,
-      category: "2d" as const,
-    },
+    
+      {
+  id: 12,
+  title: "Lunes",
+  url: "https://www.youtube.com/watch?v=N2g6_lLy4jw",
+  video_url: "https://www.youtube.com/watch?v=N2g6_lLy4jw",
+  description: "Tesis de grado universitario",
+  year: undefined,
+  category: "stop" as const,
+},
   ];
 
   useEffect(() => {
