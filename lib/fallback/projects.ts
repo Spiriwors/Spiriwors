@@ -209,5 +209,5 @@ export const FALLBACK_PROJECTS: Project[] = [
   display_order: 12,
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
-}
+},
 ];
