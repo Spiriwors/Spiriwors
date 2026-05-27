@@ -23,6 +23,7 @@ const Navbar = () => {
     const updatePosition = () => {
       if (eyeButtonRef.current && !isUIHidden) {
         const rect = eyeButtonRef.current.getBoundingClientRect();
+
         setEyeButtonPosition({
           top: rect.top,
           right: window.innerWidth - rect.right,
@@ -160,7 +161,8 @@ const Navbar = () => {
 
               <div className="hidden lg:block mt-4 max-w-[420px] font-sans">
                 <p className="text-white/90 text-xs leading-snug tracking-wide font-semibold">
-                  Ayala – Animación 2D (TVPaint) &amp; Stop-motion
+                  <span className="font-bold text-white">©</span>{" "}
+                  Camilo Ayala – Animación 2D &amp; Stop-motion
                 </p>
 
                 <p

@@ -66,7 +66,7 @@ const Footer = () => {
                 SPIRIWORS
               </span>
             </div>
-            <p className="text-gray-400 text-sm">Animación Stop-Motion y 2D</p>
+            <p className="text-gray-400 text-sm"> Animación 2D & Stop-Motion</p>
           </div>
 
           {/* Quick Links */}

@@ -153,7 +153,7 @@ const Contact = () => {
             </h2>
 
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            ¿Tienes un proyecto en mente? Hablemos.
+            ¿Tienes un proyecto en mente? ¡Hablemos!.
             Estoy disponible para colaboraciones en animación 2D y Stop-motion, aportando una visión artesanal a flujos de trabajo globales.
             </p>
           </div>

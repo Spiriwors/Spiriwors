@@ -597,7 +597,11 @@ const Carousel = () => {
                     )}
 
                     {projectInfo.credits.length > 0 && (
-                      <div className="mt-8 space-y-2 text-white text-sm md:text-base font-semibold leading-relaxed">
+                      <div
+                        className={`mt-7 space-y-1 text-gray-300 text-sm leading-relaxed text-center ${
+                          projectType === "Lunes" ? "font-semibold text-white" : ""
+                        }`}
+                      >
                         {projectInfo.credits.map((credit, creditIndex) => (
                           <p key={creditIndex}>{credit}</p>
                         ))}
@@ -605,25 +609,25 @@ const Carousel = () => {
                     )}
 
                     {projectInfo.award && (
-                      <p className="mt-8 text-white text-sm md:text-base font-semibold">
+                      <p className="mt-8 text-gray-300 text-sm leading-relaxed text-center">
                         {projectInfo.award}
                       </p>
                     )}
 
                     {projectInfo.distributor && (
-                      <p
-                        className={`mt-6 text-white font-semibold ${
-                          projectType === "LJDP"
-                            ? "text-lg md:text-xl"
-                            : "text-sm md:text-base"
-                        }`}
-                      >
+                      <p className="mt-4 text-gray-300 text-sm leading-relaxed text-center">
                         {projectInfo.distributor}
                       </p>
                     )}
 
                     {projectInfo.logos.length > 0 && (
-                      <div className="mt-1 flex justify-center items-center">
+                      <div
+                        className={`flex justify-center items-center ${
+                          projectType === "LJDP" || projectType === "Salu"
+                            ? "-mt-8"
+                            : "mt-1"
+                        }`}
+                      >
                         {projectInfo.logos.map((logo) => (
                           <img
                             key={logo.src}
