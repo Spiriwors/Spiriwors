@@ -435,14 +435,14 @@ const Carousel = () => {
                               const imageScale = image.includes("LJDP-premio")
                                 ? 1.15
                                 : image.includes("PACCPA_premio")
-                                ? 0.95
-                                : image.includes("LaurelLeaves")
-                                ? 0.75
-                                : image.includes("LaurelesIbero")
-                                ? 0.95
-                                : image.includes("Premio_Lunes")
-                                ? 0.95
-                                : 1;
+                                  ? 0.95
+                                  : image.includes("LaurelLeaves")
+                                    ? 0.75
+                                    : image.includes("LaurelesIbero")
+                                      ? 0.95
+                                      : image.includes("Premio_Lunes")
+                                        ? 0.95
+                                        : 1;
 
                               return (
                                 <div
@@ -454,8 +454,8 @@ const Carousel = () => {
                                     backgroundColor: isFirstLJDPImage
                                       ? "#000000"
                                       : isLJDPLogoOrLaurel || isLunesPrize
-                                      ? "#ffffff"
-                                      : getProjectBackgroundColor(project),
+                                        ? "#ffffff"
+                                        : getProjectBackgroundColor(project),
                                   }}
                                 >
                                   <img
@@ -599,7 +599,9 @@ const Carousel = () => {
                     {projectInfo.credits.length > 0 && (
                       <div
                         className={`mt-7 space-y-1 text-gray-300 text-sm leading-relaxed text-center ${
-                          projectType === "Lunes" ? "font-semibold text-white" : ""
+                          projectType === "Lunes"
+                            ? "font-semibold text-white"
+                            : ""
                         }`}
                       >
                         {projectInfo.credits.map((credit, creditIndex) => (
