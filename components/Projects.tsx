@@ -122,16 +122,15 @@ const Projects = () => {
       year: undefined,
       category: "2d" as const,
     },
-    
-      {
-  id: 12,
-  title: "Lunes",
-  url: "https://www.youtube.com/watch?v=N2g6_lLy4jw",
-  video_url: "https://www.youtube.com/watch?v=N2g6_lLy4jw",
-  description: "Tesis de grado universitario",
-  year: undefined,
-  category: "stop" as const,
-},
+    {
+      id: 12,
+      title: "Lunes",
+      url: "https://www.youtube.com/watch?v=gzhEYLPObHs",
+      video_url: "https://www.youtube.com/watch?v=gzhEYLPObHs",
+      description: "Tesis de grado universitario",
+      year: undefined,
+      category: "stop" as const,
+    },
   ];
 
   useEffect(() => {
@@ -288,6 +287,7 @@ const Projects = () => {
                         {cardsInLastRow === 0 && (
                           <div className="hidden lg:block"></div>
                         )}
+
                         <div className="w-full">
                           <ParallaxAnimation frameRate={15} />
                         </div>
@@ -310,10 +310,12 @@ const Projects = () => {
                           className="col-span-1 h-0 lg:h-auto"
                           aria-hidden="true"
                         ></div>
+
                         <div
                           className="col-span-1 h-0 lg:h-auto"
                           aria-hidden="true"
                         ></div>
+
                         <div className="col-span-1 md:col-span-2 lg:col-span-1">
                           <ParallaxAnimation frameRate={15} />
                         </div>
@@ -335,10 +337,12 @@ const Projects = () => {
                         className="col-span-1 h-0 lg:h-auto"
                         aria-hidden="true"
                       ></div>
+
                       <div
                         className="col-span-1 h-0 lg:h-auto"
                         aria-hidden="true"
                       ></div>
+
                       <div className="col-span-1 md:col-span-2 lg:col-span-1">
                         <ParallaxAnimation frameRate={15} />
                       </div>

@@ -153,8 +153,9 @@ const Contact = () => {
             </h2>
 
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            ¿Tienes un proyecto en mente? ¡Hablemos!.
-            Estoy disponible para colaboraciones en animación 2D y Stop-motion, aportando una visión artesanal a flujos de trabajo globales.
+              ¿Tienes un proyecto en mente? ¡Hablemos! Estoy disponible para
+              colaboraciones en animación 2D y Stop-motion, aportando una visión
+              artesanal a flujos de trabajo globales.
             </p>
           </div>
         </ScrollReveal>
@@ -292,14 +293,6 @@ const Contact = () => {
                           "--tw-ring-color": accentColor,
                         } as React.CSSProperties
                       }
-                      onFocus={(e) => {
-                        e.currentTarget.style.borderColor = accentColor;
-                        e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}33`;
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.borderColor = "";
-                        e.currentTarget.style.boxShadow = "";
-                      }}
                     >
                       <SelectValue placeholder="Selecciona el tipo de proyecto" />
                     </SelectTrigger>
