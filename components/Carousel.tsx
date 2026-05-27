@@ -317,8 +317,8 @@ const Carousel = () => {
   };
 
   return (
-    <section className="py-20 bg-gray-800">
-      <div className="container mx-auto px-6">
+    <section className="py-20 bg-gray-800 overflow-x-hidden">
+      <div className="container mx-auto px-4 sm:px-6">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 amatic-sc-bold text-white">
             Trabajos Destacados
@@ -334,7 +334,7 @@ const Carousel = () => {
             No hay proyectos destacados
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 gap-8 max-w-[57.6rem] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[57.6rem] mx-auto w-full">
             {featuredProjects.map((project, index) => {
               const projectKey = getProjectKey(project);
               const isFlipped = flippedCards[projectKey] || false;
@@ -350,9 +350,9 @@ const Carousel = () => {
                 null;
 
               return (
-                <div key={project.id} className="group">
+                <div key={project.id} className="group min-w-0 w-full">
                   <div
-                    className="relative w-full aspect-[3/4.2] mb-6 cursor-pointer"
+                    className="relative w-full max-w-full aspect-[3/4.2] mb-6 cursor-pointer"
                     style={{ perspective: "1000px" }}
                     onClick={() => handleCardClick(projectKey)}
                   >
@@ -541,7 +541,7 @@ const Carousel = () => {
                     </div>
                   </div>
 
-                  <div className="rounded-lg p-6 border border-gray-600 bg-transparent shadow-none text-center">
+                  <div className="rounded-lg p-6 border border-gray-600 bg-transparent shadow-none text-center w-full max-w-full overflow-hidden">
                     <h3 className="text-lg font-bold text-white mb-4 text-center">
                       {project.title}
                     </h3>
@@ -551,7 +551,7 @@ const Carousel = () => {
                     </p>
 
                     {projectInfo.laurels.length > 0 && (
-                      <div className="mt-6 flex justify-center items-center gap-4 md:gap-6">
+                      <div className="mt-6 flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-6">
                         {projectInfo.laurels.map((laurel) => (
                           <div
                             key={laurel.src}
@@ -570,7 +570,7 @@ const Carousel = () => {
                     )}
 
                     {projectInfo.badges.length > 0 && (
-                      <div className="mt-6 flex justify-center items-start gap-6">
+                      <div className="mt-6 flex flex-col sm:flex-row justify-center items-center sm:items-start gap-6">
                         {projectInfo.badges.map((badge, badgeIndex) => (
                           <div
                             key={`${badge.src}-${badgeIndex}`}
