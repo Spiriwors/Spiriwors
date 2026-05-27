@@ -435,14 +435,14 @@ const Carousel = () => {
                               const imageScale = image.includes("LJDP-premio")
                                 ? 1.15
                                 : image.includes("PACCPA_premio")
-                                  ? 0.95
-                                  : image.includes("LaurelLeaves")
-                                    ? 0.75
-                                    : image.includes("LaurelesIbero")
-                                      ? 0.95
-                                      : image.includes("Premio_Lunes")
-                                        ? 0.95
-                                        : 1;
+                                ? 0.95
+                                : image.includes("LaurelLeaves")
+                                ? 0.75
+                                : image.includes("LaurelesIbero")
+                                ? 0.95
+                                : image.includes("Premio_Lunes")
+                                ? 0.95
+                                : 1;
 
                               return (
                                 <div
@@ -454,8 +454,8 @@ const Carousel = () => {
                                     backgroundColor: isFirstLJDPImage
                                       ? "#000000"
                                       : isLJDPLogoOrLaurel || isLunesPrize
-                                        ? "#ffffff"
-                                        : getProjectBackgroundColor(project),
+                                      ? "#ffffff"
+                                      : getProjectBackgroundColor(project),
                                   }}
                                 >
                                   <img
